@@ -14,10 +14,12 @@
     <base href="~/"/>
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css"/>
     <link href="css/site.css" rel="stylesheet"/>
-    <link href="Blazor.styles.css" rel="stylesheet"/>
+    <link href="Client.styles.css" rel="stylesheet"/>
+    <link href="_content/Blazored.Modal/blazored-modal.css" rel="stylesheet" />
+    <script src="_content/Blazored.Modal/blazored.modal.js"></script>
 </head>
 <body>
-<component type="typeof(App)" render-mode="ServerPrerendered"/>
+<component type="typeof(App)" render-mode="Server"/>
 
 <div id="blazor-error-ui">
     <environment include="Staging,Production">
@@ -31,5 +33,7 @@
 </div>
 
 <script src="_framework/blazor.server.js"></script>
+<script src="js/AudioPlayer.razor.js"></script>
+<script src="js/ProgressBar.js"></script>
 </body>
 </html>

@@ -4,4 +4,14 @@
         <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Entities\Entities.csproj" />
+      <ProjectReference Include="..\SocketsT1_T2\SocketsT1_T2.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Blazored.Modal" Version="6.0.1" />
+      <PackageReference Include="NAudio" Version="1.9.0" />
+    </ItemGroup>
+
 </Project>

@@ -1,15 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Blazor.Model;
+using Blazor.Util;
+using Blazored.Modal;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Server.Circuits;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Blazor.Data;
+using SocketsT1_T2.Tier1;
 
 namespace Blazor
 {
@@ -26,9 +24,19 @@ namespace Blazor
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddScoped<IJSRuntime, JSRuntime>();
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
+
+           services.AddScoped<IClient,Client>();
+            
+            services.AddScoped<IAudioTestModel,AudioTestModel>();
+            services.AddScoped<IPlayerModel, PlayerModel>();
+            services.AddScoped<CircuitHandler, CircuitHandlerService>();
+            services.AddScoped<ISongSearchModel, SongSearchModel>();
+            services.AddBlazoredModal();
+            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
