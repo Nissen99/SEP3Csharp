@@ -7,8 +7,13 @@ namespace Domain.SongSearch
 {
     public class SongSearchService : ISongSearchService
     {
-        private IDataEndPointSearchSong endPointSearchSong = new DataEndPointSearchSong();
-        
+        private ISongSearchNetworking songSearchNetworking;
+
+        public SongSearchService(ISongSearchNetworking songSearchNetworking)
+        {
+            this.songSearchNetworking = songSearchNetworking;
+        }
+
         public async Task<string> GetSongsByFilterJsonAsync(TransferObj tObj)
         {
             string[] stringArray = JsonSerializer.Deserialize<string[]>(tObj.Arg);
@@ -31,18 +36,18 @@ namespace Domain.SongSearch
 
         private async Task<string> getSongFromArtist(string artistName)
         {
-            return await endPointSearchSong.GetSongsByArtistNameAsync(artistName);
+            return await songSearchNetworking.GetSongsByArtistNameAsync(artistName);
         }
 
         private async Task<string>  getSongFromAlbum(string albumTitle)
         {
-            return await endPointSearchSong.GetSongsByAlbumTitleAsync(albumTitle);
+            return await songSearchNetworking.GetSongsByAlbumTitleAsync(albumTitle);
             
         }
 
         private async Task<string> getSongFromTitle(string songTitle)
         {
-            return await endPointSearchSong.GetSongsByTitleAsync(songTitle);
+            return await songSearchNetworking.GetSongsByTitleAsync(songTitle);
             
         }
     }

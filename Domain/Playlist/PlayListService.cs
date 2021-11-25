@@ -7,6 +7,12 @@ namespace Domain.Playlist
     public class PlayListService:IPlayListService
 
     {
+        private IPlaylistNetworking playlistNetworking;
+        public PlayListService(IPlaylistNetworking playlistNetworking)
+        {
+            this.playlistNetworking = playlistNetworking;
+        }
+
         public Task<PlayList> CreatePlaylist(PlayList playList)
         {
             throw new System.NotImplementedException();

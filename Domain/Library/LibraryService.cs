@@ -8,17 +8,22 @@ namespace Domain.Library
 {
     public class LibraryService : ILibraryService
     {
-        private ILibraryNetworking dataEndPoint = new LibraryRestClient();
         private IList<byte[]> songsByte = new List<byte[]>();
         private IList<Song> songList = new List<Song>();
+        private ILibraryNetworking libraryNetworking;
+        
+        public LibraryService(ILibraryNetworking libraryNetworking)
+        {
+            this.libraryNetworking = libraryNetworking;
+        }
         public async Task<IList<byte[]>> GetAllMP3Async()
         {
-            return await dataEndPoint.GetAllMP3();
+            return await libraryNetworking.GetAllMP3();
         }
 
         public async Task SendSongListToDBAsync()
         {
-            string path = @"C:\Users\Solaiman\RiderProjects\SEP3Final\Tier2\Application\Util\Audio\tempfile.mp3";
+            string path = @"C:\Users\basti\RiderProjects\SEP3Csharp\Domain\Audio\tempfile.mp3";
             songsByte = await GetAllMP3Async();
             
             //Builder Pattern!!!! GO go implement
@@ -53,7 +58,7 @@ namespace Domain.Library
                 
             }
             
-            await dataEndPoint.PostAllSongs(songList);
+            await libraryNetworking.PostAllSongs(songList);
             Console.WriteLine("Post Done");
 
         }

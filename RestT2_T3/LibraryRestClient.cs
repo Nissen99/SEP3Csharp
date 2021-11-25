@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Domain.Library;
 using Entities;
@@ -7,14 +11,41 @@ namespace RestT2_T3
 {
     public class LibraryRestClient : ILibraryNetworking
     {
-        public Task PostAllSongs(IList<Song> songList)
+        private string uri = "http://localhost:8080/";
+        public async Task PostAllSongs(IList<Song> songList)
         {
-            throw new System.NotImplementedException();
+            using HttpClient client = new HttpClient();
+            string songListAsJson = JsonSerializer.Serialize(songList, new JsonSerializerOptions{PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
+            Console.WriteLine("Er vi her?");
+            StringContent content = new StringContent(songListAsJson, Encoding.UTF8, "application/json");
+            
+            HttpResponseMessage response = await client.PostAsync(uri + "songs", content);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception($@"Error: {response.StatusCode}, {response.ReasonPhrase}");
+            }
         }
 
-        public Task<IList<byte[]>> GetAllMP3()
+        public async Task<IList<byte[]>> GetAllMP3()
         {
-            throw new System.NotImplementedException();
+            using HttpClient client = new HttpClient();
+            int count = 0;
+            IList<byte[]> toReturn = new List<byte[]>();
+            while (true)
+            {
+                try
+                {
+                    byte[] byteArrayAsync = await client.GetByteArrayAsync(uri + "mp3/" + count++);
+                    Console.WriteLine(byteArrayAsync.Length);
+                    toReturn.Add(byteArrayAsync);
+                }
+                catch (Exception e)
+                {
+                    break;
+                }
+            }
+
+            return toReturn;
         }
     }
 }

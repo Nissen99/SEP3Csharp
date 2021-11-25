@@ -1,12 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Entities;
 
-namespace Domain.User
+namespace Domain.Users
 {
     public class UserService : IUserService
     {
-        
+        private IUserNetworking userNetworking;
         public IList<User> Users { get; }
+        public UserService(IUserNetworking userNetworking)
+        {
+            this.userNetworking = userNetworking;
+        }
 
         public Task<IList<User>> GetUsers()
         {

@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Entities;
 
-namespace Domain.User
+namespace Domain.Users
 {
     public interface IUserService
     {
