@@ -16,27 +16,27 @@ namespace Blazor.Model
         }
 
 
-        public Task<PlayList> CreatePlaylist(PlayList playList, User user)
+        public Task<Playlist> CreatePlaylist(Playlist playlist, User user)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<IList<PlayList>> GetAllPlayForUser(User user)
+        public Task<IList<Playlist>> GetAllPlayForUser(User user)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task RemoveSongFromPlaylist(PlayList playList, Song song)
+        public Task RemoveSongFromPlaylist(Playlist playlist, Song song)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task AddSongToPlaylist(PlayList playList, Song song)
+        public Task AddSongToPlaylist(Playlist playlist, Song song)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task DeletePlayList(PlayList playList)
+        public Task DeletePlayList(Playlist playlist)
         {
             throw new System.NotImplementedException();
         }

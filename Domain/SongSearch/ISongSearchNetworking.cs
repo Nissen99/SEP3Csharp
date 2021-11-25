@@ -1,12 +1,14 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Entities;
 
 namespace Domain.SongSearch
 {
     public interface ISongSearchNetworking
     {
-        Task<string> GetSongsByTitleAsync(string songTitle);
-        Task<string> GetSongsByArtistNameAsync(string artistName);
+        Task<IList<Song>> GetSongsByTitleAsync(string songTitle);
+        Task<IList<Song>> GetSongsByArtistNameAsync(string artistName);
 
-        Task<string> GetSongsByAlbumTitleAsync(string albumTitle);
+        Task<IList<Song>> GetSongsByAlbumTitleAsync(string albumTitle);
     }
 }

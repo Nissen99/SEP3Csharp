@@ -1,7 +1,11 @@
+using System.Security.Claims;
+using Blazor.Authentication;
 using Blazor.Model;
 using Blazor.Util;
 using Blazored.Modal;
+using Domain.Users;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server.Circuits;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -31,12 +35,34 @@ namespace Blazor
            services.AddScoped<IClient,Client>();
             
             services.AddScoped<IAudioTestModel,AudioTestModel>();
-            services.AddScoped<IPlayerModel, PlayerModel>();
+            services.AddScoped<IPlayModel, PlayModel>();
             services.AddScoped<CircuitHandler, CircuitHandlerService>();
             services.AddScoped<ISongSearchModel, SongSearchModel>();
             services.AddBlazoredModal();
+            services.AddScoped<IUserModel, UserModel>();
             
+            services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
+            services.AddAuthorization(options => {
+                options.AddPolicy("MustBeAdmin",  a => 
+                    a.RequireAuthenticatedUser().RequireClaim("Domain", "viaAdmin.dk"));
+         
+                options.AddPolicy("MustBeStudent",  a => 
+                    a.RequireAuthenticatedUser().RequireClaim("Domain", "viaStudent.dk"));
+            
+                options.AddPolicy("SecurityLevel4",  a => 
+                    a.RequireAuthenticatedUser().RequireClaim("Level", "4","5"));
+            
+                options.AddPolicy("MustBeTeacher",  a => 
+                    a.RequireAuthenticatedUser().RequireClaim("Role", "Teacher"));
+            
+                options.AddPolicy("SecurityLevel2", policy =>
+                    policy.RequireAuthenticatedUser().RequireAssertion(context => {
+                        Claim levelClaim = context.User.FindFirst(claim => claim.Type.Equals("Level"));
+                        if (levelClaim == null) return false;
+                        return int.Parse(levelClaim.Value) >= 2;
+                    }));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

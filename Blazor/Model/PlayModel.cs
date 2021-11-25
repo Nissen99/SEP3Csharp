@@ -10,7 +10,7 @@ using SocketsT1_T2.Tier1;
 
 namespace Blazor.Model
 {
-    public class PlayerModel : IPlayerModel
+    public class PlayModel : IPlayModel
     {
         private IClient client;
         private Mp3FileReader fileReader;
@@ -28,7 +28,7 @@ namespace Blazor.Model
         public Action ProgressBarUpdate { get; set; }
         public IList<Song> CurrentPlaylist { get; set; }
 
-        public PlayerModel(IClient client)
+        public PlayModel(IClient client)
         {
             this.client = client;
             waveOut = new WaveOutEvent();
@@ -75,13 +75,13 @@ namespace Blazor.Model
         {
             if (!File.Exists(serverFile))
             {
-                string songAsJson = JsonSerializer.Serialize(song);
-                TransferObj transferObj = new TransferObj() {Action = "PLAYSONG", Arg = songAsJson};
-                string transf = JsonSerializer.Serialize(transferObj);
-                song = await client.PlaySong(transf);
+
+                Console.WriteLine("SONG BEFORE NULL POINTER: " + song.Title);
+                Song songToPlay = await client.PlaySong(song);
+                Console.WriteLine("song to play " + songToPlay.Title);
                 using (FileStream byteToSong = File.Create(serverFile))
                 {
-                    await byteToSong.WriteAsync(song.Mp3, 0, song.Mp3.Length);
+                    await byteToSong.WriteAsync(songToPlay.Mp3, 0, songToPlay.Mp3.Length);
                 }
             }
         }
@@ -152,7 +152,7 @@ namespace Blazor.Model
         {
             if (currentSong.Artists.Count < 2)
             {
-                return currentSong.Title + " " + currentSong.Artists[0].ArtistName + currentSong.Duration;
+                return currentSong.Title + " " + currentSong.Artists[0].Name + currentSong.Duration;
             }
             else
             {

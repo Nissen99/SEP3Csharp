@@ -23,7 +23,7 @@ namespace SocketsT1_T2
             IUserNetworking userNetworking = new UserRestClient();
             IUserService userService = new UserService(userNetworking);
 
-            IServer server = new Server(libraryService, playService, songSearchService);
+            IServer server = new Server(libraryService, playService, songSearchService, userService);
             server.startServer();
         }
     }

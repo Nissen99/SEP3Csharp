@@ -42,12 +42,12 @@ namespace Domain.Library
                 int duration = (int)file.Properties.Duration.TotalSeconds;
                 
                 Artist artist = new Artist();
-                artist.ArtistName = artistName[0]; //Lav det her om, lige nu får den artistName som string
+                artist.Name = artistName[0]; //Lav det her om, lige nu får den artistName som string
                 
                 Song song = new Song()
                 {
                     Title = title,
-                    Album = new Album() {AlbumTitle = albumName},
+                    Album = new Album() {Title = albumName},
                     Artists = new List<Artist>() {artist},
                     Duration = duration,
                     ReleaseYear = (int)year,

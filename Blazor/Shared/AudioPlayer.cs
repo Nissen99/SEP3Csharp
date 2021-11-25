@@ -11,7 +11,7 @@ namespace Blazor.Shared
 {
     public partial class AudioPlayer : ComponentBase
     {
-        [Inject] public IPlayerModel Player { get; set; }
+        [Inject] public IPlayModel Play { get; set; }
         [Inject] public IModalService ModalService { get; set; }
 
         public double progressValuePercentage { get; set; }
@@ -29,30 +29,30 @@ namespace Blazor.Shared
 
         protected override async Task OnInitializedAsync()
         {
-            Player.UpdatePlayState = () => updatePlayState();
-            Player.ProgressBarUpdate = () => updateProgressBar();
+            Play.UpdatePlayState = () => updatePlayState();
+            Play.ProgressBarUpdate = () => updateProgressBar();
         }
         private async Task TogglePlay()
         {
-            await Player.PlayPauseToggleAsync();
+            await Play.PlayPauseToggleAsync();
         }
         private async Task previousSong()
         {
-            await Player.PlayPreviousSong();
+            await Play.PlayPreviousSong();
         }
 
         private async Task nextSong()
         {
-            await Player.PlayNextSongAsync();
+            await Play.PlayNextSongAsync();
         }
 
        
         private async Task updatePlayState()
         { 
-            isPlaying = Player.IsPlaying;
-            currentSong = await Player.GetCurrentSongAsync();
+            isPlaying = Play.IsPlaying;
+            currentSong = await Play.GetCurrentSongAsync();
             songTitle = currentSong.Title;
-            artistTitle = currentSong.Artists[0].ArtistName; //Giver kun første artist på listen - skal flyttes ud i modellen.
+            artistTitle = currentSong.Artists[0].Name; //Giver kun første artist på listen - skal flyttes ud i modellen.
             TimeSpan totalDurationSpan = new TimeSpan(0, currentSong.Duration / 60, currentSong.Duration % 60);
             totalDuration = totalDurationSpan.ToString();
             StateHasChanged();
@@ -60,7 +60,7 @@ namespace Blazor.Shared
         }
         private async Task updateProgressBar()
         {
-           progressValue = await Player.UpdateProgressBar();
+           progressValue = await Play.UpdateProgressBar();
             progressValuePercentage = progressValue / currentSong.Duration * 100;
             pVP = (int) progressValuePercentage;
             TimeSpan currentDurationSpan = new TimeSpan(0, (int)(currentSong.Duration * progressValuePercentage / 100 / 60), (int)(currentSong.Duration * progressValuePercentage / 100 % 60));
@@ -73,13 +73,13 @@ namespace Blazor.Shared
         {
             float returnHack = 1;
             returnHack = await JS.InvokeAsync<float>("getProgress", mouseEventArgs);
-            await Player.PlayFromAsync(returnHack);
+            await Play.PlayFromAsync(returnHack);
         }
         
         private async Task volumeClicked(MouseEventArgs arg)
         {
             volume = await JS.InvokeAsync<int>("getVolume", arg);
-            await Player.SetVolumeAsync(volume);
+            await Play.SetVolumeAsync(volume);
         }
 
 

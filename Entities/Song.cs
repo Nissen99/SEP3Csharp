@@ -14,8 +14,5 @@ namespace Entities
         public Album Album { get; set; }
         public int ReleaseYear { get; set; }
         public byte[] Mp3 { get; set; }
-        //public DateTime ReleaseDate { get; set; }
-        
-        
     }
 }

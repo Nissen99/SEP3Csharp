@@ -1,14 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Domain.SongSearch;
+using Entities;
 
 namespace RestT2_T3
 {
     public class SongSearchRestClient : ISongSearchNetworking
     {
         private string uri = "http://localhost:8080/";
-        public async Task<string> GetSongsByTitleAsync(string songTitle)
+        public async Task<IList<Song>> GetSongsByTitleAsync(string songTitle)
         {
             using HttpClient httpClient = new HttpClient();
             HttpResponseMessage responseMessage = await httpClient.GetAsync(uri + $"songSearch/songTitle={songTitle}");
@@ -16,31 +19,35 @@ namespace RestT2_T3
             return await ResponseFromServer(responseMessage);
         }
 
-        public async Task<string> GetSongsByArtistNameAsync(string artistName)
+        public async Task<IList<Song>> GetSongsByArtistNameAsync(string artistName)
         {
             using HttpClient httpClient = new HttpClient();
-            HttpResponseMessage responseMessage = await httpClient.GetAsync(uri + $"songSearch/artistName={artistName}");
+            HttpResponseMessage responseMessage =
+                await httpClient.GetAsync(uri + $"songSearch/artistName={artistName}");
 
             return await ResponseFromServer(responseMessage);
         }
 
-        public async Task<string> GetSongsByAlbumTitleAsync(string albumTitle)
+        public async Task<IList<Song>> GetSongsByAlbumTitleAsync(string albumTitle)
         {
             using HttpClient httpClient = new HttpClient();
-            HttpResponseMessage responseMessage = await httpClient.GetAsync(uri + $"songSearch/albumTitle={albumTitle}");
+            HttpResponseMessage responseMessage =
+                await httpClient.GetAsync(uri + $"songSearch/albumTitle={albumTitle}");
 
             return await ResponseFromServer(responseMessage);
         }
-        
-        private async Task<string> ResponseFromServer(HttpResponseMessage responseMessage)
+
+        private async Task<IList<Song>> ResponseFromServer(HttpResponseMessage responseMessage)
         {
             RequestCodeCheck(responseMessage);
 
             string responseFromServer = await responseMessage.Content.ReadAsStringAsync();
 
-            return responseFromServer;
+            return JsonSerializer.Deserialize<IList<Song>>(responseFromServer,
+                new JsonSerializerOptions {PropertyNameCaseInsensitive = true});
         }
-        
+
+
         private void RequestCodeCheck(HttpResponseMessage responseMessage)
         {
             Console.WriteLine("Checking request");

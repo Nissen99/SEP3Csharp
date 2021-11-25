@@ -2,9 +2,9 @@
 
 namespace Entities
 {
-    public class PlayList
+    public class Playlist
     {
-        public int PlaylistID { get; set; }
+        public int Id { get; set; }
         public User User { get; set; }
         public string Title { get; set; }
         public List<Song> Songs { get; set; }

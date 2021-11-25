@@ -7,16 +7,16 @@ namespace Blazor.Util
 {
     public class CircuitHandlerService : CircuitHandler
     {
-        private IPlayerModel player;
+        private IPlayModel _play;
         
-        public CircuitHandlerService(IPlayerModel player)
+        public CircuitHandlerService(IPlayModel play)
         {
-            this.player = player;
+            this._play = play;
         }
         
         public override async Task OnCircuitClosedAsync(Circuit circuit, CancellationToken cancellationToken)
         {
-            player.StopPlaying();
+            _play.StopPlaying();
             
         }
         

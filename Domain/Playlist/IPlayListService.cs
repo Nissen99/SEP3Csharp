@@ -6,9 +6,9 @@ namespace Domain.Playlist
 {
     public interface IPlayListService
     {
-        Task<PlayList> CreatePlaylist(PlayList playList);
-        Task<IList<PlayList>> GetAllPlaylist();
-        Task UpdatePlaylist(PlayList playlist);
+        Task<Entities.Playlist> CreatePlaylist(Entities.Playlist playlist);
+        Task<IList<Entities.Playlist>> GetAllPlaylist();
+        Task UpdatePlaylist(Entities.Playlist playlist);
         Task DeletePlayList(int playListID);
         
 

@@ -1,11 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Entities;
 
 namespace Domain.Play
 {
     public interface IPlayNetworking
     {
-        Task<string> GetSongWithMP3(Song song);
-        Task<string> GetAllSongs();
+        Task<Song> GetSongWithMP3(Song song);
+        Task<IList<Song>> GetAllSongs();
     }
 }

@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace SocketsT1_T2.Util
+namespace RestT2_T3.Util
 {
     public class ByteArrayConverter : JsonConverter<byte[]>
     {

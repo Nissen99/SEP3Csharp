@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Entities;
@@ -14,21 +15,14 @@ namespace Domain.Play
             this.playNetworking = playNetworking;
         }
 
-        public async Task<string> GetAllSongsAsJsonAsync()
+        public async Task<IList<Song>> GetAllSongsAsync()
         {
-            
-            string allSongs = await playNetworking.GetAllSongs();
-            Console.WriteLine("Play: alls onsg: " + allSongs);
-            TransferObj sentObj = new TransferObj() {Arg = allSongs};
-            string transAsJson = JsonSerializer.Serialize(sentObj);
-            
-            
-            return transAsJson;
+            return await playNetworking.GetAllSongs();
         }
-        public async Task<string> PlayAsync(Song song)
+
+        public async Task<Song> PlayAsync(Song song)
         {
             return await playNetworking.GetSongWithMP3(song);
         }
-
     }
 }

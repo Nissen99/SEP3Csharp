@@ -6,9 +6,8 @@ namespace Entities
     public class Album
     {
         public int Id { get; set; }
-        public string AlbumTitle { get; set; }
+        public string Title { get; set; }
         public int Duration { get; set; }
-        public DateTime ReleaseDate { get; set; }
 
     }
 }

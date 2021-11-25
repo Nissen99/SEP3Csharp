@@ -5,7 +5,7 @@ using Entities;
 
 namespace Blazor.Model
 {
-    public interface IPlayerModel
+    public interface IPlayModel
     {
         Task PlaySongAsync(Song song);
         Task PlayPauseToggleAsync();

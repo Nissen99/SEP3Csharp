@@ -15,15 +15,18 @@ namespace RestT2_T3
         public async Task PostAllSongs(IList<Song> songList)
         {
             using HttpClient client = new HttpClient();
-            string songListAsJson = JsonSerializer.Serialize(songList, new JsonSerializerOptions{PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
-            Console.WriteLine("Er vi her?");
+            string songListAsJson = JsonSerializer.Serialize(songList,
+                new JsonSerializerOptions {PropertyNameCaseInsensitive = true});
             StringContent content = new StringContent(songListAsJson, Encoding.UTF8, "application/json");
-            
+
+            Console.WriteLine("Yike");
             HttpResponseMessage response = await client.PostAsync(uri + "songs", content);
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception($@"Error: {response.StatusCode}, {response.ReasonPhrase}");
             }
+
+            Console.WriteLine("Done");
         }
 
         public async Task<IList<byte[]>> GetAllMP3()

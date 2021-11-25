@@ -12,7 +12,7 @@ namespace Blazor.Pages
     public partial class AudioTestPage : ComponentBase
     {
         [Inject] public IAudioTestModel Model { get; set; }
-        [Inject] public IPlayerModel Player { get; set; }
+        [Inject] public IPlayModel Play { get; set; }
         [Inject] public IModalService ModalService { get; set; }
         private IList<Song> songs;
         private Song currentSong;
@@ -22,7 +22,7 @@ namespace Blazor.Pages
             if (!firstRender) return;
             
             songs = await Model.GetAllSongs();
-                Player.CurrentPlaylist = songs;
+                Play.CurrentPlaylist = songs;
                 Console.WriteLine("DONE");
                 StateHasChanged();
             
@@ -39,7 +39,7 @@ namespace Blazor.Pages
                 }
 
                 currentSong = songs.First(t => t.Id == int.Parse((string) e.Value));
-                await Player.PlaySongAsync(currentSong);
+                await Play.PlaySongAsync(currentSong);
                 
             }
             catch (Exception exception)

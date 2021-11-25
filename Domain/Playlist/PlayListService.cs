@@ -13,17 +13,17 @@ namespace Domain.Playlist
             this.playlistNetworking = playlistNetworking;
         }
 
-        public Task<PlayList> CreatePlaylist(PlayList playList)
+        public Task<Entities.Playlist> CreatePlaylist(Entities.Playlist playlist)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<IList<PlayList>> GetAllPlaylist()
+        public Task<IList<Entities.Playlist>> GetAllPlaylist()
         {
             throw new System.NotImplementedException();
         }
 
-        public Task UpdatePlaylist(PlayList playlist)
+        public Task UpdatePlaylist(Entities.Playlist playlist)
         {
             throw new System.NotImplementedException();
         }
