@@ -43,25 +43,14 @@ namespace Blazor
             
             services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
-            services.AddAuthorization(options => {
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("MustBeLoggedIn", a =>
+                    a.RequireAuthenticatedUser().RequireClaim("Role", "StandardUser", "Admin"));
                 options.AddPolicy("MustBeAdmin",  a => 
-                    a.RequireAuthenticatedUser().RequireClaim("Domain", "viaAdmin.dk"));
-         
-                options.AddPolicy("MustBeStudent",  a => 
-                    a.RequireAuthenticatedUser().RequireClaim("Domain", "viaStudent.dk"));
+                    a.RequireAuthenticatedUser().RequireClaim("Role", "Admin"));
             
-                options.AddPolicy("SecurityLevel4",  a => 
-                    a.RequireAuthenticatedUser().RequireClaim("Level", "4","5"));
-            
-                options.AddPolicy("MustBeTeacher",  a => 
-                    a.RequireAuthenticatedUser().RequireClaim("Role", "Teacher"));
-            
-                options.AddPolicy("SecurityLevel2", policy =>
-                    policy.RequireAuthenticatedUser().RequireAssertion(context => {
-                        Claim levelClaim = context.User.FindFirst(claim => claim.Type.Equals("Level"));
-                        if (levelClaim == null) return false;
-                        return int.Parse(levelClaim.Value) >= 2;
-                    }));
+                
             });
         }
 

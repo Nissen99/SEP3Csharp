@@ -30,29 +30,30 @@ else
         @foreach (var song in SongList)
         {
             <tr>
-                @if (CurrentSong != null && CurrentSong.Id == song.Id)
-                {
-                    if (IsPlaying())
+                <td>
+                    <AuthorizeView Policy="MustBeLoggedIn">
+                        <i class="mr-2 oi oi-plus"/>
+                    </AuthorizeView>
+                    
+                    @if (CurrentSong != null && CurrentSong.Id == song.Id)
                     {
-                        <td>
+                        if (IsPlaying())
+                        {
                             <i class="oi oi-media-pause" @onclick="() => TogglePlay()"/>
-                        </td> 
+                        }
+                        else
+                        {
+                            <i class="oi oi-media-play" @onclick="() => TogglePlay()"/>
+                        }
                     }
                     else
                     {
-                        <td>
-                            <i class="oi oi-media-play" @onclick="() => TogglePlay()"/>
-                        </td> 
-                    }
-                   
-                }
-                else
-                {
-                    <td>
                         <i class="oi oi-media-play" @onclick="() => PlaySong(song)"/>
-                    </td> 
-                }
-               
+
+                    }
+
+                </td>
+
                 <td>@song.Title</td>
                 <td>@songDurationDisplay(song)</td>
                 <td>@song.Album.Title</td>

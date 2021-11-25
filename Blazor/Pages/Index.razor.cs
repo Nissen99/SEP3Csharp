@@ -30,7 +30,7 @@ namespace Blazor.Pages
             try
             {
                 User user = new User() {Username = username, Password = password, Role = "StandardUser"};
-                ((CustomAuthenticationStateProvider) AuthenticationStateProvider).ValidateLogin(user);
+                await ((CustomAuthenticationStateProvider) AuthenticationStateProvider).ValidateLogin(user);
                 username = "";
                 password = "";
             }

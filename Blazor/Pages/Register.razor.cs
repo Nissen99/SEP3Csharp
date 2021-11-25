@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Blazor.Model;
 using Blazored.Modal;
 using Blazored.Modal.Services;
 using Domain.Users;
@@ -10,8 +11,7 @@ namespace Blazor.Pages
     public partial class Register : ComponentBase
 
     {
-        [Inject] private NavigationManager NavigationManager { get; set; }
-        [Inject] private IUserService UserService { get; set; }
+        
 
         private string username;
         private string password;

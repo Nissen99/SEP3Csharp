@@ -16,13 +16,13 @@ namespace RestT2_T3
         {
             using HttpClient client = new HttpClient();
             string stringAsync = await client.GetStringAsync(uri + $"songs/{song.Id}");
-            Console.WriteLine("GetSongWithMp3.lenght::::: " + stringAsync.Length);
+            
             Song songWithMP3 = JsonSerializer.Deserialize<Song>(stringAsync, new JsonSerializerOptions()
             {
                 PropertyNameCaseInsensitive = true,
                 Converters = { new ByteArrayConverter() }
             });
-            Console.WriteLine("GetSongWithMp3.Song.Mp3.Lenth::::: " + songWithMP3.Title);
+            
             return  songWithMP3;
         }
 
@@ -30,8 +30,7 @@ namespace RestT2_T3
         {
             using HttpClient client = new HttpClient();
             string stringAsync = await client.GetStringAsync(uri + "songs");
-
-            Console.WriteLine(stringAsync);
+            
             return JsonSerializer.Deserialize<IList<Song>>(stringAsync,
                 new JsonSerializerOptions {PropertyNameCaseInsensitive = true});
         }

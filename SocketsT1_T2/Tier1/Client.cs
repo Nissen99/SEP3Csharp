@@ -42,7 +42,7 @@ namespace SocketsT1_T2.Tier1
         public async Task<User> validateUser(User user)
         {
             using TcpClient client = GetTcpClient();
-           await SendServerRequest("VALIDATEUSER", user,client);
+            await SendServerRequest("VALIDATEUSER", user, client);
             return await serverResponse<User>(client, 5000);
         }
 

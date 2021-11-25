@@ -20,6 +20,9 @@ namespace Blazor.Model
            
         }
 
-        public async Task RegisterUser(User user) => await client.RegisterUser(user);
+        public async Task RegisterUser(User user)
+        {
+            await client.RegisterUser(user);
+        }
     }
 }

@@ -35,22 +35,21 @@ namespace SocketsT1_T2.Tier2
             {
                 case "GETSONGS":
                     await GetAllSongsAsync();
-                    Console.WriteLine("SEND SONGS");
                     break;
                 case "PLAYSONG":
-                    Console.WriteLine("arguemnt of song " + result.Arg);
-                    Console.WriteLine("Argument of song type = : " + result.Arg.GetType());
                     Song song = ElementToObject<Song>((JsonElement) result.Arg);
                     await HandlePlaySongAsync(song, client.GetStream());
                     break;
                 case "GETSONGSBYFILTER":
                     await GetSongsByFilterAsync((string[]) result.Arg);
-                    Console.WriteLine("SENDING FILTERED SONGS");
                     break;
                 case "REGISTERUSER":
-                    User user = (User) result.Arg;
-                    Console.WriteLine("REGISTERING NEW USER");
-                    await RegisterUser(user);
+                    User registerUser = ElementToObject<User>((JsonElement) result.Arg);
+                    await RegisterUser(registerUser);
+                    break;
+                case "VALIDATEUSER":
+                    User validateUser = ElementToObject<User>((JsonElement) result.Arg);
+                    await ValidateUser(validateUser);
                     break;
             }
 
@@ -91,7 +90,6 @@ namespace SocketsT1_T2.Tier2
             byte[] dataFromServer = new byte[5000];
             int bytesRead = await stream.ReadAsync(dataFromServer, 0, dataFromServer.Length);
             string readFromClient = Encoding.UTF8.GetString(dataFromServer, 0, bytesRead);
-            Console.WriteLine(readFromClient);
             TransferObj<Object> transferObj = JsonSerializer.Deserialize<TransferObj<Object>>(readFromClient,
                 new JsonSerializerOptions
                 {
@@ -114,6 +112,12 @@ namespace SocketsT1_T2.Tier2
             await userService.RegisterUser(user);
         }
 
+        private async Task ValidateUser(User user)
+        {
+            User toReturn = await userService.ValidateUser(user);
+            await SendToClient("RETURN", toReturn);
+        }
+
 
         private async Task SendToClient<T>(string action, T TObject)
         {
@@ -132,17 +136,16 @@ namespace SocketsT1_T2.Tier2
 
         private async Task HandlePlaySongAsync(Song song, NetworkStream stream)
         {
-            Console.WriteLine("HandlePlaySongAsync Song.Title::::: " +song.Title);
+            
             Song songWithMp3 = await playSongService.PlayAsync(song);
             
-            Console.WriteLine("HandlePlaySongAsync SongWithMp3.Lenght::::: " + songWithMp3.Mp3.Length);
+            
             TransferObj<Song> transferObj = new TransferObj<Song>() {Action = "Response", Arg = songWithMp3};
             
             string jsonTrans = JsonSerializer.Serialize(transferObj);
-            Console.WriteLine("HandlePlaySongAsync Trans.Lenght::::: " + songWithMp3.Mp3.Length);
+            
             
             byte[] bytes = Encoding.UTF8.GetBytes(jsonTrans);
-            Console.WriteLine("HandlePlaySongAsync jsonTransByte.Lenght::::: " + bytes.Length);
             await stream.WriteAsync(bytes, 0, bytes.Length);
         }
     }

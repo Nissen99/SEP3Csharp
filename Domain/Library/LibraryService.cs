@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Entities;
+using NAudio.Wave;
 
 namespace Domain.Library
 {
@@ -23,7 +24,8 @@ namespace Domain.Library
 
         public async Task SendSongListToDBAsync()
         {
-            string path = @"C:\Users\basti\RiderProjects\SEP3Csharp\Domain\Audio\tempfile.mp3";
+            string path = @"../../../../Domain/Audio/tempfile.mp3";
+            
             songsByte = await GetAllMP3Async();
             
             //Builder Pattern!!!! GO go implement
