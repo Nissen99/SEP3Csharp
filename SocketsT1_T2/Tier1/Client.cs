@@ -22,7 +22,7 @@ namespace SocketsT1_T2.Tier1
         public async Task<Song> PlaySong(Song song)
         {
             TcpClient client = new TcpClient("localhost", 1098);
-            await SendServerRequest<Song>("PLAYSONG", song, client);
+            await SendServerRequest("PLAYSONG", song, client);
             return await serverResponse<Song>(client, 80000000);
         }
 
@@ -46,7 +46,28 @@ namespace SocketsT1_T2.Tier1
             return await serverResponse<User>(client, 5000);
         }
 
-        
+        public async Task<IList<Artist>> SearchForArtists(string name)
+        {
+            using TcpClient client = GetTcpClient();
+            await SendServerRequest("SEARCHFORARTISTS", name, client);
+            return await serverResponse<IList<Artist>>(client, 500000);
+            
+        }
+
+        public async Task<IList<Album>> SearchForAlbums(string title)
+        {
+            using TcpClient client = GetTcpClient();
+            await SendServerRequest("SEARCHFORALBUMS", title, client);
+            return await serverResponse<IList<Album>>(client, 500000);
+        }
+
+        public async Task AddNewSongAsync(Song newSong)
+        {
+            using TcpClient client = GetTcpClient();
+            await SendServerRequest("ADDNEWSONG", newSong, client);
+        }
+
+
         private async Task SendServerRequest<T>(string action, T TObject, TcpClient client)
         {
             NetworkStream stream = client.GetStream();

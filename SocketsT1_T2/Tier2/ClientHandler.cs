@@ -4,7 +4,10 @@ using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Domain.Album;
+using Domain.Artist;
 using Domain.Play;
+using Domain.Songs;
 using Domain.SongSearch;
 using Domain.Users;
 using Entities;
@@ -17,13 +20,21 @@ namespace SocketsT1_T2.Tier2
         private IPlayService playSongService;
         private IUserService userService;
         private ISongSearchService songSearchService;
-        
-        public ClientHandler(TcpClient client, IPlayService playSongService, IUserService userService, ISongSearchService songSearchService)
+        private IArtistService artistService;
+        private IAlbumService albumService;
+        private ISongManageService songManageService;
+
+        public ClientHandler(TcpClient client, IPlayService playSongService, IUserService userService, 
+            ISongSearchService songSearchService, IArtistService artistService, IAlbumService albumService,
+            ISongManageService songManageService)
         {
             this.client = client;
             this.playSongService = playSongService;
             this.userService = userService;
             this.songSearchService = songSearchService;
+            this.artistService = artistService;
+            this.albumService = albumService;
+            this.songManageService = songManageService;
 
         }
         public async void ListenToClientAsync()
@@ -51,12 +62,43 @@ namespace SocketsT1_T2.Tier2
                     User validateUser = ElementToObject<User>((JsonElement) result.Arg);
                     await ValidateUser(validateUser);
                     break;
+                case "SEARCHFORARTISTS":
+                    string name = ElementToObject<string>((JsonElement) result.Arg);
+                    await SearchForArtists(name);
+                    break;
+                case "SEARCHFORALBUMS":
+                    string title = ElementToObject<string>((JsonElement) result.Arg);
+                    await SearchForAlbum(title);
+                    break;
+                case "ADDNEWSONG":
+                    Song newSong = ElementToObject<Song>((JsonElement) result.Arg);
+                    await AddNewSongAsync(newSong);
+                    break;
             }
 
             client.Dispose();
         }
 
-         private T ElementToObject<T>(JsonElement element)
+        private async Task AddNewSongAsync(Song newSong)
+        {
+            await songManageService.AddNewSongAsync(newSong);
+        }
+
+        private async Task SearchForAlbum(string title)
+        {
+            IList<Album> artists = await albumService.SearchForAlbums(title);
+
+            await SendToClient("RESPONSE FROM SERVER", artists);        }
+
+        private async Task SearchForArtists(string name)
+        {
+            IList<Artist> artists = await artistService.SearchForArtists(name);
+
+            await SendToClient("RESPONSE FROM SERVER", artists);
+
+        }
+
+        private T ElementToObject<T>(JsonElement element)
         {
             string stringElement = element.GetRawText();
             return JsonSerializer.Deserialize<T>(stringElement,new JsonSerializerOptions {PropertyNameCaseInsensitive = true});
@@ -87,7 +129,7 @@ namespace SocketsT1_T2.Tier2
 
         private async Task<TransferObj<Object>> readFromClientAsync(NetworkStream stream)
         {
-            byte[] dataFromServer = new byte[5000];
+            byte[] dataFromServer = new byte[8000000];
             int bytesRead = await stream.ReadAsync(dataFromServer, 0, dataFromServer.Length);
             string readFromClient = Encoding.UTF8.GetString(dataFromServer, 0, bytesRead);
             TransferObj<Object> transferObj = JsonSerializer.Deserialize<TransferObj<Object>>(readFromClient,

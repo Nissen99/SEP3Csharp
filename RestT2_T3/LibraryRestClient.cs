@@ -16,7 +16,7 @@ namespace RestT2_T3
         {
             using HttpClient client = new HttpClient();
             string songListAsJson = JsonSerializer.Serialize(songList,
-                new JsonSerializerOptions {PropertyNameCaseInsensitive = true});
+                new JsonSerializerOptions {PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
             StringContent content = new StringContent(songListAsJson, Encoding.UTF8, "application/json");
 
             Console.WriteLine("Yike");

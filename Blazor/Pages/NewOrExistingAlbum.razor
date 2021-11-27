@@ -1,0 +1,93 @@
+﻿@using Entities
+@using Blazor.Model
+@inject IModalService ModalService
+@inject IAlbumModel AlbumModel 
+
+<input  type="text" @bind="albumTitle">
+<button @onclick="addNewAlbum">
+    Add new Album
+</button> 
+<br/>
+<br/>
+
+
+<input type="text" @bind="searchTitle">
+<button @onclick="() => searchForAlbum()">
+    Search
+</button> 
+
+@if (searchedForAlbums == null)
+    {
+        <p>
+        Search for artists
+            </p>
+    } @if (searchedForAlbums.Count == 0)
+      {
+          <p>
+              No Artists with that name found
+          </p>
+      }
+      else
+      {
+          <table class="table">
+              <thead>
+              <tr>
+                  <th>Name</th>
+              </tr>
+              </thead>
+              <tbody>
+              @foreach (Album album in searchedForAlbums)
+              {
+                  <tr>
+                      <td>@album.Title</td>
+                      <td>
+                          <button class="btn btn-secondary" @onclick="() => chooseExistingAlbum(album)">Add artist</button>
+                      </td>
+                  </tr>
+                  
+              }
+              </tbody>
+          </table>
+      }
+
+
+<button @onclick="Cancel" class="btn btn-secondary">Cancel</button>
+
+
+@code {
+
+    [CascadingParameter] public BlazoredModalInstance BlazoredModal { get; set; }
+
+    
+    [Parameter]
+    public Song Song { get; set; }
+
+    private string albumTitle = "";
+    private string searchTitle = "";
+
+    private IList<Album> searchedForAlbums = new List<Album>();
+
+    private async Task addNewAlbum()
+    {
+        Album justCreatedAlbum = new Album() {Title = albumTitle};
+        await BlazoredModal.CloseAsync(ModalResult.Ok(justCreatedAlbum));
+    }
+
+    private async Task chooseExistingAlbum(Album album)
+    {
+        await BlazoredModal.CloseAsync(ModalResult.Ok(album));
+    }
+
+    private async Task searchForAlbum()
+    {
+        searchedForAlbums = await AlbumModel.SearchForAlbums(searchTitle);
+        Console.WriteLine(searchedForAlbums.Count);
+        StateHasChanged();
+    }
+
+    private async Task Cancel()
+    {
+        await BlazoredModal.CancelAsync();
+    }
+
+}

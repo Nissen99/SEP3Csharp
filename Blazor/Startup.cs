@@ -1,9 +1,7 @@
-using System.Security.Claims;
 using Blazor.Authentication;
 using Blazor.Model;
 using Blazor.Util;
 using Blazored.Modal;
-using Domain.Users;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server.Circuits;
@@ -38,6 +36,11 @@ namespace Blazor
             services.AddScoped<IPlayModel, PlayModel>();
             services.AddScoped<CircuitHandler, CircuitHandlerService>();
             services.AddScoped<ISongSearchModel, SongSearchModel>();
+            services.AddScoped<IArtistModel, ArtistModel>();
+            services.AddScoped<IAlbumModel, AlbumModel>();
+            services.AddScoped<ISongManageModel, SongManageModel>();
+
+
             services.AddBlazoredModal();
             services.AddScoped<IUserModel, UserModel>();
             

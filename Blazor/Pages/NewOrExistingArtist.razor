@@ -1,0 +1,93 @@
+﻿@using Entities
+@using Blazor.Model
+@inject IModalService ModalService
+@inject IArtistModel ArtistModel 
+
+<input  type="text" @bind="artistName">
+<button @onclick="addNewArtist">
+    Add new Artist
+</button> 
+<br/>
+<br/>
+
+
+<input type="text" @bind="searchName">
+<button @onclick="@searchForArtist">
+    Search
+</button> 
+
+@if (searchedForArtists == null)
+    {
+        <p>
+        Search for artists
+            </p>
+    } @if (searchedForArtists.Count == 0)
+      {
+          <p>
+              No Artists with that name found
+          </p>
+      }
+      else
+      {
+          <table class="table">
+              <thead>
+              <tr>
+                  <th>Name</th>
+              </tr>
+              </thead>
+              <tbody>
+              @foreach (Artist artist in searchedForArtists)
+              {
+                  <tr>
+                      <td>@artist.Name</td>
+                      <td>
+                          <button class="btn btn-secondary" @onclick="() => chooseExistingArtist(artist)">Add artist</button>
+                      </td>
+                  </tr>
+                  
+              }
+              </tbody>
+          </table>
+      }
+
+
+<button @onclick="Cancel" class="btn btn-secondary">Cancel</button>
+
+
+@code {
+
+    [CascadingParameter] public BlazoredModalInstance BlazoredModal { get; set; }
+
+    
+    [Parameter]
+    public Song Song { get; set; }
+
+    private string artistName = "";
+    private string searchName = "";
+
+    private IList<Artist> searchedForArtists = new List<Artist>();
+
+    private async Task addNewArtist()
+    {
+        Artist justCreatedArtist = new Artist() {Name = artistName};
+        await BlazoredModal.CloseAsync(ModalResult.Ok(justCreatedArtist));
+    }
+
+    private async Task chooseExistingArtist(Artist artist)
+    {
+        await BlazoredModal.CloseAsync(ModalResult.Ok(artist));
+    }
+
+    private async Task searchForArtist()
+    {
+        searchedForArtists = await ArtistModel.SearchForArtists(searchName);
+        Console.WriteLine(searchedForArtists.Count);
+        StateHasChanged();
+    }
+
+    private async Task Cancel()
+    {
+        await BlazoredModal.CancelAsync();
+    }
+
+}

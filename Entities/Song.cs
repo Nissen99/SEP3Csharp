@@ -7,6 +7,8 @@ namespace Entities
 
     public class Song
     {
+       
+
         public int Id { get; set; }
         public string Title { get; set; }
         public int Duration { get; set; }
@@ -14,5 +16,10 @@ namespace Entities
         public Album Album { get; set; }
         public int ReleaseYear { get; set; }
         public byte[] Mp3 { get; set; }
+        
+        public Song()
+        {
+            Artists = new List<Artist>();
+        }
     }
 }

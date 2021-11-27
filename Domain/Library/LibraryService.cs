@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Domain.Library;
 using Entities;
 using NAudio.Wave;
 
-namespace Domain.Library
-{
+
     public class LibraryService : ILibraryService
     {
         private IList<byte[]> songsByte = new List<byte[]>();
@@ -65,4 +65,3 @@ namespace Domain.Library
 
         }
     }
-}

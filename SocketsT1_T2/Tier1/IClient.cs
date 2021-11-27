@@ -14,6 +14,9 @@ namespace SocketsT1_T2.Tier1
         
         Task RegisterUser(User user);
         Task<User> validateUser(User user);
-        
+
+        Task<IList<Artist>> SearchForArtists(string name);
+        Task<IList<Album>> SearchForAlbums(string title);
+        Task AddNewSongAsync(Song newSong);
     }
 }

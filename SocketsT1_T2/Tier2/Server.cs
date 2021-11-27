@@ -2,8 +2,11 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using Domain.Album;
+using Domain.Artist;
 using Domain.Library;
 using Domain.Play;
+using Domain.Songs;
 using Domain.SongSearch;
 using Domain.Users;
 
@@ -15,12 +18,19 @@ namespace SocketsT1_T2.Tier2
         private IPlayService playSongService;
         private ISongSearchService songSearchService;
         private IUserService userService;
-        public Server(ILibraryService libraryService, IPlayService playSongService, ISongSearchService songSearchService, IUserService userService)
+        private IArtistService artistService;
+        private IAlbumService albumService;
+        private ISongManageService songManageService;
+        public Server(ILibraryService libraryService, IPlayService playSongService, ISongSearchService songSearchService, 
+            IUserService userService, IArtistService artistService, IAlbumService albumService, ISongManageService songManageService)
        {
            this.libraryService = libraryService;
            this.playSongService = playSongService;
            this.songSearchService = songSearchService;
            this.userService = userService;
+           this.artistService = artistService;
+           this.albumService = albumService;
+           this.songManageService = songManageService;
        }
 
        public void startServer()
@@ -34,7 +44,7 @@ namespace SocketsT1_T2.Tier2
             while (true)
             {
                 TcpClient client = listener.AcceptTcpClient();
-                IClientHandler clientHandler = new ClientHandler(client, playSongService, userService, songSearchService);
+                IClientHandler clientHandler = new ClientHandler(client, playSongService, userService, songSearchService, artistService, albumService, songManageService);
                 new Thread(clientHandler.ListenToClientAsync).Start();
             }
             
