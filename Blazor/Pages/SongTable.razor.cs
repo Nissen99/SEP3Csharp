@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Blazor.Model;
@@ -9,6 +10,7 @@ namespace Blazor.Pages
     public partial class SongTable : ComponentBase
     {
         [Inject] public IAudioTestModel Model { get; set; }
+        [Inject] public ISongManageModel SongManageModel { get; set; }
         [Inject] public IPlayModel PlayModel { get; set; }
         [Parameter]
         public IList<Song> SongList { get; set; }
@@ -89,6 +91,13 @@ namespace Blazor.Pages
 
             return timestamp;
 
+        }
+
+        private async Task removeSong(Song song)
+        {
+            await SongManageModel.RemoveSongAsync(song);
+            Console.WriteLine("Remove Song ");
+            StateHasChanged();
         }
     }
 }

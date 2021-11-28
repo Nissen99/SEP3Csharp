@@ -74,9 +74,18 @@ namespace SocketsT1_T2.Tier2
                     Song newSong = ElementToObject<Song>((JsonElement) result.Arg);
                     await AddNewSongAsync(newSong);
                     break;
+                case "REMOVESONG":
+                    Song songToRemove = ElementToObject<Song>((JsonElement) result.Arg);
+                    await RemoveSongAsync(songToRemove);
+                    break;
             }
 
             client.Dispose();
+        }
+
+        private async Task RemoveSongAsync(Song songToRemove)
+        {
+            await songManageService.RemoveSongAsync(songToRemove);
         }
 
         private async Task AddNewSongAsync(Song newSong)

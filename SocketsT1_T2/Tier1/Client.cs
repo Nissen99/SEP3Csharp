@@ -67,6 +67,12 @@ namespace SocketsT1_T2.Tier1
             await SendServerRequest("ADDNEWSONG", newSong, client);
         }
 
+        public async Task RemoveSongAsync(Song song)
+        {
+            using TcpClient client = GetTcpClient();
+            await SendServerRequest("REMOVESONG", song, client);
+        }
+
 
         private async Task SendServerRequest<T>(string action, T TObject, TcpClient client)
         {

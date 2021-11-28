@@ -17,7 +17,6 @@ namespace RestT2_T3
         {
             using HttpClient httpClient = new HttpClient();
 
-            Console.WriteLine($"(REST CLIENT Title: {newSong.Title}");
 
             string newSongAsJson = JsonSerializer.Serialize(newSong,
                 new JsonSerializerOptions {PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
@@ -29,7 +28,17 @@ namespace RestT2_T3
             RequestCodeCheck(responseMessage);
             
         }
-        
+
+        public async Task RemoveSongAsync(Song songToRemove)
+        {
+            using HttpClient httpClient = new HttpClient();
+
+            HttpResponseMessage responseMessage = await httpClient.DeleteAsync(uri + $"/song/{songToRemove.Id}");
+            
+            RequestCodeCheck(responseMessage);
+
+        }
+
         protected static void RequestCodeCheck(HttpResponseMessage responseMessage)
         {
             Console.WriteLine("Checking request");

@@ -34,5 +34,10 @@ namespace Domain.Songs
 
             await songManageNetworking.AddNewSongAsync(newSong);
         }
+
+        public async Task RemoveSongAsync(Song songToRemove)
+        {
+            await songManageNetworking.RemoveSongAsync(songToRemove);
+        }
     }
 }

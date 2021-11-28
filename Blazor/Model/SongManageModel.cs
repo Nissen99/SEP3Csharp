@@ -17,5 +17,10 @@ namespace Blazor.Model
         {
             await client.AddNewSongAsync(newSong);
         }
+
+        public async Task RemoveSongAsync(Song song)
+        {
+            await client.RemoveSongAsync(song);
+        }
     }
 }

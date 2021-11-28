@@ -10,6 +10,7 @@ namespace Blazor.Pages
     {
         [Inject] private IAudioTestModel AudioTestModel { get; set; }
         [Inject] private ISongSearchModel SongSearchModel { get; set; }
+        [Inject] private IPlayModel PlayModel { get; set; }
 
         
         private IList<Song> songsToShow;
@@ -19,6 +20,7 @@ namespace Blazor.Pages
         protected override async Task OnInitializedAsync()
         {
             songsToShow = await AudioTestModel.GetAllSongs();
+            PlayModel.CurrentPlaylist = songsToShow;
         }
 
         private async void Filter()
@@ -33,6 +35,7 @@ namespace Blazor.Pages
                 songsToShow = await AudioTestModel.GetAllSongs();
             }
             
+            PlayModel.CurrentPlaylist = songsToShow;
             StateHasChanged();
         }
     }

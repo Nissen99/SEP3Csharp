@@ -59,6 +59,11 @@ else
                 <td>@song.Album.Title</td>
                 <td>@generateArtists(song)</td>
                 <td>@song.ReleaseYear</td>
+                <td>
+                     <button @onclick="@(() => removeSong(song))">
+                                           <i class="oi oi-trash" style="color:red"/>
+                                       </button>
+                </td>
             </tr>
         }
         </tbody>
