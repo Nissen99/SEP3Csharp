@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Domain.Library;
 using Entities;
@@ -39,29 +40,29 @@ using NAudio.Wave;
                 TagLib.File file = TagLib.File.Create(path);
                 string title = file.Tag.Title;
                 string albumName = file.Tag.Album;
-                string[] artistName = file.Tag.Performers;
+                string[] artists = TagSplitter(file.Tag.Performers[0]);
                 uint year = file.Tag.Year;
                 int duration = (int)file.Properties.Duration.TotalSeconds;
                 
-                Artist artist = new Artist();
-                artist.Name = artistName[0]; //Lav det her om, lige nu får den artistName som string
-                
-                Song song = new Song()
+                Song song = new Song
                 {
                     Title = title,
                     Album = new Album() {Title = albumName},
-                    Artists = new List<Artist>() {artist},
+                    Artists = Enumerable.Range(0,artists.Length).Select(i => new Artist{Name = artists[i]}).ToList(),
                     Duration = duration,
                     ReleaseYear = (int)year,
                     Mp3 = MP3Byte
                 };
-                
                 songList.Add(song);
-                
             }
             
             await libraryNetworking.PostAllSongs(songList);
             Console.WriteLine("Post Done");
 
+        }
+        
+        private string[] TagSplitter(string toSplit)
+        {
+            return toSplit.Split(",");
         }
     }
