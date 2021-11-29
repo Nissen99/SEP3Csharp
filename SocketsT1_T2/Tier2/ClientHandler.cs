@@ -52,7 +52,8 @@ namespace SocketsT1_T2.Tier2
                     await HandlePlaySongAsync(song, client.GetStream());
                     break;
                 case "GETSONGSBYFILTER":
-                    await GetSongsByFilterAsync((string[]) result.Arg);
+                    string[] getSongFilterOptions = ElementToObject<string[]>((JsonElement) result.Arg);
+                    await GetSongsByFilterAsync(getSongFilterOptions);
                     break;
                 case "REGISTERUSER":
                     User registerUser = ElementToObject<User>((JsonElement) result.Arg);
