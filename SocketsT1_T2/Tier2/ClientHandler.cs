@@ -79,10 +79,19 @@ namespace SocketsT1_T2.Tier2
                     Song songToRemove = ElementToObject<Song>((JsonElement) result.Arg);
                     await RemoveSongAsync(songToRemove);
                     break;
+                case "GETALLALBUMS":
+                    await GetAllAlbumsAsync();
+                    break;
             }
 
             client.Dispose();
         }
+
+        private async Task GetAllAlbumsAsync()
+        {
+            IList<Album> allAlbums = await albumService.GetAllAlbumsAsync();
+
+            await SendToClient("RESPONSE FROM SERVER", allAlbums);        }
 
         private async Task RemoveSongAsync(Song songToRemove)
         {

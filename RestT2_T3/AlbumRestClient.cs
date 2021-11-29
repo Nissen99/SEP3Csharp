@@ -25,5 +25,19 @@ namespace RestT2_T3
 
             return albumsFromServer;
         }
+
+        public async Task<IList<Album>> GetAllAlbumsAsync()
+        {
+            using HttpClient client = new HttpClient();
+            string responseFromServerAsJson = await client.GetStringAsync(uri + $"album");
+
+            IList<Album> albumsFromServer = JsonSerializer.Deserialize<IList<Album>>(responseFromServerAsJson,
+                new JsonSerializerOptions()
+                {
+                    PropertyNameCaseInsensitive = true
+                });
+            
+            return albumsFromServer;
+        }
     }
 }
