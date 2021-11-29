@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using Entities;
+using NAudio.Wave;
 
 namespace Domain.Songs
 {
@@ -17,16 +18,12 @@ namespace Domain.Songs
         //TODO Input checks
         public async Task AddNewSongAsync(Song newSong)
         {
-            string path = @"../../../../Domain/Audio/tempfileForSaving.mp3";
-
-            using (FileStream byteToMp3 = File.Create(path))
-            {
-                await byteToMp3.WriteAsync(newSong.Mp3, 0, newSong.Mp3.Length);
-            }
-
-            TagLib.File file = TagLib.File.Create(path);
+            using MemoryStream ms = new MemoryStream(newSong.Mp3);
+            using Mp3FileReader fileReader = new Mp3FileReader(ms);
             
-            int duration = (int) file.Properties.Duration.TotalSeconds;
+            
+            int duration = (int) fileReader.TotalTime.TotalSeconds;
+            Console.WriteLine("Duration read in int: " + duration);
 
             newSong.Duration = duration;
             
