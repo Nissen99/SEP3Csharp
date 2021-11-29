@@ -20,5 +20,6 @@ namespace SocketsT1_T2.Tier1
         Task AddNewSongAsync(Song newSong);
         Task RemoveSongAsync(Song song);
         Task<IList<Album>> GetAllAlbumsAsync();
+        Task<IList<Artist>> GetAllArtistAsync();
     }
 }

@@ -82,9 +82,20 @@ namespace SocketsT1_T2.Tier2
                 case "GETALLALBUMS":
                     await GetAllAlbumsAsync();
                     break;
+                case "GETALLARTISTS":
+                    await GetAllArtistsAsync();
+                    break;
             }
 
             client.Dispose();
+        }
+
+        private async Task GetAllArtistsAsync()
+        {
+            IList<Artist> allArtists = await artistService.GetAllArtistsAsync();
+
+            await SendToClient("RESPONSE FROM SERVER", allArtists);
+            
         }
 
         private async Task GetAllAlbumsAsync()

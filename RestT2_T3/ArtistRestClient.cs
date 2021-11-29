@@ -27,5 +27,20 @@ namespace RestT2_T3
             
             return  artistsFromServer;        
         }
+
+        public async Task<IList<Artist>> GetAllArtistsAsync()
+        {
+            using HttpClient client = new HttpClient();
+            string responseFromServerAsJson = await client.GetStringAsync(uri + $"artist");
+
+            IList<Artist> artistsFromServer = JsonSerializer.Deserialize<IList<Artist>>(responseFromServerAsJson,
+                new JsonSerializerOptions()
+                {
+                    PropertyNameCaseInsensitive = true
+                });
+           
+            
+            return  artistsFromServer;  
+        }
     }
 }
