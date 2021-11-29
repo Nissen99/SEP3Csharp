@@ -19,12 +19,12 @@
 @if (searchedForAlbums == null)
     {
         <p>
-        Search for artists
+        Search for Album
             </p>
     } @if (searchedForAlbums.Count == 0)
       {
           <p>
-              No Artists with that name found
+              No Album with that name found
           </p>
       }
       else
@@ -41,7 +41,7 @@
                   <tr>
                       <td>@album.Title</td>
                       <td>
-                          <button class="btn btn-secondary" @onclick="() => chooseExistingAlbum(album)">Add artist</button>
+                          <button class="btn btn-secondary" @onclick="() => chooseExistingAlbum(album)">Add Album</button>
                       </td>
                   </tr>
                   

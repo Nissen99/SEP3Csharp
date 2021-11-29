@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Domain.Library;
 using Entities;
-using NAudio.Wave;
 
-
+namespace Domain.Library
+{
     public class LibraryService : ILibraryService
     {
         private IList<byte[]> songsByte = new List<byte[]>();
@@ -47,8 +46,8 @@ using NAudio.Wave;
                 Song song = new Song
                 {
                     Title = title,
-                    Album = new Album() {Title = albumName},
-                    Artists = Enumerable.Range(0,artists.Length).Select(i => new Artist{Name = artists[i]}).ToList(),
+                    Album = new Entities.Album() {Title = albumName},
+                    Artists = Enumerable.Range(0,artists.Length).Select(i => new Entities.Artist{Name = artists[i]}).ToList(),
                     Duration = duration,
                     ReleaseYear = (int)year,
                     Mp3 = MP3Byte
@@ -66,3 +65,4 @@ using NAudio.Wave;
             return toSplit.Split(",");
         }
     }
+}
