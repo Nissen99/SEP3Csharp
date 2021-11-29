@@ -7,6 +7,6 @@ namespace Entities
         public int Id { get; set; }
         public User User { get; set; }
         public string Title { get; set; }
-        public List<Song> Songs { get; set; }
+        public IList<Song> Songs { get; set; }
     }
 }

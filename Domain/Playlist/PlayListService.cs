@@ -13,22 +13,28 @@ namespace Domain.Playlist
             this.playlistNetworking = playlistNetworking;
         }
 
-        public Task<Entities.Playlist> CreatePlaylist(Entities.Playlist playlist)
+
+        public Task<Entities.Playlist> CreatePlaylistAsync(Entities.Playlist playlist, User user)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<IList<Entities.Playlist>> GetAllPlaylist()
+        public Task<IList<Entities.Playlist>> GetAllPlaylistsForUserAsync(User user)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task UpdatePlaylist(Entities.Playlist playlist)
+        public Task RemoveSongFromPlaylistAsync(Entities.Playlist playlist, Song song)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task DeletePlayList(int playListID)
+        public Task AddSongToPlaylistAsync(Entities.Playlist playlist, Song song)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task DeletePlayListAsync(Entities.Playlist playlist)
         {
             throw new System.NotImplementedException();
         }
