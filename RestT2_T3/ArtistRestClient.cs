@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net.Http;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Domain.Artist;
 using Entities;
-using RestT2_T3.Util;
 
 namespace RestT2_T3
 {
@@ -15,6 +12,7 @@ namespace RestT2_T3
         public async Task<IList<Artist>> SearchForArtists(string name)
         {
             using HttpClient client = new HttpClient();
+            
             HttpResponseMessage responseMessage = await client.GetAsync(Uri + $"artist/{name}");
 
             return await HandleResponseFromServer<IList<Artist>>(responseMessage);
