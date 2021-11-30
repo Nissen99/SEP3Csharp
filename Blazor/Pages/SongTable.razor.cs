@@ -103,10 +103,11 @@ namespace Blazor.Pages
             
             var form = ModalService.Show<ConfirmChoice>($"Are you sure you want to remove \"{song.Title}\"");
             var result = await form.Result;
-
+         
             if (!result.Cancelled)
             {
                 await SongManageModel.RemoveSongAsync(song);
+                SongList.Remove(song);
                 Console.WriteLine("Remove Song ");
                 StateHasChanged();
             }

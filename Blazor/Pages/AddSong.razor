@@ -92,7 +92,7 @@ Could fix later but now the method call on "Create" button-->
 
     <div class="form-group">
         Mp3:<br/>
-        <InputFile OnChange="@LoadFile" @onclick="() => resetMp3()" @bind-Value="newSong.Mp3"></InputFile>
+        <InputFile accept=".mp3" OnChange="@LoadFile" @onclick="() => resetMp3()" @bind-Value="newSong.Mp3"></InputFile>
     </div>
 
     <p class="actions">
@@ -108,6 +108,12 @@ Could fix later but now the method call on "Create" button-->
 
     private async void LoadFile(InputFileChangeEventArgs e)
     {
+        if (!e.File.Name.EndsWith(".mp3"))
+        {
+            resetMp3();
+            modalService.Show<Popup>("Not right File type, please select an mp3");
+            return;
+        }
         using MemoryStream ms = new MemoryStream(80000000);
 
         await e.File.OpenReadStream(80000000).CopyToAsync(ms);

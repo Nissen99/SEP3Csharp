@@ -1,15 +1,15 @@
 ﻿
 
-<button onclick="@Confirm()">Ok</button>
+<button @onclick="Confirm">Ok</button>
 
-<button onclick="@Cancel()">Cancel</button>
+<button @onclick="Cancel">Cancel</button>
 
 
 @code {
     
     [CascadingParameter] public BlazoredModalInstance BlazoredModal { get; set; }
 
-    public async Task Confirm()
+    private async Task Confirm()
     {
         await BlazoredModal.CloseAsync(ModalResult.Ok(true));
     }
