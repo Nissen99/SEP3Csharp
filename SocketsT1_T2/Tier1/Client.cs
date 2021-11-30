@@ -1,11 +1,12 @@
-using System;
+
+#nullable enable
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Entities;
-using RestT2_T3.Util;
+
 
 namespace SocketsT1_T2.Tier1
 {
@@ -117,6 +118,7 @@ namespace SocketsT1_T2.Tier1
             
             return objectFromServer.Arg;
         }
+        
 
         private TcpClient GetTcpClient()
         {
