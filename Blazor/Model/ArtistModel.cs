@@ -18,5 +18,10 @@ namespace Blazor.Model
         {
             return await client.SearchForArtists(name);
         }
+
+        public async Task<IList<Artist>> GetAllArtistAsync()
+        {
+            return await client.GetAllArtistAsync();
+        }
     }
 }

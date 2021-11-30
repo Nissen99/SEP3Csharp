@@ -80,8 +80,16 @@
 
     private async Task searchForArtist()
     {
-        searchedForArtists = await ArtistModel.SearchForArtists(searchName);
+        if (!string.IsNullOrEmpty(searchName))
+        {
+            searchedForArtists = await ArtistModel.SearchForArtists(searchName);
+        }
+        else
+        {
+            searchedForArtists = await ArtistModel.GetAllArtistAsync();
+        }
         Console.WriteLine(searchedForArtists.Count);
+
         StateHasChanged();
     }
 

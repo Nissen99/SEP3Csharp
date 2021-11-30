@@ -6,11 +6,11 @@ namespace Blazor.Model
 {
     public interface IPlayListModel
     {
-        Task<Playlist> CreatePlaylist(Playlist playlist, User user);
-        Task<IList<Playlist>> GetAllPlayForUser(User user);
-        Task RemoveSongFromPlaylist(Playlist playlist, Song song);
-        Task AddSongToPlaylist(Playlist playlist, Song song);
-        Task DeletePlayList(Playlist playlist);
+        Task<Playlist> CreatePlaylistAsync(Playlist playlist, User user);
+        Task<IList<Playlist>> GetAllPlaylistsForUserAsync(User user);
+        Task RemoveSongFromPlaylistAsync(Playlist playlist, Song song);
+        Task AddSongToPlaylistAsync(Playlist playlist, Song song);
+        Task DeletePlayListAsync(Playlist playlist);
         
 
 

@@ -6,6 +6,7 @@ namespace Blazor.Model
 {
     public interface IAlbumModel
     {
-        Task<IList<Album>> SearchForAlbums(string title);
+        Task<IList<Album>> SearchForAlbumsAsync(string title);
+        Task<IList<Album>> GetAllAlbumsAsync();
     }
 }
