@@ -1,7 +1,57 @@
 @page "/Playlist"
-@attribute [Authorize (Policy = "MustBeLoggedIn")]
+@using Blazor.Model.PlaylistModel
+@using Entities
+@using System.Security.AccessControl
+@using Blazor.Authentication
+@attribute [Authorize(Policy = "MustBeLoggedIn")]
 <h3>Playlist</h3>
 
-@code {
-    
+@if (Playlists == null)
+{
+    <em>Loading...</em>
 }
+else if (!Playlists.Any())
+{
+    <br/>
+    <em>No songs found.</em>
+}
+else
+{
+    <table class="table">
+        <thead>
+
+        <tr>
+            <th></th>
+            <th>Title</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var playlist in Playlists)
+        {
+            <tr>
+                <td>@playlist.Title</td>
+                @* <td> *@
+                @*     <button @onclick="@(() => "Go to playlist")"> *@
+                @*         <i class="oi oi-trash" style="color:red"/> *@
+                @*     </button> *@
+                @* </td> *@
+            </tr>
+        }
+        </tbody>
+    </table>
+    
+@code {
+
+    [Inject]
+    public IPlayListModel PlaylistModel { get; set; }
+
+    public IList<Entities.Playlist> Playlists { get; set; }
+    private User user = CustomAuthenticationStateProvider.cachedUser;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Playlists = await PlaylistModel.GetAllPlaylistsForUserAsync(user);
+    // StateHasChanged();
+    }
+
+}}

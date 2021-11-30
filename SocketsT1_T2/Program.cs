@@ -32,7 +32,7 @@ namespace SocketsT1_T2
             ISongManageNetworking songManageNetworking = new SongManageRestClient();
             ISongManageService songManageService = new SongManageService(songManageNetworking);
 
-            IServer server = new Server(libraryService, playService, songSearchService, userService, artistService, albumService, songManageService);
+            IServer server = new Server(libraryService, playService, songSearchService, userService, artistService, albumService, songManageService, playListService);
             server.startServer();
         }
     }

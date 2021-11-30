@@ -73,6 +73,20 @@ namespace SocketsT1_T2.Tier1
             await SendServerRequest("REMOVESONG", song, client);
         }
 
+        public async Task<IList<Playlist>> GetAllPlaylistsForUserAsync(User user)
+        {
+            using TcpClient client = GetTcpClient();
+            await SendServerRequest("GETPLAYLISTS", user, client);
+            return await serverResponse<IList<Playlist>>(client, 100000);
+        }
+
+        public async Task<IList<Song>> GetAllSongsFromPlaylistAsync(Playlist playlist)
+        {
+            using TcpClient client = GetTcpClient();
+            await SendServerRequest("GETSONGSFROMPLAYLIST", playlist, client);
+            return await serverResponse<IList<Song>>(client, 100000);
+        }
+
 
         private async Task SendServerRequest<T>(string action, T TObject, TcpClient client)
         {

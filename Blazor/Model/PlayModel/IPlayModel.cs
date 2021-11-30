@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Entities;
 
-namespace Blazor.Model
+namespace Blazor.Model.PlayModel
 {
     public interface IPlayModel
     {

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Blazor.Authentication;
 using Blazor.Model;
+using Blazor.Model.UserModel;
 using Blazored.Modal.Services;
 using Domain.Users;
 using Entities;
@@ -15,9 +16,7 @@ namespace Blazor.Pages
         [Inject] public IModalService ModalService { get; set; }
         [Inject] private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
         [Inject] private NavigationManager NavigationManager { get; set; }
-
-        [Inject]
-        private IUserModel UserModel { get; set; }
+        [Inject] private IUserModel UserModel { get; set; }
 
 
         private string username;

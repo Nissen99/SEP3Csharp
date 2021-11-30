@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Entities;
 using NAudio.Wave;
 using SocketsT1_T2.Tier1;
 
-namespace Blazor.Model
+namespace Blazor.Model.PlayModel
 {
     public class PlayModel : IPlayModel
     {

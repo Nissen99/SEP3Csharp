@@ -6,6 +6,7 @@ using Domain.Album;
 using Domain.Artist;
 using Domain.Library;
 using Domain.Play;
+using Domain.Playlist;
 using Domain.Songs;
 using Domain.SongSearch;
 using Domain.Users;
@@ -21,8 +22,9 @@ namespace SocketsT1_T2.Tier2
         private IArtistService artistService;
         private IAlbumService albumService;
         private ISongManageService songManageService;
+        private IPlayListService playListService;
         public Server(ILibraryService libraryService, IPlayService playSongService, ISongSearchService songSearchService, 
-            IUserService userService, IArtistService artistService, IAlbumService albumService, ISongManageService songManageService)
+            IUserService userService, IArtistService artistService, IAlbumService albumService, ISongManageService songManageService, IPlayListService playListService)
        {
            this.libraryService = libraryService;
            this.playSongService = playSongService;
@@ -31,6 +33,7 @@ namespace SocketsT1_T2.Tier2
            this.artistService = artistService;
            this.albumService = albumService;
            this.songManageService = songManageService;
+           this.playListService = playListService;
        }
 
        public void startServer()
@@ -41,10 +44,11 @@ namespace SocketsT1_T2.Tier2
             Console.WriteLine("SERVER STARED");
             
             libraryService.SendSongListToDBAsync();
+            
             while (true)
             {
                 TcpClient client = listener.AcceptTcpClient();
-                IClientHandler clientHandler = new ClientHandler(client, playSongService, userService, songSearchService, artistService, albumService, songManageService);
+                IClientHandler clientHandler = new ClientHandler(client, playSongService, userService, songSearchService, artistService, albumService, songManageService, playListService);
                 new Thread(clientHandler.ListenToClientAsync).Start();
             }
             

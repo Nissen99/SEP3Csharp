@@ -19,9 +19,9 @@ namespace Domain.Playlist
             throw new System.NotImplementedException();
         }
 
-        public Task<IList<Entities.Playlist>> GetAllPlaylistsForUserAsync(User user)
+        public async Task<IList<Entities.Playlist>> GetAllPlaylistsForUserAsync(User user)
         {
-            throw new System.NotImplementedException();
+            return await playlistNetworking.GetAllPlaylistsForUserAsync(user);
         }
 
         public Task RemoveSongFromPlaylistAsync(Entities.Playlist playlist, Song song)
@@ -37,6 +37,11 @@ namespace Domain.Playlist
         public Task DeletePlayListAsync(Entities.Playlist playlist)
         {
             throw new System.NotImplementedException();
+        }
+
+        public async Task<IList<Song>> GetAllSongsFromPlaylistAsync(Entities.Playlist playlist)
+        {
+            return await playlistNetworking.GetAllSongsFromPlaylistAsync(playlist);
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Domain.Album;
 using Domain.Artist;
 using Domain.Play;
+using Domain.Playlist;
 using Domain.Songs;
 using Domain.SongSearch;
 using Domain.Users;
@@ -23,10 +24,11 @@ namespace SocketsT1_T2.Tier2
         private IArtistService artistService;
         private IAlbumService albumService;
         private ISongManageService songManageService;
+        private IPlayListService playListService;
 
         public ClientHandler(TcpClient client, IPlayService playSongService, IUserService userService, 
             ISongSearchService songSearchService, IArtistService artistService, IAlbumService albumService,
-            ISongManageService songManageService)
+            ISongManageService songManageService, IPlayListService playListService)
         {
             this.client = client;
             this.playSongService = playSongService;
@@ -35,6 +37,7 @@ namespace SocketsT1_T2.Tier2
             this.artistService = artistService;
             this.albumService = albumService;
             this.songManageService = songManageService;
+            this.playListService = playListService;
 
         }
         public async void ListenToClientAsync()
@@ -79,9 +82,27 @@ namespace SocketsT1_T2.Tier2
                     Song songToRemove = ElementToObject<Song>((JsonElement) result.Arg);
                     await RemoveSongAsync(songToRemove);
                     break;
+                case "GETPLAYLISTS":
+                    User user = ElementToObject<User>((JsonElement) result.Arg);
+                    await GetPlaylistsAsync(user);
+                    break;
+                case "GETSONGSFROMPLAYLIST":
+                    Playlist playlist = ElementToObject<Playlist>((JsonElement) result.Arg);
+                    await GetSongsFromPlaylistAsync(playlist);
+                    break;
             }
 
             client.Dispose();
+        }
+
+        private async Task GetSongsFromPlaylistAsync(Playlist playlist)
+        {
+            await playListService.GetAllSongsFromPlaylistAsync(playlist);
+        }
+
+        private async Task GetPlaylistsAsync(User user)
+        {
+            await playListService.GetAllPlaylistsForUserAsync(user);
         }
 
         private async Task RemoveSongAsync(Song songToRemove)
