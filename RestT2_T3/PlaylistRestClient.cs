@@ -21,7 +21,6 @@ namespace RestT2_T3
         {
             using HttpClient client = new HttpClient();
             string stringAsync = await client.GetStringAsync(uri + "playlist/" + user.Username);
-
             Console.WriteLine(stringAsync);
             return JsonSerializer.Deserialize<IList<Playlist>>(stringAsync,
                 new JsonSerializerOptions {PropertyNameCaseInsensitive = true});

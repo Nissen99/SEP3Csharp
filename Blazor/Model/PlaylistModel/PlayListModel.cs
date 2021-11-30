@@ -8,6 +8,8 @@ namespace Blazor.Model.PlaylistModel
     public class PlayListModel:IPlayListModel
     {
         private IClient Client;
+        
+        public Playlist CurrentPlaylist { get; set; }
 
 
         public PlayListModel(IClient client)
@@ -21,9 +23,14 @@ namespace Blazor.Model.PlaylistModel
             throw new System.NotImplementedException();
         }
 
-        public Task<IList<Playlist>> GetAllPlaylistsForUserAsync(User user)
+        public async Task<IList<Playlist>> GetAllPlaylistsForUserAsync(User user)
         {
-            throw new System.NotImplementedException();
+            return await Client.GetAllPlaylistsForUserAsync(user);
+        }
+
+        public async Task<IList<Song>> GetAllSongFromPlaylist(Playlist playlist)
+        {
+            return await Client.GetAllSongsFromPlaylistAsync(playlist);
         }
 
         public Task RemoveSongFromPlaylistAsync(Playlist playlist, Song song)

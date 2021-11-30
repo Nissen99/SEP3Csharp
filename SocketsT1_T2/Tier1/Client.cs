@@ -23,7 +23,7 @@ namespace SocketsT1_T2.Tier1
         {
             TcpClient client = new TcpClient("localhost", 1098);
             await SendServerRequest("PLAYSONG", song, client);
-            return await serverResponse<Song>(client, 80000000);
+            return await serverResponse<Song>(client, 10000000);
         }
 
         public async Task<IList<Song>> GetSongsByFilterAsync(string[] filterOptions)
@@ -89,8 +89,10 @@ namespace SocketsT1_T2.Tier1
         public async Task<IList<Playlist>> GetAllPlaylistsForUserAsync(User user)
         {
             using TcpClient client = GetTcpClient();
+            Console.WriteLine("På client, er vi her user: " + user.Username);
             await SendServerRequest("GETPLAYLISTS", user, client);
-            return await serverResponse<IList<Playlist>>(client, 100000);
+            
+            return await serverResponse<IList<Playlist>>(client, 1000000);
         }
 
         public async Task<IList<Song>> GetAllSongsFromPlaylistAsync(Playlist playlist)

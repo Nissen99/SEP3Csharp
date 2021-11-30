@@ -1,0 +1,69 @@
+@page "/PlaylistOverview"
+@using Blazor.Model.PlaylistModel
+@using Entities
+@using System.Security.AccessControl
+@using Blazor.Authentication
+
+@inject NavigationManager NavigationManager
+@attribute [Authorize(Policy = "MustBeLoggedIn")]
+<h3>Your Playlists</h3>
+
+@if (Playlists == null)
+{
+    <em>Loading...</em>
+}
+else if (!Playlists.Any())
+{
+    <br/>
+    <em>No playlists found.</em>
+}
+else
+{
+    <table class="table">
+        <thead>
+
+        <tr>
+            <th>Title</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var playlist in Playlists)
+        {
+            <tr>
+                <td @onclick="@(() => LoadPlaylist(playlist))">
+                    <button @onclick="@(() => NavigationManager.NavigateTo("/playlist"))">
+                        <i class="oi oi-media-play" style="color:blue"/>
+                    </button> @playlist.Title
+                </td>
+                <td>
+
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    
+@code {
+
+    [Inject]
+    public IPlayListModel PlaylistModel { get; set; }
+
+    public IList<Entities.Playlist> Playlists { get; set; }
+    private User user = CustomAuthenticationStateProvider.cachedUser;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Playlists = await PlaylistModel.GetAllPlaylistsForUserAsync(user);
+    // StateHasChanged();
+    }
+
+    private void LoadPlaylist(Entities.Playlist playlist)
+    {
+        PlaylistModel.CurrentPlaylist = playlist;
+        NavigationManager.NavigateTo("/playlist");
+    }
+
+}    
+    
+}

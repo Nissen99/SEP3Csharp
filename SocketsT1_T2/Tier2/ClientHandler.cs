@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
@@ -103,12 +104,16 @@ namespace SocketsT1_T2.Tier2
 
         private async Task GetSongsFromPlaylistAsync(Playlist playlist)
         {
-            await playListService.GetAllSongsFromPlaylistAsync(playlist);
+            IList<Song> songs = await playListService.GetAllSongsFromPlaylistAsync(playlist);
+            
+            await SendToClient("RESPONSE FROM SERVER", songs);
         }
 
         private async Task GetPlaylistsAsync(User user)
         {
-            await playListService.GetAllPlaylistsForUserAsync(user);
+            IList<Playlist> playlists = await playListService.GetAllPlaylistsForUserAsync(user);
+            
+            await SendToClient("RESPONSE FROM SERVER", playlists);
         }
 
         private async Task GetAllArtistsAsync()

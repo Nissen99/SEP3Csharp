@@ -1,57 +1,23 @@
-@page "/Playlist"
-@using Blazor.Model.PlaylistModel
+﻿@page "/Playlist"
 @using Entities
-@using System.Security.AccessControl
-@using Blazor.Authentication
-@attribute [Authorize(Policy = "MustBeLoggedIn")]
+@using Blazor.Model.PlaylistModel
 <h3>Playlist</h3>
 
-@if (Playlists == null)
-{
-    <em>Loading...</em>
-}
-else if (!Playlists.Any())
-{
-    <br/>
-    <em>No songs found.</em>
-}
-else
-{
-    <table class="table">
-        <thead>
+<SongTable SongList="songs"/>
 
-        <tr>
-            <th></th>
-            <th>Title</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var playlist in Playlists)
-        {
-            <tr>
-                <td>@playlist.Title</td>
-                @* <td> *@
-                @*     <button @onclick="@(() => "Go to playlist")"> *@
-                @*         <i class="oi oi-trash" style="color:red"/> *@
-                @*     </button> *@
-                @* </td> *@
-            </tr>
-        }
-        </tbody>
-    </table>
-    
+<p></p>
+
 @code {
-
     [Inject]
     public IPlayListModel PlaylistModel { get; set; }
-
-    public IList<Entities.Playlist> Playlists { get; set; }
-    private User user = CustomAuthenticationStateProvider.cachedUser;
-
+    
+    private IList<Song> songs;
+    Entities.Playlist currentPlaylist;
+    
     protected async override Task OnInitializedAsync()
     {
-        Playlists = await PlaylistModel.GetAllPlaylistsForUserAsync(user);
-    // StateHasChanged();
+        currentPlaylist = PlaylistModel.CurrentPlaylist;
+        songs = await PlaylistModel.GetAllSongFromPlaylist(currentPlaylist);
+        
     }
-
-}}
+}
