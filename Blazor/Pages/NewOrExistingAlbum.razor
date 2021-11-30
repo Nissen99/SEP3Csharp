@@ -81,7 +81,14 @@
 
     private async Task searchForAlbum()
     {
-        searchedForAlbums = await AlbumModel.SearchForAlbums(searchTitle);
+        if (!string.IsNullOrEmpty(searchTitle))
+        {
+            searchedForAlbums = await AlbumModel.SearchForAlbumsAsync(searchTitle);
+        }
+        else
+        {
+            searchedForAlbums = await AlbumModel.GetAllAlbumsAsync();
+        }
         Console.WriteLine(searchedForAlbums.Count);
         StateHasChanged();
     }

@@ -90,6 +90,12 @@ namespace SocketsT1_T2.Tier2
                     Playlist playlist = ElementToObject<Playlist>((JsonElement) result.Arg);
                     await GetSongsFromPlaylistAsync(playlist);
                     break;
+                case "GETALLALBUMS":
+                    await GetAllAlbumsAsync();
+                    break;
+                case "GETALLARTISTS":
+                    await GetAllArtistsAsync();
+                    break;
             }
 
             client.Dispose();
@@ -104,6 +110,20 @@ namespace SocketsT1_T2.Tier2
         {
             await playListService.GetAllPlaylistsForUserAsync(user);
         }
+
+        private async Task GetAllArtistsAsync()
+        {
+            IList<Artist> allArtists = await artistService.GetAllArtistsAsync();
+
+            await SendToClient("RESPONSE FROM SERVER", allArtists);
+            
+        }
+
+        private async Task GetAllAlbumsAsync()
+        {
+            IList<Album> allAlbums = await albumService.GetAllAlbumsAsync();
+
+            await SendToClient("RESPONSE FROM SERVER", allAlbums);        }
 
         private async Task RemoveSongAsync(Song songToRemove)
         {

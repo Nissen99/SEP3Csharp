@@ -14,9 +14,14 @@ namespace Blazor.Model.AlbumModel
         {
             this.client = client;
         }
-        public async Task<IList<Album>> SearchForAlbums(string title)
+        public async Task<IList<Album>> SearchForAlbumsAsync(string title)
         {
             return await client.SearchForAlbums(title);
+        }
+
+        public async Task<IList<Album>> GetAllAlbumsAsync()
+        {
+            return await client.GetAllAlbumsAsync();
         }
     }
 }

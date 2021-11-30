@@ -6,5 +6,6 @@ namespace Domain.Artist
     public interface IArtistNetworking
     {
         Task<IList<Entities.Artist>> SearchForArtists(string name);
+        Task<IList<Entities.Artist>> GetAllArtistsAsync();
     }
 }

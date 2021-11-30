@@ -16,5 +16,10 @@ namespace Domain.Artist
             return await artistNetworking.SearchForArtists(name);
 
         }
+
+        public async Task<IList<Entities.Artist>> GetAllArtistsAsync()
+        {
+            return await artistNetworking.GetAllArtistsAsync();
+        }
     }
 }

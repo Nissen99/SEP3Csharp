@@ -16,5 +16,10 @@ namespace Domain.Album
             return await albumNetworking.SearchForAlbums(title);
 
         }
+
+        public async Task<IList<Entities.Album>> GetAllAlbumsAsync()
+        {
+            return await albumNetworking.GetAllAlbumsAsync();
+        }
     }
 }

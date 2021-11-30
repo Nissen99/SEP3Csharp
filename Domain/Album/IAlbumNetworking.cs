@@ -6,5 +6,6 @@ namespace Domain.Album
     public interface IAlbumNetworking
     {
         Task<IList<Entities.Album>> SearchForAlbums(string title);
+        Task<IList<Entities.Album>> GetAllAlbumsAsync();
     }
 }

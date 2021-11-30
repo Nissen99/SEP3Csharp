@@ -7,5 +7,6 @@ namespace Blazor.Model.ArtistModel
     public interface IArtistModel
     {
         Task<IList<Artist>> SearchForArtists(string name);
+        Task<IList<Artist>> GetAllArtistAsync();
     }
 }
