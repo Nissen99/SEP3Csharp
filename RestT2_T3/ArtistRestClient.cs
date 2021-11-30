@@ -9,38 +9,26 @@ using RestT2_T3.Util;
 
 namespace RestT2_T3
 {
-    public class ArtistRestClient : IArtistNetworking
+    public class ArtistRestClient : HttpClientBase, IArtistNetworking
     {
-        private string uri = "http://localhost:8080/";
 
         public async Task<IList<Artist>> SearchForArtists(string name)
         {
             using HttpClient client = new HttpClient();
-            string responseFromServerAsJson = await client.GetStringAsync(uri + $"artist/{name}");
+            HttpResponseMessage responseMessage = await client.GetAsync(Uri + $"artist/{name}");
 
-            IList<Artist> artistsFromServer = JsonSerializer.Deserialize<IList<Artist>>(responseFromServerAsJson,
-                new JsonSerializerOptions()
-                {
-                    PropertyNameCaseInsensitive = true
-                });
-           
-            
-            return  artistsFromServer;        
+            return await HandleResponseFromServer<IList<Artist>>(responseMessage);
+       
         }
 
         public async Task<IList<Artist>> GetAllArtistsAsync()
         {
             using HttpClient client = new HttpClient();
-            string responseFromServerAsJson = await client.GetStringAsync(uri + $"artist");
-
-            IList<Artist> artistsFromServer = JsonSerializer.Deserialize<IList<Artist>>(responseFromServerAsJson,
-                new JsonSerializerOptions()
-                {
-                    PropertyNameCaseInsensitive = true
-                });
-           
             
-            return  artistsFromServer;  
+            HttpResponseMessage responseMessage = await client.GetAsync(Uri + $"artist");
+
+            return await HandleResponseFromServer<IList<Artist>>(responseMessage);
+ 
         }
     }
 }
