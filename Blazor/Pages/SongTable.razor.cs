@@ -5,6 +5,7 @@ using Blazor.Model;
 using Blazor.Model.AudioTestModel;
 using Blazor.Model.PlayModel;
 using Blazor.Model.SongManagerModel;
+using Blazored.Modal.Services;
 using Entities;
 using Microsoft.AspNetCore.Components;
 
@@ -15,6 +16,7 @@ namespace Blazor.Pages
         [Inject] public IAudioTestModel Model { get; set; }
         [Inject] public ISongManageModel SongManageModel { get; set; }
         [Inject] public IPlayModel PlayModel { get; set; }
+        [Inject] public IModalService ModalService { get; set; }
         [Parameter]
         public IList<Song> SongList { get; set; }
 
@@ -98,9 +100,17 @@ namespace Blazor.Pages
 
         private async Task removeSong(Song song)
         {
-            await SongManageModel.RemoveSongAsync(song);
-            Console.WriteLine("Remove Song ");
-            StateHasChanged();
+            
+            var form = ModalService.Show<ConfirmChoice>($"Are you sure you want to remove \"{song.Title}\"");
+            var result = await form.Result;
+
+            if (!result.Cancelled)
+            {
+                await SongManageModel.RemoveSongAsync(song);
+                Console.WriteLine("Remove Song ");
+                StateHasChanged();
+            }
+          
         }
     }
 }

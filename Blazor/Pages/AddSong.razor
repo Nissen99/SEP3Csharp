@@ -92,7 +92,7 @@ Could fix later but now the method call on "Create" button-->
 
     <div class="form-group">
         Mp3:<br/>
-        <InputFile OnChange="@LoadFile" @bind-Value="newSong.Mp3"></InputFile>
+        <InputFile OnChange="@LoadFile" @onclick="() => resetMp3()" @bind-Value="newSong.Mp3"></InputFile>
     </div>
 
     <p class="actions">
@@ -122,6 +122,8 @@ Could fix later but now the method call on "Create" button-->
         if (string.IsNullOrEmpty(newSong.Title) || newSong.Album == null || newSong.Artists.Count == 0 || newSong.Mp3 == null)
         {
             modalService.Show<Popup>("Something not sat, please make sure everything is sat");
+            newSong.Mp3 = Array.Empty<byte>();
+
             return;
         }
         Console.WriteLine($"Title: {newSong.Title}");
@@ -164,6 +166,11 @@ Could fix later but now the method call on "Create" button-->
             newSong.Album = justCreated;
             StateHasChanged();
         }
+    }
+
+    private void resetMp3()
+    {
+        newSong.Mp3 = Array.Empty<byte>();
     }
 
 }
