@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Entities;
 using SocketsT1_T2.Tier1;
 
-namespace Blazor.Model
+namespace Blazor.Model.AlbumModel
 {
     public class AlbumModel : IAlbumModel
     {

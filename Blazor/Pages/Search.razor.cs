@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Blazor.Model;
+using Blazor.Model.AudioTestModel;
+using Blazor.Model.PlayModel;
+using Blazor.Model.SongSearchModel;
 using Entities;
 using Microsoft.AspNetCore.Components;
 

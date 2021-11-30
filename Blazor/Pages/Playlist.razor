@@ -1,7 +1,23 @@
-@page "/Playlist"
-@attribute [Authorize (Policy = "MustBeLoggedIn")]
+﻿@page "/Playlist"
+@using Entities
+@using Blazor.Model.PlaylistModel
 <h3>Playlist</h3>
 
+<SongTable SongList="songs"/>
+
+<p></p>
+
 @code {
+    [Inject]
+    public IPlayListModel PlaylistModel { get; set; }
     
+    private IList<Song> songs;
+    Entities.Playlist currentPlaylist;
+    
+    protected async override Task OnInitializedAsync()
+    {
+        currentPlaylist = PlaylistModel.CurrentPlaylist;
+        songs = await PlaylistModel.GetAllSongFromPlaylist(currentPlaylist);
+        
+    }
 }

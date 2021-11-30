@@ -1,5 +1,6 @@
 ﻿@using Entities
 @using Blazor.Model
+@using Blazor.Model.AlbumModel
 @inject IModalService ModalService
 @inject IAlbumModel AlbumModel 
 
@@ -19,12 +20,12 @@
 @if (searchedForAlbums == null)
     {
         <p>
-        Search for Album
+        @displayToUser
             </p>
     } @if (searchedForAlbums.Count == 0)
       {
           <p>
-              No Album with that name found
+        @displayToUser
           </p>
       }
       else
@@ -64,6 +65,7 @@
 
     private string albumTitle = "";
     private string searchTitle = "";
+    private string displayToUser = "Search for Albums";
 
     private IList<Album> searchedForAlbums = new List<Album>();
 
@@ -83,6 +85,10 @@
         if (!string.IsNullOrEmpty(searchTitle))
         {
             searchedForAlbums = await AlbumModel.SearchForAlbumsAsync(searchTitle);
+            if (searchedForAlbums.Count == 0)
+            {
+                displayToUser = "No albums found matching";
+            }
         }
         else
         {

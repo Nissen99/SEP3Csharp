@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Entities;
 
-namespace Blazor.Model
+namespace Blazor.Model.SongManagerModel
 {
     public interface ISongManageModel
     {

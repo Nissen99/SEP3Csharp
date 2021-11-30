@@ -1,5 +1,13 @@
 using Blazor.Authentication;
 using Blazor.Model;
+using Blazor.Model.AlbumModel;
+using Blazor.Model.ArtistModel;
+using Blazor.Model.AudioTestModel;
+using Blazor.Model.PlaylistModel;
+using Blazor.Model.PlayModel;
+using Blazor.Model.SongManagerModel;
+using Blazor.Model.SongSearchModel;
+using Blazor.Model.UserModel;
 using Blazor.Util;
 using Blazored.Modal;
 using Microsoft.AspNetCore.Builder;
@@ -39,6 +47,7 @@ namespace Blazor
             services.AddScoped<IArtistModel, ArtistModel>();
             services.AddScoped<IAlbumModel, AlbumModel>();
             services.AddScoped<ISongManageModel, SongManageModel>();
+            services.AddScoped<IPlayListModel, PlayListModel>();
 
 
             services.AddBlazoredModal();
@@ -52,7 +61,6 @@ namespace Blazor
                     a.RequireAuthenticatedUser().RequireClaim("Role", "StandardUser", "Admin"));
                 options.AddPolicy("MustBeAdmin",  a => 
                     a.RequireAuthenticatedUser().RequireClaim("Role", "Admin"));
-            
                 
             });
         }

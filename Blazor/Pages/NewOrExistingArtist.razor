@@ -1,5 +1,6 @@
 ﻿@using Entities
 @using Blazor.Model
+@using Blazor.Model.ArtistModel
 @inject IModalService ModalService
 @inject IArtistModel ArtistModel 
 
@@ -19,12 +20,12 @@
 @if (searchedForArtists == null)
     {
         <p>
-        Search for artists
+        @displayToUser
             </p>
     } @if (searchedForArtists.Count == 0)
       {
           <p>
-              No Artists with that name found
+        @displayToUser
           </p>
       }
       else
@@ -64,6 +65,8 @@
 
     private string artistName = "";
     private string searchName = "";
+    private string displayToUser = "Search for Artist";
+
 
     private IList<Artist> searchedForArtists = new List<Artist>();
 
@@ -83,6 +86,10 @@
         if (!string.IsNullOrEmpty(searchName))
         {
             searchedForArtists = await ArtistModel.SearchForArtists(searchName);
+            if (searchedForArtists.Count == 0)
+            {
+                displayToUser = "No artist found matching";
+            }
         }
         else
         {

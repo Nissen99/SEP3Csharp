@@ -7,37 +7,27 @@ using Entities;
 
 namespace RestT2_T3
 {
-    public class AlbumRestClient : IAlbumNetworking
+    public class AlbumRestClient : HttpClientBase, IAlbumNetworking
     {
-        private string uri = "http://localhost:8080/";
-
+        
         public async Task<IList<Album>> SearchForAlbums(string title)
         {
             using HttpClient client = new HttpClient();
-            string responseFromServerAsJson = await client.GetStringAsync(uri + $"album/{title}");
 
-            IList<Album> albumsFromServer = JsonSerializer.Deserialize<IList<Album>>(responseFromServerAsJson,
-                new JsonSerializerOptions()
-                {
-                    PropertyNameCaseInsensitive = true
-                });
+            HttpResponseMessage responseMessage = await client.GetAsync(Uri + $"album/{title}");
 
-
-            return albumsFromServer;
+            return await HandleResponseFromServer<IList<Album>>(responseMessage);
+            
         }
 
         public async Task<IList<Album>> GetAllAlbumsAsync()
         {
             using HttpClient client = new HttpClient();
-            string responseFromServerAsJson = await client.GetStringAsync(uri + $"album");
-
-            IList<Album> albumsFromServer = JsonSerializer.Deserialize<IList<Album>>(responseFromServerAsJson,
-                new JsonSerializerOptions()
-                {
-                    PropertyNameCaseInsensitive = true
-                });
             
-            return albumsFromServer;
+            HttpResponseMessage responseMessage = await client.GetAsync(Uri + $"album");
+
+            return await HandleResponseFromServer<IList<Album>>(responseMessage);
+          
         }
     }
 }

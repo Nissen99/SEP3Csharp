@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Blazor.Model;
+using Blazor.Model.UserModel;
 using Domain.Users;
 using Entities;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -16,7 +17,7 @@ namespace Blazor.Authentication
         private readonly IJSRuntime jsRuntime;
         private readonly IUserModel userModel;
 
-        private User cachedUser;
+        public static User cachedUser { get; private set; }
 
         public CustomAuthenticationStateProvider(IJSRuntime jsRuntime, IUserModel userModel)
         {

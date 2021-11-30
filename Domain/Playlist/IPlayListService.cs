@@ -11,6 +11,7 @@ namespace Domain.Playlist
         Task RemoveSongFromPlaylistAsync(Entities.Playlist playlist, Song song);
         Task AddSongToPlaylistAsync(Entities.Playlist playlist, Song song);
         Task DeletePlayListAsync(Entities.Playlist playlist);
+        Task<IList<Song>> GetAllSongsFromPlaylistAsync(Entities.Playlist playlist);
     }
 }		
 ;
