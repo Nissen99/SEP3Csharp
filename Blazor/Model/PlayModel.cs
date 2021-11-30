@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Net;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Blazor.Util;
 using Entities;
 using NAudio.Wave;
 using SocketsT1_T2.Tier1;
@@ -14,6 +17,8 @@ namespace Blazor.Model
     {
         private IClient client;
         private Mp3FileReader fileReader;
+        private MemoryStream ms;
+        private BufferedWaveProvider bufferedWaveProvider;
         private IWavePlayer waveOut;
         private IList<Song> previouslySongs = new List<Song>();
         private Song currentSong;
@@ -38,18 +43,22 @@ namespace Blazor.Model
 
         public async Task PlaySongAsync(Song song)
         {
-            if (fileReader != null)
-            {
-                fileReader.Dispose();
-            }
+            var watch = new Stopwatch();
+            watch.Start();
 
             waveOut.Dispose();
             
             
-            string serverFile = "wwwroot\\audio\\" + song.Title + song.Id + ".mp3";
+            // string serverFile = "wwwroot\\audio\\" + song.Title + song.Id + ".mp3";
+            // await FileExists(song, serverFile);
+            // fileReader = new Mp3FileReader(serverFile);
+            Song songToPlay = await client.PlaySong(song);
+            watch.Stop();
+            Console.WriteLine("Time taken to play song: " + watch.Elapsed.ToString(@"m\:ss\.fff"));
+            MemoryStream ms = new MemoryStream(songToPlay.Mp3);
+            fileReader = new Mp3FileReader(ms);
             
-            await FileExists(song, serverFile);
-            fileReader = new Mp3FileReader(serverFile);
+            
             
             waveOut.Init(fileReader);
             waveOut.Play();
@@ -69,22 +78,38 @@ namespace Blazor.Model
             {
                 previouslySongs.Add(song);
             }
+            
         }
 
-        private async Task FileExists(Song song, string serverFile)
+        public async Task GPlaySongAsync(Song song)
         {
-            if (!File.Exists(serverFile))
-            {
+            Song songToPlay = await client.PlaySong(song);
+            MemoryStream ms = new MemoryStream(songToPlay.Mp3);
+            
 
-                Console.WriteLine("SONG BEFORE NULL POINTER: " + song.Title);
-                Song songToPlay = await client.PlaySong(song);
-                Console.WriteLine("song to play " + songToPlay.Title);
-                using (FileStream byteToSong = File.Create(serverFile))
+            fileReader = new Mp3FileReader(ms);
+            
+            waveOut.Init(fileReader);
+            waveOut.Play();
+            currentSong = song;
+            UpdatePlayState.Invoke();
+            Thread t1 = new Thread(() =>
+            {
+                while (true)
                 {
-                    await byteToSong.WriteAsync(songToPlay.Mp3, 0, songToPlay.Mp3.Length);
+                    ProgressBarUpdate.Invoke();
+                    Thread.Sleep(500);
                 }
+            });
+            t1.Start();
+
+            if (previouslySongs.Count == 0 || previouslySongs[^1].Id != song.Id)
+            {
+                previouslySongs.Add(song);
             }
+            
         }
+        
 
         public async Task PlayPauseToggleAsync()
         {
