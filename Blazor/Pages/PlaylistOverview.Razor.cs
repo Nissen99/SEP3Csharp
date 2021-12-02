@@ -32,7 +32,7 @@ namespace Blazor.Pages
 
         private async Task RemovePlaylist(Entities.Playlist playlist)
         {
-            var form = ModalService.Show<ConfirmChoice>($"Are you sure you want to remove \"{playlist.Id}\"");
+            var form = ModalService.Show<ConfirmChoice>($"Are you sure you want to remove \"{playlist.Title}\"");
             var result = await form.Result;
 
             if (!result.Cancelled)
