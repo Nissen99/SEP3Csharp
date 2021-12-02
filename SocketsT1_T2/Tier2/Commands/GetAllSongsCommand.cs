@@ -21,6 +21,9 @@ namespace SocketsT1_T2.Tier2.Commands
             //Parameter skal ikke bruges
             IList<Song> result = await playService.GetAllSongsAsync();
             await ServerResponse.SendToClient(stream, result);
+            
+
+
 
         }
 

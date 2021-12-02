@@ -17,22 +17,9 @@ namespace SocketsT1_T2
         {
             ILibraryNetworking libraryNetworking = new LibraryRestClient();
             ILibraryService libraryService = new LibraryService(libraryNetworking);
-            IPlayNetworking playNetworking = new PlayRestClient();
-            IPlayService playService = new PlayService(playNetworking);
-            IPlaylistNetworking playlistNetworking = new PlaylistRestClient();
-            IPlayListService playListService = new PlayListService(playlistNetworking);
-            ISongSearchNetworking songSearchNetworking = new SongSearchRestClient();
-            ISongSearchService songSearchService = new SongSearchService(songSearchNetworking);
-            IUserNetworking userNetworking = new UserRestClient();
-            IUserService userService = new UserService(userNetworking);
-            IArtistNetworking artistNetworking = new ArtistRestClient();
-            IArtistService artistService = new ArtistService(artistNetworking);
-            IAlbumNetworking albumNetworking = new AlbumRestClient();
-            IAlbumService albumService = new AlbumService(albumNetworking);
-            ISongManageNetworking songManageNetworking = new SongManageRestClient();
-            ISongManageService songManageService = new SongManageService(songManageNetworking);
+            
 
-            IServer server = new Server(libraryService, playService, songSearchService, userService, artistService, albumService, songManageService, playListService);
+            IServer server = new Server(libraryService);
             server.startServer();
         }
     }

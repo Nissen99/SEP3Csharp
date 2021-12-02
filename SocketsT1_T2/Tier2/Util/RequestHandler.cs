@@ -27,7 +27,9 @@ namespace SocketsT1_T2.Tier2.Util
             {"GETPLAYLISTS", new GetPlaylistsCommand()},
             {"GETSONGSFROMPLAYLIST", new GetSongsFromPlaylistCommand()},
             {"CREATENEWPLAYLIST", new CreateNewPlaylistCommand()},
-            {"REMOVEPLAYLIST",new RemovePlaylistCommand()}
+            {"REMOVEPLAYLIST",new RemovePlaylistCommand()},
+            {"ADDSONGTOPLAYLIST", new AddSongToPlaylistCommand()},
+            {"REMOVESONGFROMPLAYLIST",new RemoveSongFromPlaylistCommand()}
         };
 
         public string RequestAction { get; set; }

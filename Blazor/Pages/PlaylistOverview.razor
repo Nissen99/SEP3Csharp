@@ -80,8 +80,8 @@ else
         {
             <tr>
                 <td>
-                    @* @onclick="@(() => LoadPlaylist(playlist)) *@
-                    <button @onclick="@(() => NavigationManager.NavigateTo("/playlist"))">
+                     
+                    <button @onclick="@(() => LoadPlaylist(playlist))">
                         <i class="oi oi-media-play" style="color:blue"/>
                     </button> @playlist.Title
                 </td>

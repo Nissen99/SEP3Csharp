@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Blazor.Model;
 using Blazor.Model.AudioTestModel;
+using Blazor.Model.PlaylistManageModel;
 using Blazor.Model.PlayModel;
 using Blazor.Model.SongManagerModel;
 using Blazored.Modal.Services;
@@ -15,15 +17,26 @@ namespace Blazor.Pages
     {
         [Inject] public IAudioTestModel Model { get; set; }
         [Inject] public ISongManageModel SongManageModel { get; set; }
+        [Inject] public IPlaylistManageModel PlaylistManageModel { get; set; }
         [Inject] public IPlayModel PlayModel { get; set; }
         [Inject] public IModalService ModalService { get; set; }
         [Parameter]
         public IList<Song> SongList { get; set; }
+        
+        [Parameter]
+        public Entities.Playlist Playlist { get; set; }
 
         public Song CurrentSong;
 
         protected async override Task OnInitializedAsync()
         {
+            if (Playlist != null)
+            {
+                Console.WriteLine("Vi bruger squ playlisten nu");
+                SongList = Playlist.Songs;
+            }
+            
+            
             SongPlaying();
             PlayModel.UpdatePlayState += () => SongPlaying();
             StateHasChanged();
@@ -98,9 +111,36 @@ namespace Blazor.Pages
 
         }
 
-        private async Task removeSong(Song song)
+        private async Task remove(Song song)
         {
+            if (Playlist != null)
+            {
+                await removeSongFromPlaylist(song);
+                return;
+            }
+
+            await removeSongFromSystem(song);
+        }
+
+        private async Task removeSongFromPlaylist(Song song)
+        {
+            Console.WriteLine("Removing from playlist");
+            var form = ModalService.Show<ConfirmChoice>($"Are you sure you want to remove \"{song.Title}\"");
+            var result = await form.Result;
+
+            if (!result.Cancelled)
+            {
+                await PlaylistManageModel.RemoveSongFromPlaylist(Playlist, song);
+                SongList.Remove(song);
+                StateHasChanged();
+            }
             
+        }
+
+
+        private async Task removeSongFromSystem(Song song)
+        {
+            Console.WriteLine("Removing from muddafucka system");
             var form = ModalService.Show<ConfirmChoice>($"Are you sure you want to remove \"{song.Title}\"");
             var result = await form.Result;
          
@@ -111,7 +151,18 @@ namespace Blazor.Pages
                 Console.WriteLine("Remove Song ");
                 StateHasChanged();
             }
-          
+        }
+
+        private async Task PerformAddToPlaylist(Song song)
+        {
+            var form = ModalService.Show<AddToPlaylist>("Choose a playlist to add this song to");
+            var result = await form.Result;
+            if (!result.Cancelled)
+            {
+                Entities.Playlist playlist = (Entities.Playlist)result.Data;
+                await PlaylistManageModel.AddSongToPlaylist(playlist, song);
+                Console.WriteLine($"Added {song.Title} to playlist: {playlist.Title}");
+            }
         }
     }
 }

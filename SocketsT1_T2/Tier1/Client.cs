@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Entities;
+using SocketsT1_T2.Tier2.Commands;
 
 
 namespace SocketsT1_T2.Tier1
@@ -22,7 +23,7 @@ namespace SocketsT1_T2.Tier1
 
         public async Task<Song> PlaySong(Song song)
         {
-            TcpClient client = new TcpClient("localhost", 1098);
+            using TcpClient client = GetTcpClient();
             await SendServerRequest("PLAYSONG", song, client);
             return await serverResponse<Song>(client, 30000000);
         }
@@ -113,6 +114,20 @@ namespace SocketsT1_T2.Tier1
             using TcpClient client = GetTcpClient();
             await SendServerRequest("GETSONGSFROMPLAYLIST", playlist, client);
             return await serverResponse<IList<Song>>(client, 100000);
+        }
+
+        public async Task AddSongToPlaylistAsync(Playlist playlist, Song song)
+        {
+            using TcpClient client = GetTcpClient();
+            object[] toSent = {playlist, song};
+            await SendServerRequest("ADDSONGTOPLAYLIST", toSent, client);
+        }
+
+        public async Task RemoveSongFromPlaylistAsync(Playlist playlist, Song song)
+        {
+            using TcpClient client = GetTcpClient();
+            object[] toSent = {playlist, song};
+            await SendServerRequest("REMOVESONGFROMPLAYLIST", toSent, client);
         }
 
 

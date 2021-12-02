@@ -6,6 +6,8 @@ namespace SocketsT1_T2.Tier1
 {
     public interface IClient
     {
+        Task AddSongToPlaylistAsync(Playlist playlist, Song song);
+        Task RemoveSongFromPlaylistAsync(Playlist playlist, Song song);
         Task<IList<Song>> GetAllSongs();
         Task<Song> PlaySong(Song song);
 

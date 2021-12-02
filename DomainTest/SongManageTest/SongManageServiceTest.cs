@@ -41,7 +41,7 @@ namespace DomainTest.SongManageTest
             album = new Album() {Title = "TestAlbum"};
             artists = new List<Artist>() {new Artist() {Name = "Test"}};
             releaseYear = 2020;
-            mp3 = File.ReadAllBytes(@"C:\Users\Mikkel\RiderProjects\SEP3Csharp\DomainTest\audio\test.mp3");
+            mp3 = File.ReadAllBytes(@"C:\Users\mathi\RiderProjects\SEP3Csharp\DomainTest\audio\test.mp3");
         }
 
 
@@ -112,7 +112,7 @@ namespace DomainTest.SongManageTest
         [Test]
         public async Task AddSongWithWrongFileType()
         {
-            mp3 = File.ReadAllBytes(@"C:\Users\Mikkel\RiderProjects\SEP3Csharp\DomainTest\audio\testNotMp3File.txt");
+            mp3 = File.ReadAllBytes(@"C:\Users\mathi\RiderProjects\SEP3Csharp\DomainTest\audio\test.txt");
             Assert.ThrowsAsync<InvalidDataException>(CreateNewSongAndSave);
         }
 

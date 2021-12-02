@@ -16,24 +16,11 @@ namespace SocketsT1_T2.Tier2
     public class Server : IServer
     {
         private ILibraryService libraryService;
-        private IPlayService playSongService;
-        private ISongSearchService songSearchService;
-        private IUserService userService;
-        private IArtistService artistService;
-        private IAlbumService albumService;
-        private ISongManageService songManageService;
-        private IPlayListService playListService;
-        public Server(ILibraryService libraryService, IPlayService playSongService, ISongSearchService songSearchService, 
-            IUserService userService, IArtistService artistService, IAlbumService albumService, ISongManageService songManageService, IPlayListService playListService)
+        
+        public Server(ILibraryService libraryService)
        {
            this.libraryService = libraryService;
-           this.playSongService = playSongService;
-           this.songSearchService = songSearchService;
-           this.userService = userService;
-           this.artistService = artistService;
-           this.albumService = albumService;
-           this.songManageService = songManageService;
-           this.playListService = playListService;
+          
        }
 
        public void startServer()
