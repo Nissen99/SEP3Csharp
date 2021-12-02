@@ -8,5 +8,14 @@ namespace Entities
         public User User { get; set; }
         public string Title { get; set; }
         public IList<Song> Songs { get; set; }
+
+
+        public Playlist()
+        {
+            Songs = new List<Song>();
+        }
     }
+    
+    
+    
 }

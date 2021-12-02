@@ -11,10 +11,20 @@ namespace RestT2_T3
 {
     public class PlaylistRestClient : HttpClientBase, IPlaylistNetworking
     {
-        public async Task<Playlist> CreatePlaylistAsync(Playlist playlist, User user)
+
+        public async Task CreateNewPlaylistAsync(Playlist playlist)
+
         {
-            throw new NotImplementedException();
+            using HttpClient client = new HttpClient();
+            
+            StringContent content = FromObjectToStringContentCamelCase(playlist);
+
+            HttpResponseMessage responseMessage = await client.PostAsync(Uri + "playlist/" , content);
+            
+            HandleResponsePostAndRemove(responseMessage);
+            
         }
+        
 
         public async Task<IList<Playlist>> GetAllPlaylistsForUserAsync(User user)
         {
@@ -34,9 +44,24 @@ namespace RestT2_T3
  
         }
 
-        public async Task DeletePlayListAsync(Playlist playlist)
+        public Task RemoveSongFromPlaylistAsync(Playlist playlist, Song song)
         {
             throw new NotImplementedException();
+        }
+
+        public Task AddSongsToPlaylistAsync(Playlist playlist, IList<Song> songs)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public async Task RemovePlaylistAsync(Playlist playlist)
+        {
+            using HttpClient httpClient = new HttpClient();
+
+            HttpResponseMessage responseMessage = await httpClient.DeleteAsync(Uri + $"/playlist/{playlist.Id}");
+            
+            HandleResponsePostAndRemove(responseMessage);
         }
     }
 }

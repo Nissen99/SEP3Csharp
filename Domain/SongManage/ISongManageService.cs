@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Entities;
 
-namespace Domain.Songs
+namespace Domain.SongManage
 {
-    public interface ISongManageNetworking
+    public interface ISongManageService
     {
         Task AddNewSongAsync(Song newSong);
         Task RemoveSongAsync(Song songToRemove);

@@ -12,11 +12,11 @@ namespace Domain.Playlist
         {
             this.playlistNetworking = playlistNetworking;
         }
+        
 
-
-        public Task<Entities.Playlist> CreatePlaylistAsync(Entities.Playlist playlist, User user)
+        public async Task DeleteExistingPlayListAsync(Entities.Playlist playlist)
         {
-            throw new System.NotImplementedException();
+            await playlistNetworking.RemovePlaylistAsync(playlist);
         }
 
         public async Task<IList<Entities.Playlist>> GetAllPlaylistsForUserAsync(User user)
@@ -24,19 +24,20 @@ namespace Domain.Playlist
             return await playlistNetworking.GetAllPlaylistsForUserAsync(user);
         }
 
-        public Task RemoveSongFromPlaylistAsync(Entities.Playlist playlist, Song song)
+        public  async Task RemoveSongFromPlaylistAsync(Entities.Playlist playlist, Song song)
         {
-            throw new System.NotImplementedException();
+            await playlistNetworking.RemoveSongFromPlaylistAsync(playlist, song);
+
         }
 
-        public Task AddSongToPlaylistAsync(Entities.Playlist playlist, Song song)
+        public async Task AddSongsToPlaylistAsync(Entities.Playlist playlist, IList<Song> songs)
         {
-            throw new System.NotImplementedException();
+            await playlistNetworking.AddSongsToPlaylistAsync(playlist, songs);
         }
-
-        public Task DeletePlayListAsync(Entities.Playlist playlist)
+        
+        public async Task CreateNewPlaylistAsync(Entities.Playlist playlist)
         {
-            throw new System.NotImplementedException();
+             await playlistNetworking.CreateNewPlaylistAsync(playlist);
         }
 
         public async Task<IList<Song>> GetAllSongsFromPlaylistAsync(Entities.Playlist playlist)

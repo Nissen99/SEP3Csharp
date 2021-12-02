@@ -1,0 +1,33 @@
+﻿<h3>CreatePlaylist</h3>
+
+
+<div class="form-group">
+    <label>Playlist Title:</label>
+    <input type="text" placeholder="Title" @bind-value="Playlist.Title"/>
+</div>
+<div style="color:red">@errorMessage</div>
+
+<button @onclick="PerformCreatePlaylist"> Create Playlist </button>
+<div/>
+
+@code {
+
+    [CascadingParameter]
+    public BlazoredModalInstance BlazoredModal { get; set; }
+
+    private string Title;
+    private string errorMessage;
+    private Entities.Playlist Playlist = new Entities.Playlist();
+
+
+    public async Task PerformCreatePlaylist()
+    {
+        await BlazoredModal.CloseAsync(ModalResult.Ok(Playlist));
+    }
+    
+    private async Task Cancel()
+    {
+        await BlazoredModal.CancelAsync();
+    }
+
+}

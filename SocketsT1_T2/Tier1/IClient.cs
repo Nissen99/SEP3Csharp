@@ -22,7 +22,11 @@ namespace SocketsT1_T2.Tier1
         Task<IList<Playlist>> GetAllPlaylistsForUserAsync(User user);
         Task<IList<Song>> GetAllSongsFromPlaylistAsync(Entities.Playlist playlist);
 
+        Task CreateNewPlaylistAsync(Playlist playlist);
+
+
         Task<IList<Album>> GetAllAlbumsAsync();
         Task<IList<Artist>> GetAllArtistAsync();
+        Task RemovePlaylistAsync(Playlist playlist);
     }
 }

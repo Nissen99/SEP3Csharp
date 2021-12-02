@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Entities
 {
@@ -8,8 +9,8 @@ namespace Entities
     public class Song
     {
        
-
         public int Id { get; set; }
+        [Required]
         public string Title { get; set; }
         public int Duration { get; set; }
         public IList<Artist> Artists { get; set; }

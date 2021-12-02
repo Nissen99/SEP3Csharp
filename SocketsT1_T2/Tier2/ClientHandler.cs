@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Domain.Album;
 using Domain.Artist;
 using Domain.Play;
-using Domain.Songs;
 using Domain.SongSearch;
 using Domain.Users;
 using Entities;
@@ -36,7 +35,7 @@ namespace SocketsT1_T2.Tier2
             ICommand command = await rHandler.GetCommand();
             await command.Execute(client.GetStream(),rHandler.RequestArg );
             
-            client.Dispose();
+            //client.Dispose();
         }
         
     }
