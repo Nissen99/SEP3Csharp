@@ -10,6 +10,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestT2_T3", "RestT2_T3\Rest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocketsT1_T2", "SocketsT1_T2\SocketsT1_T2.csproj", "{7BD10DEE-8839-444B-94C5-1CE52C0C13F6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTest", "UnitTest", "{0EE25ABF-DF43-4777-A563-50D8B1A79C04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainTest", "DomainTest\DomainTest.csproj", "{3627B305-E586-4206-A950-E397A8304413}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +40,12 @@ Global
 		{7BD10DEE-8839-444B-94C5-1CE52C0C13F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7BD10DEE-8839-444B-94C5-1CE52C0C13F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7BD10DEE-8839-444B-94C5-1CE52C0C13F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3627B305-E586-4206-A950-E397A8304413}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3627B305-E586-4206-A950-E397A8304413}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3627B305-E586-4206-A950-E397A8304413}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3627B305-E586-4206-A950-E397A8304413}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3627B305-E586-4206-A950-E397A8304413} = {0EE25ABF-DF43-4777-A563-50D8B1A79C04}
 	EndGlobalSection
 EndGlobal

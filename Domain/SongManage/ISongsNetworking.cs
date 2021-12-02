@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Entities;
 
-namespace Domain.Songs
+namespace Domain.SongManage
 {
     public interface ISongsNetworking
     {
