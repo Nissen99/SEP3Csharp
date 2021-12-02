@@ -17,10 +17,9 @@ namespace Blazor.Model.PlaylistModel
             Client = client;
         }
 
-
-        public Task<Playlist> CreatePlaylistAsync(Playlist playlist, User user)
+        public async Task CreateNewPlatListAsync(Playlist playlist)
         {
-            throw new System.NotImplementedException();
+          await Client.CreateNewPlaylistAsync(playlist);
         }
 
         public async Task<IList<Playlist>> GetAllPlaylistsForUserAsync(User user)
@@ -43,9 +42,12 @@ namespace Blazor.Model.PlaylistModel
             throw new System.NotImplementedException();
         }
 
-        public Task DeletePlayListAsync(Playlist playlist)
+
+        public async Task RemovePlayListAsync(Playlist playlist)
+
         {
-            throw new System.NotImplementedException();
+           await Client.RemovePlaylistAsync(playlist);
         }
+        
     }
 }

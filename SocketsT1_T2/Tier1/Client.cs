@@ -1,4 +1,3 @@
-
 #nullable enable
 using System;
 using System.Collections.Generic;
@@ -13,7 +12,7 @@ namespace SocketsT1_T2.Tier1
 {
     public class Client : IClient
     {
-       public async Task<IList<Song>> GetAllSongs()
+        public async Task<IList<Song>> GetAllSongs()
         {
             using TcpClient client = GetTcpClient();
             await SendServerRequest("GETSONGS", "", client);
@@ -31,14 +30,14 @@ namespace SocketsT1_T2.Tier1
         public async Task<IList<Song>> GetSongsByFilterAsync(string[] filterOptions)
         {
             using TcpClient client = GetTcpClient();
-             await SendServerRequest("GETSONGSBYFILTER", filterOptions,client);
+            await SendServerRequest("GETSONGSBYFILTER", filterOptions, client);
             return await serverResponse<IList<Song>>(client, 500000);
         }
 
         public async Task RegisterUser(User user)
         {
             using TcpClient client = GetTcpClient();
-            await SendServerRequest("REGISTERUSER", user,client);
+            await SendServerRequest("REGISTERUSER", user, client);
         }
 
         public async Task<User> validateUser(User user)
@@ -53,7 +52,6 @@ namespace SocketsT1_T2.Tier1
             using TcpClient client = GetTcpClient();
             await SendServerRequest("SEARCHFORARTISTS", name, client);
             return await serverResponse<IList<Artist>>(client, 500000);
-            
         }
 
         public async Task<IList<Album>> SearchForAlbums(string title)
@@ -75,6 +73,12 @@ namespace SocketsT1_T2.Tier1
             await SendServerRequest("REMOVESONG", song, client);
         }
 
+        public async Task CreateNewPlaylistAsync(Playlist playlist)
+        {
+            using TcpClient client = GetTcpClient();
+            await SendServerRequest("CREATENEWPLAYLIST", playlist, client);
+        }
+
         public async Task<IList<Album>> GetAllAlbumsAsync()
         {
             using TcpClient client = GetTcpClient();
@@ -86,14 +90,21 @@ namespace SocketsT1_T2.Tier1
         {
             using TcpClient client = GetTcpClient();
             await SendServerRequest("GETALLARTISTS", "", client);
-            return await serverResponse<IList<Artist>>(client, 500000);        }
+            return await serverResponse<IList<Artist>>(client, 500000);
+        }
+
+        public async Task RemovePlaylistAsync(Playlist playlist)
+        {
+            using TcpClient client = GetTcpClient();
+            await SendServerRequest("REMOVEPLAYLIST", playlist, client);
+        }
 
         public async Task<IList<Playlist>> GetAllPlaylistsForUserAsync(User user)
         {
             using TcpClient client = GetTcpClient();
             Console.WriteLine("På client, er vi her user: " + user.Username);
             await SendServerRequest("GETPLAYLISTS", user, client);
-            
+
             return await serverResponse<IList<Playlist>>(client, 1000000);
         }
 
@@ -115,9 +126,8 @@ namespace SocketsT1_T2.Tier1
             string transferAsJson = JsonSerializer.Serialize(transferObj);
             byte[] toServer = Encoding.UTF8.GetBytes(transferAsJson);
             await stream.WriteAsync(toServer);
-           
         }
-        
+
 
         private async Task<T> serverResponse<T>(TcpClient client, int bufferSize)
         {
@@ -127,15 +137,15 @@ namespace SocketsT1_T2.Tier1
             int bytesRead = await stream.ReadAsync(dataFromServer, 0, dataFromServer.Length);
 
             string inFromServer = Encoding.UTF8.GetString(dataFromServer, 0, bytesRead);
-            TransferObj<T> objectFromServer = JsonSerializer.Deserialize<TransferObj<T>>(inFromServer, new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
+            TransferObj<T> objectFromServer = JsonSerializer.Deserialize<TransferObj<T>>(inFromServer,
+                new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
 
-            });
-            
             return objectFromServer.Arg;
         }
-        
+
 
         private TcpClient GetTcpClient()
         {

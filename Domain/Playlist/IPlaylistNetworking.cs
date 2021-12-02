@@ -6,9 +6,11 @@ namespace Domain.Playlist
 {
     public interface IPlaylistNetworking
     {
-        Task<Entities.Playlist> CreatePlaylistAsync(Entities.Playlist playlist, User user);
+        public Task CreateNewPlaylistAsync(Entities.Playlist playlist);
         Task<IList<Entities.Playlist>> GetAllPlaylistsForUserAsync(User user);
         Task<IList<Song>> GetAllSongsFromPlaylistAsync(Entities.Playlist playlist);
-        Task DeletePlayListAsync(Entities.Playlist playlist);
+        Task RemoveSongFromPlaylistAsync(Entities.Playlist playlist, Song song);
+        Task AddSongsToPlaylistAsync(Entities.Playlist playlist, IList<Song> songs);
+        Task RemovePlaylistAsync(Entities.Playlist playlist);
     }
 }

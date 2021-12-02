@@ -10,6 +10,7 @@ namespace Blazor
         {
             CreateHostBuilder(args).Build().Run();
             Console.WriteLine();
+            
 
         }
 

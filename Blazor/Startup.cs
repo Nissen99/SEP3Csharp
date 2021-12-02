@@ -17,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SocketsT1_T2.Tier1;
+using Syncfusion.Blazor;
 
 namespace Blazor
 {
@@ -47,9 +48,11 @@ namespace Blazor
             services.AddScoped<IAlbumModel, AlbumModel>();
             services.AddScoped<ISongManageModel, SongManageModel>();
             services.AddScoped<IPlayListModel, PlayListModel>();
+            
 
 
             services.AddBlazoredModal();
+            services.AddSyncfusionBlazor();
             services.AddScoped<IUserModel, UserModel>();
             
             services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
