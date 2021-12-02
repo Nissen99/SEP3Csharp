@@ -1,3 +1,5 @@
+
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
@@ -5,7 +7,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Entities;
-using RestT2_T3.Util;
+
 
 namespace SocketsT1_T2.Tier1
 {
@@ -23,7 +25,7 @@ namespace SocketsT1_T2.Tier1
         {
             TcpClient client = new TcpClient("localhost", 1098);
             await SendServerRequest("PLAYSONG", song, client);
-            return await serverResponse<Song>(client, 10000000);
+            return await serverResponse<Song>(client, 30000000);
         }
 
         public async Task<IList<Song>> GetSongsByFilterAsync(string[] filterOptions)
@@ -133,6 +135,7 @@ namespace SocketsT1_T2.Tier1
             
             return objectFromServer.Arg;
         }
+        
 
         private TcpClient GetTcpClient()
         {

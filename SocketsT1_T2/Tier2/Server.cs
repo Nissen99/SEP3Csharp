@@ -48,7 +48,7 @@ namespace SocketsT1_T2.Tier2
             while (true)
             {
                 TcpClient client = listener.AcceptTcpClient();
-                IClientHandler clientHandler = new ClientHandler(client, playSongService, userService, songSearchService, artistService, albumService, songManageService, playListService);
+                IClientHandler clientHandler = new ClientHandler(client);
                 new Thread(clientHandler.ListenToClientAsync).Start();
             }
             

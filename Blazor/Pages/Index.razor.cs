@@ -4,7 +4,6 @@ using Blazor.Authentication;
 using Blazor.Model;
 using Blazor.Model.UserModel;
 using Blazored.Modal.Services;
-using Domain.Users;
 using Entities;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
