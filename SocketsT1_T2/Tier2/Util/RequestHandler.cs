@@ -23,7 +23,9 @@ namespace SocketsT1_T2.Tier2.Util
             {"SEARCHFORARTISTS", new SearchForArtistsCommand()},
             {"VALIDATEUSER", new ValidateUserCommand()},
             {"GETALLALBUMS", new GetAllAlbumsCommand()},
-            {"GETALLARTISTS", new GetAllArtistsCommand()}
+            {"GETALLARTISTS", new GetAllArtistsCommand()},
+            {"GETPLAYLISTS", new GetPlaylistsCommand()},
+            {"GETSONGSFROMPLAYLIST", new GetSongsFromPlaylistCommand()}
         };
 
         public string RequestAction { get; set; }
