@@ -2,7 +2,6 @@
 using Blazor.Model;
 using Blazored.Modal;
 using Blazored.Modal.Services;
-using Domain.Users;
 using Entities;
 using Microsoft.AspNetCore.Components;
 

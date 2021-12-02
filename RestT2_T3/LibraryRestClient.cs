@@ -39,7 +39,6 @@ namespace RestT2_T3
                 try
                 {
                     byte[] byteArrayAsync = await client.GetByteArrayAsync(uri + "mp3/" + count++);
-                    Console.WriteLine("Library size of mp3s: " + byteArrayAsync.Length);
                     toReturn.Add(byteArrayAsync);
                 }
                 catch (Exception e)
