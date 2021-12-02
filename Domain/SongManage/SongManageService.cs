@@ -1,10 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using Domain.Util;
 using Entities;
 using NAudio.Wave;
 
-namespace Domain.Songs
+namespace Domain.SongManage
 {
     public class SongManageService : ISongManageService
     {
@@ -18,17 +19,18 @@ namespace Domain.Songs
         //TODO Input checks
         public async Task AddNewSongAsync(Song newSong)
         {
+            if (!InputValidator.CheckSongValidWithoutMp3(newSong)) throw new ArgumentException("Some Property not found");
+
+            
+            
             using MemoryStream ms = new MemoryStream(newSong.Mp3);
             using Mp3FileReader fileReader = new Mp3FileReader(ms);
             
             
             int duration = (int) fileReader.TotalTime.TotalSeconds;
-            Console.WriteLine("Duration read in int: " + duration);
 
             newSong.Duration = duration;
             
-            Console.WriteLine($"(Song Service Title: {newSong.Title}");
-
             await songManageNetworking.AddNewSongAsync(newSong);
         }
 

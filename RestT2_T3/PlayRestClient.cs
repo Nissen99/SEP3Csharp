@@ -27,7 +27,7 @@ namespace RestT2_T3
             //
             // return  songWithMP3;
             byte[] byteAsync = await client.GetByteArrayAsync(Uri + $"songs/{song.Id}");
-            Console.WriteLine("Before des: Lenght: " + byteAsync.Length);
+            
             song.Mp3 = byteAsync;
 
             return song;
