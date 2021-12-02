@@ -9,9 +9,8 @@ using Entities;
 
 namespace RestT2_T3
 {
-    public class PlaylistRestClient : IPlaylistNetworking
+    public class PlaylistRestClient : HttpClientBase, IPlaylistNetworking
     {
-        private string uri = "http://localhost:8080/";
         public async Task<Playlist> CreatePlaylistAsync(Playlist playlist, User user)
         {
             throw new NotImplementedException();
@@ -20,19 +19,19 @@ namespace RestT2_T3
         public async Task<IList<Playlist>> GetAllPlaylistsForUserAsync(User user)
         {
             using HttpClient client = new HttpClient();
-            string stringAsync = await client.GetStringAsync(uri + "playlist/" + user.Username);
-            Console.WriteLine(stringAsync);
-            return JsonSerializer.Deserialize<IList<Playlist>>(stringAsync,
-                new JsonSerializerOptions {PropertyNameCaseInsensitive = true});
+            
+            HttpResponseMessage responseMessage = await client.GetAsync(Uri + "playlist/" + user.Username);
+
+            return await HandleResponseGet<IList<Playlist>>(responseMessage);
         }
         public async Task<IList<Song>> GetAllSongsFromPlaylistAsync(Playlist playlist)
         {
             using HttpClient client = new HttpClient();
-            string stringAsync = await client.GetStringAsync(uri + "playlistSongs/" + playlist.Id);
+           
+            HttpResponseMessage responseMessage= await client.GetAsync(Uri + "playlistSongs/" + playlist.Id);
 
-            Console.WriteLine(stringAsync);
-            return JsonSerializer.Deserialize<IList<Song>>(stringAsync,
-                new JsonSerializerOptions {PropertyNameCaseInsensitive = true});
+            return await HandleResponseGet<IList<Song>>(responseMessage);
+ 
         }
 
         public async Task DeletePlayListAsync(Playlist playlist)

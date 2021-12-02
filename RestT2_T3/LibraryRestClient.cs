@@ -9,24 +9,18 @@ using Entities;
 
 namespace RestT2_T3
 {
-    public class LibraryRestClient : ILibraryNetworking
+    public class LibraryRestClient : HttpClientBase, ILibraryNetworking
     {
-        private string uri = "http://localhost:8080/";
         public async Task PostAllSongs(IList<Song> songList)
         {
             using HttpClient client = new HttpClient();
-            string songListAsJson = JsonSerializer.Serialize(songList,
-                new JsonSerializerOptions {PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
-            StringContent content = new StringContent(songListAsJson, Encoding.UTF8, "application/json");
+            
+            StringContent content = FromObjectToStringContentCamelCase(songList);
 
-            Console.WriteLine("Yike");
-            HttpResponseMessage response = await client.PostAsync(uri + "songs", content);
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new Exception($@"Error: {response.StatusCode}, {response.ReasonPhrase}");
-            }
+            HttpResponseMessage responseMessage = await client.PostAsync(Uri + "songs", content);
+           
+            HandleResponsePostAndRemove(responseMessage);
 
-            Console.WriteLine("Done");
         }
 
         public async Task<IList<byte[]>> GetAllMP3()
@@ -38,7 +32,7 @@ namespace RestT2_T3
             {
                 try
                 {
-                    byte[] byteArrayAsync = await client.GetByteArrayAsync(uri + "mp3/" + count++);
+                    byte[] byteArrayAsync = await client.GetByteArrayAsync(Uri + "mp3/" + count++);
                     Console.WriteLine("Library size of mp3s: " + byteArrayAsync.Length);
                     toReturn.Add(byteArrayAsync);
                 }

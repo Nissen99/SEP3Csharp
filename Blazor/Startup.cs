@@ -1,5 +1,4 @@
 using Blazor.Authentication;
-using Blazor.Model;
 using Blazor.Model.AlbumModel;
 using Blazor.Model.ArtistModel;
 using Blazor.Model.AudioTestModel;

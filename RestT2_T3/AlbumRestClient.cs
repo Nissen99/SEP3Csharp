@@ -16,7 +16,7 @@ namespace RestT2_T3
 
             HttpResponseMessage responseMessage = await client.GetAsync(Uri + $"album/{title}");
 
-            return await HandleResponseFromServer<IList<Album>>(responseMessage);
+            return await HandleResponseGet<IList<Album>>(responseMessage);
             
         }
 
@@ -26,7 +26,7 @@ namespace RestT2_T3
             
             HttpResponseMessage responseMessage = await client.GetAsync(Uri + $"album");
 
-            return await HandleResponseFromServer<IList<Album>>(responseMessage);
+            return await HandleResponseGet<IList<Album>>(responseMessage);
           
         }
     }

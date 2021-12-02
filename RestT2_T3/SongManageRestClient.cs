@@ -9,23 +9,19 @@ using Entities;
 
 namespace RestT2_T3
 {
-    public class SongManageRestClient : ISongManageNetworking
+    public class SongManageRestClient : HttpClientBase, ISongManageNetworking
     {
-        private string uri = "http://localhost:8080/";
 
         public async Task AddNewSongAsync(Song newSong)
         {
             using HttpClient httpClient = new HttpClient();
-
-
-            string newSongAsJson = JsonSerializer.Serialize(newSong,
-                new JsonSerializerOptions {PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
             
-            StringContent newSongAsStringContent = new StringContent(newSongAsJson, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage responseMessage = await httpClient.PostAsync(uri + "/song", newSongAsStringContent);
+            StringContent newSongAsStringContent = FromObjectToStringContentCamelCase(newSong);
+
+            HttpResponseMessage responseMessage = await httpClient.PostAsync(Uri + "/song", newSongAsStringContent);
             
-            RequestCodeCheck(responseMessage);
+            HandleResponsePostAndRemove(responseMessage);
             
         }
 
@@ -33,21 +29,12 @@ namespace RestT2_T3
         {
             using HttpClient httpClient = new HttpClient();
 
-            HttpResponseMessage responseMessage = await httpClient.DeleteAsync(uri + $"/song/{songToRemove.Id}");
+            HttpResponseMessage responseMessage = await httpClient.DeleteAsync(Uri + $"/song/{songToRemove.Id}");
             
-            RequestCodeCheck(responseMessage);
+            HandleResponsePostAndRemove(responseMessage);
 
         }
-
-        protected static void RequestCodeCheck(HttpResponseMessage responseMessage)
-        {
-            Console.WriteLine("Checking request");
-            if (!responseMessage.IsSuccessStatusCode)
-            {
-                Console.WriteLine("Not good");
-                throw new Exception($"Error: {responseMessage.StatusCode}, {responseMessage.ReasonPhrase}");
-            }
-        }
+        
         
     }
     }

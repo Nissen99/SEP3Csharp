@@ -8,17 +8,16 @@ using Entities;
 
 namespace RestT2_T3
 {
-    public class SongsRestClient : ISongsNetworking
+    public class SongsRestClient : HttpClientBase, ISongsNetworking
     {
-        private string uri = "http://localhost:8080/";
         public async Task<IList<Song>> GetAllSongs()
         {
             using HttpClient client = new HttpClient();
-            string stringAsync = await client.GetStringAsync(uri + "songs");
+            
+            HttpResponseMessage responseMessage = await client.GetAsync(Uri + "songs");
 
-            Console.WriteLine(stringAsync);
-            return JsonSerializer.Deserialize<IList<Song>>(stringAsync,
-                new JsonSerializerOptions {PropertyNameCaseInsensitive = true});
+            return await HandleResponseGet<IList<Song>>(responseMessage);
+            
         }
     }
 }
