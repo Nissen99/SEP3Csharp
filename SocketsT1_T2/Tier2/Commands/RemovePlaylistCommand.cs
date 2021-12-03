@@ -17,7 +17,7 @@ namespace SocketsT1_T2.Tier2.Commands
         public async Task Execute(NetworkStream stream, JsonElement tObj)
         {
             Playlist playlist = JsonElementConverter.ElementToObject<Playlist>(tObj);
-            await playListService.DeleteExistingPlayListAsync(playlist);
+            await playListService.RemovePlayListAsync(playlist);
 
         }
     }

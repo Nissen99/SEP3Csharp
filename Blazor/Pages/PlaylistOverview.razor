@@ -1,7 +1,10 @@
 @page "/PlaylistOverview"
 @inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment env
+
+
 @inject NavigationManager NavigationManager
 @attribute [Authorize(Policy = "MustBeLoggedIn")]
+@using Syncfusion.Blazor.Buttons
 
 
 <h3>Your Playlists</h3>
@@ -36,7 +39,7 @@ else
         {
             <tr>
                 <td>
-                     
+                    
                     <button @onclick="@(() => LoadPlaylist(playlist))">
                         <i class="oi oi-media-play" style="color:blue"/>
                     </button> @playlist.Title

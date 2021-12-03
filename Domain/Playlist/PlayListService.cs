@@ -27,7 +27,12 @@ namespace Domain.Playlist
 
         public async Task CreateNewPlaylistAsync(Entities.Playlist playlist)
         {
-             await playlistNetworking.CreateNewPlaylistAsync(playlist);
+            if (!InputValidator.CheckPlaylist(playlist))
+            {
+                throw new ArgumentException("Some property not found");
+            }
+
+            await playlistNetworking.CreateNewPlaylistAsync(playlist);
         }
 
         public async Task<IList<Song>> GetAllSongsFromPlaylistAsync(Entities.Playlist playlist)

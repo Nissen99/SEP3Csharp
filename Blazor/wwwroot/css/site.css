@@ -56,5 +56,9 @@ a, .btn-link {
         top: 0.5rem;
     }
 
+.blazored-modal-content {
+    height: 300px;
+    overflow-y: auto;
+}
     
     <!-- -->

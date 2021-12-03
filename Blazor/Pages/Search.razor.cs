@@ -14,6 +14,10 @@ namespace Blazor.Pages
         [Inject] private IAudioTestModel AudioTestModel { get; set; }
         [Inject] private ISongSearchModel SongSearchModel { get; set; }
         [Inject] private IPlayModel PlayModel { get; set; }
+        
+        
+        public bool ShowTrack { get; set; }
+
 
         
         private IList<Song> songsToShow;
