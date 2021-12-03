@@ -13,8 +13,8 @@ namespace Blazor.Pages
     public partial class AddSong : ComponentBase{
         
         
-        [Inject] public ModalService ModalService { get; set; }
-        [Inject] public SongManageModel SongManageModel { get; set; }
+        [Inject] public IModalService ModalService { get; set; }
+        [Inject] public ISongManageModel SongManageModel { get; set; }
         private Song newSong = new Song();
         private Mp3 newMp3 = new Mp3();
         private int defaultYear = @DateTime.Now.Year;

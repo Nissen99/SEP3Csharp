@@ -30,7 +30,7 @@ namespace RestT2_T3
 
             HttpResponseMessage responseMessage = await httpClient.DeleteAsync(Uri + $"/song/{songToRemove.Id}");
             
-            HandleResponsePostAndRemove(responseMessage);
+            HandleResponseNoReturn(responseMessage);
 
         }
 
