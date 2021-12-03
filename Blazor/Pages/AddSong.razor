@@ -1,10 +1,9 @@
 ﻿@page "/AddSong"
 @using Entities
-@using System.IO
-@using Blazor.Model
+@using Microsoft.AspNetCore.Components
 @using Blazor.Model.SongManagerModel
-@inject IModalService modalService
-@inject ISongManageModel songManageModel 
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment env
+
 
 <h3>AddSong</h3>
 
