@@ -55,6 +55,7 @@ namespace Blazor
             services.AddSyncfusionBlazor();
             services.AddScoped<IUserModel, UserModel>();
             
+            
             services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
             services.AddAuthorization(options =>

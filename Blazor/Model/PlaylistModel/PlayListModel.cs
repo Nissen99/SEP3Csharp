@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Blazor.Model.UserModel;
 using Entities;
 using SocketsT1_T2.Tier1;
 
@@ -31,17 +32,7 @@ namespace Blazor.Model.PlaylistModel
         {
             return await Client.GetAllSongsFromPlaylistAsync(playlist);
         }
-
-        public Task RemoveSongFromPlaylistAsync(Playlist playlist, Song song)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task AddSongToPlaylistAsync(Playlist playlist, Song song)
-        {
-            throw new System.NotImplementedException();
-        }
-
+        
 
         public async Task RemovePlayListAsync(Playlist playlist)
 

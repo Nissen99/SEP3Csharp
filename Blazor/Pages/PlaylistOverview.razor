@@ -1,47 +1,6 @@
 @page "/PlaylistOverview"
-@using Blazor.Model.PlaylistModel
-@using Entities
 @inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment env
-@using Blazor.Authentication
-@using Microsoft.AspNetCore.Components
-@using System.Threading.Tasks
-@using Blazor.Authentication
-@using Blazor.Model.PlaylistModel
-@using Blazor.Pages
-@using Blazored.Modal
-@using Blazored.Modal.Services
-@using Entities
-@using Microsoft.AspNetCore.Components
-@using System.Threading.Tasks
-@using Blazor.Authentication
-@using Blazor.Model.PlaylistModel
-@using Blazor.Pages
-@using Blazored.Modal
-@using Blazored.Modal.Services
-@using Entities
-@using Microsoft.AspNetCore.Components
-@using System.Threading.Tasks
-@using Blazor.Authentication
-@using Blazor.Model.PlaylistModel
-@using Blazor.Pages
-@using Blazored.Modal
-@using Blazored.Modal.Services
-@using Entities
-@using Microsoft.AspNetCore.Components
-@using System.Threading.Tasks
-@using Blazor.Authentication
-@using Blazor.Model.PlaylistModel
-@using Blazor.Pages
-@using Blazored.Modal
-@using Blazored.Modal.Services
-@using Entities
-@using Microsoft.AspNetCore.Components
-@using Playlist = Blazor.Pages.Playlist
-@using System.Threading.Tasks
-@using Blazor.Model.PlaylistModel
-@using Blazor.Pages
-@using Entities
-@using Microsoft.AspNetCore.Components
+
 
 @inject NavigationManager NavigationManager
 @attribute [Authorize(Policy = "MustBeLoggedIn")]
@@ -80,8 +39,8 @@ else
         {
             <tr>
                 <td>
-                    @* @onclick="@(() => LoadPlaylist(playlist)) *@
-                    <button @onclick="@(() => NavigationManager.NavigateTo("/playlist"))">
+                    
+                    <button @onclick="@(() => LoadPlaylist(playlist))">
                         <i class="oi oi-media-play" style="color:blue"/>
                     </button> @playlist.Title
                 </td>
