@@ -45,14 +45,10 @@ namespace Blazor.Model.PlayModel
 
             waveOut.Dispose();
             
-            
-            // string serverFile = "wwwroot\\audio\\" + song.Title + song.Id + ".mp3";
-            // await FileExists(song, serverFile);
-            // fileReader = new Mp3FileReader(serverFile);
-            Song songToPlay = await client.PlaySong(song);
+            byte[] songToPlay = await client.PlaySong(song);
             watch.Stop();
             Console.WriteLine("Time taken to play song: " + watch.Elapsed.ToString(@"m\:ss\.fff"));
-            MemoryStream ms = new MemoryStream(songToPlay.Mp3);
+            MemoryStream ms = new MemoryStream(songToPlay);
             fileReader = new Mp3FileReader(ms);
             
             
@@ -78,34 +74,7 @@ namespace Blazor.Model.PlayModel
             
         }
 
-        public async Task GPlaySongAsync(Song song)
-        {
-            Song songToPlay = await client.PlaySong(song);
-            MemoryStream ms = new MemoryStream(songToPlay.Mp3);
-            
-
-            fileReader = new Mp3FileReader(ms);
-            
-            waveOut.Init(fileReader);
-            waveOut.Play();
-            currentSong = song;
-            UpdatePlayState.Invoke();
-            Thread t1 = new Thread(() =>
-            {
-                while (true)
-                {
-                    ProgressBarUpdate.Invoke();
-                    Thread.Sleep(500);
-                }
-            });
-            t1.Start();
-
-            if (previouslySongs.Count == 0 || previouslySongs[^1].Id != song.Id)
-            {
-                previouslySongs.Add(song);
-            }
-            
-        }
+       
         
 
         public async Task PlayPauseToggleAsync()

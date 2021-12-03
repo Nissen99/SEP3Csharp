@@ -13,9 +13,9 @@ namespace Blazor.Model.SongManagerModel
             this.client = client;
         }
 
-        public async Task AddNewSongAsync(Song newSong)
+        public async Task AddNewSongAsync(Song newSong, Mp3 mp3)
         {
-            await client.AddNewSongAsync(newSong);
+            await client.AddNewSongAsync(newSong, mp3);
         }
 
         public async Task RemoveSongAsync(Song song)

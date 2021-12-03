@@ -16,7 +16,7 @@ namespace Entities
         public IList<Artist> Artists { get; set; }
         public Album Album { get; set; }
         public int ReleaseYear { get; set; }
-        public byte[] Mp3 { get; set; }
+        public string Mp3 { get; set; }
         
         public Song()
         {

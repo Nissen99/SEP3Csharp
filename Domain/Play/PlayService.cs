@@ -20,7 +20,7 @@ namespace Domain.Play
             return await playNetworking.GetAllSongs();
         }
 
-        public async Task<Song> PlayAsync(Song song)
+        public async Task<byte[]> PlayAsync(Song song)
         {
             return await playNetworking.GetSongWithMP3(song);
         }

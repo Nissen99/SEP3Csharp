@@ -1,5 +1,6 @@
 using System;
 using System.Net.Sockets;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Domain.Play;
@@ -15,8 +16,8 @@ namespace SocketsT1_T2.Tier2.Commands
         public async Task Execute(NetworkStream stream, JsonElement tObj)
         {
             Song tObjSong = JsonElementConverter.ElementToObject<Song>(tObj);
-            Song song = await playService.PlayAsync(tObjSong);
-            await ServerResponse.SendToClient<Song>(stream, song);
+            byte[] song = await playService.PlayAsync(tObjSong);
+            await stream.WriteAsync(song, 0, song.Length);
         }
     }
 }

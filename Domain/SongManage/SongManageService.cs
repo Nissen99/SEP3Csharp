@@ -1,9 +1,11 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Domain.Util;
 using Entities;
 using NAudio.Wave;
+using File = TagLib.File;
 
 namespace Domain.SongManage
 {
@@ -17,22 +19,22 @@ namespace Domain.SongManage
         }
 
         //TODO Input checks
-        public async Task AddNewSongAsync(Song newSong)
+        public async Task AddNewSongAsync(Song newSong, Mp3 mp3)
         {
             if (!InputValidator.CheckSongValidWithoutMp3(newSong)) throw new ArgumentException("Some Property not found");
-
             
-            
-            using MemoryStream ms = new MemoryStream(newSong.Mp3);
+            using MemoryStream ms = new MemoryStream(mp3.Data);
             using Mp3FileReader fileReader = new Mp3FileReader(ms);
-            
-            
-            int duration = (int) fileReader.TotalTime.TotalSeconds;
 
+            int duration = (int) fileReader.TotalTime.TotalSeconds;
             newSong.Duration = duration;
             
-            await songManageNetworking.AddNewSongAsync(newSong);
+            Song song = await songManageNetworking.AddNewSongAsync(newSong);
+            Console.WriteLine(song.Title);
+            mp3.path = song.Mp3;
+            await songManageNetworking.UploadMp3(mp3);
         }
+        
 
         public async Task RemoveSongAsync(Song songToRemove)
         {

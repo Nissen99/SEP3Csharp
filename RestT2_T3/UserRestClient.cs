@@ -16,7 +16,7 @@ namespace RestT2_T3
             
             StringContent content = FromObjectToStringContentCamelCase(user);
             
-            HttpResponseMessage responseMessage = await client.PostAsync(Uri + "users", content);
+            HttpResponseMessage responseMessage = await client.PostAsync(Uri + "user", content);
             
             HandleResponsePostAndRemove(responseMessage);
         }
@@ -26,7 +26,7 @@ namespace RestT2_T3
             using HttpClient client = new HttpClient();
             
             HttpResponseMessage responseMessage =
-                await client.GetAsync(Uri + $"users/{user.Username}&{user.Password}");
+                await client.GetAsync(Uri + $"user/{user.Username}&{user.Password}");
 
             return await HandleResponseGet<User>(responseMessage);
         }

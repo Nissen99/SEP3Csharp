@@ -21,11 +21,15 @@ namespace SocketsT1_T2.Tier1
         }
 
 
-        public async Task<Song> PlaySong(Song song)
+        public async Task<byte[]> PlaySong(Song song)
         {
             using TcpClient client = GetTcpClient();
             await SendServerRequest("PLAYSONG", song, client);
-            return await serverResponse<Song>(client, 30000000);
+            byte[] dataFromServer = new byte[8000000];
+            await client.GetStream().ReadAsync(dataFromServer, 0, dataFromServer.Length);
+            
+            return dataFromServer;
+            //return await serverResponse<byte[]>(client, 30000000);
         }
 
         public async Task<IList<Song>> GetSongsByFilterAsync(string[] filterOptions)
@@ -62,10 +66,11 @@ namespace SocketsT1_T2.Tier1
             return await serverResponse<IList<Album>>(client, 500000);
         }
 
-        public async Task AddNewSongAsync(Song newSong)
+        public async Task AddNewSongAsync(Song newSong, Mp3 mp3)
         {
             using TcpClient client = GetTcpClient();
-            await SendServerRequest("ADDNEWSONG", newSong, client);
+            object[] toSent = {newSong, mp3};
+            await SendServerRequest("UPLOADSONG", toSent, client);
         }
 
         public async Task RemoveSongAsync(Song song)
