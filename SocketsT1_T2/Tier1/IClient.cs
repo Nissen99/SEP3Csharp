@@ -9,7 +9,7 @@ namespace SocketsT1_T2.Tier1
         Task AddSongToPlaylistAsync(Playlist playlist, Song song);
         Task RemoveSongFromPlaylistAsync(Playlist playlist, Song song);
         Task<IList<Song>> GetAllSongs();
-        Task<Song> PlaySong(Song song);
+        Task<byte[]> PlaySong(Song song);
 
         
         Task<IList<Song>> GetSongsByFilterAsync(string[] filterOptions);
@@ -19,7 +19,7 @@ namespace SocketsT1_T2.Tier1
 
         Task<IList<Artist>> SearchForArtists(string name);
         Task<IList<Album>> SearchForAlbums(string title);
-        Task AddNewSongAsync(Song newSong);
+        Task AddNewSongAsync(Song newSong, Mp3 mp3);
         Task RemoveSongAsync(Song song);
         Task<IList<Playlist>> GetAllPlaylistsForUserAsync(User user);
         Task<IList<Song>> GetAllSongsFromPlaylistAsync(Entities.Playlist playlist);

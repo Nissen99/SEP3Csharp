@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Entities;
 
@@ -14,15 +15,32 @@ namespace Domain.Users
 
         public async Task RegisterUser(User user)
         {
+            ValidateInput(user);
             await userNetworking.RegisterUser(user);
         }
 
         public async Task<User> ValidateUser(User user)
         {
-            User userToReturn = await userNetworking.ValidateUser(user);
-            return userToReturn;
+            User toReturn;
+            ValidateInput(user);
+            try
+            {
+                toReturn = await userNetworking.ValidateUser(user);
+
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+            return toReturn;
         }
-        
-        
+
+        private void ValidateInput(User user)
+        {
+            if (string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.Password))
+                throw new ArgumentException("Field is missing");
+        }
+
+
     }
 }

@@ -15,7 +15,7 @@ namespace SocketsT1_T2.Tier2.Util
         {
             {"GETSONGS", new GetAllSongsCommand()},
             {"PLAYSONG", new PlaySongCommand()},
-            {"ADDNEWSONG", new AddNewSongCommand()},
+            {"UPLOADSONG", new UploadSongCommand()},
             {"GETSONGSBYFILTER", new GetSongsByFilterCommand()},
             {"REGISTERUSER", new RegisterUserCommand()},
             {"REMOVESONG", new RemoveSongCommand()},

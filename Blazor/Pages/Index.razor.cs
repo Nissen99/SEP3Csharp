@@ -34,7 +34,7 @@ namespace Blazor.Pages
             }
             catch (Exception e)
             {
-                errorMessage = e.Message;
+                errorMessage = "Error logging in. Try again.";
             }
         }
 

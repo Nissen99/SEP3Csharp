@@ -18,8 +18,7 @@ namespace RestT2_T3
             
             HttpResponseMessage responseMessage = await client.PostAsync(Uri + "user", content);
             
-            HandleResponseNoReturn(responseMessage);
-
+            HandleResponsePostAndRemove(responseMessage);
         }
         
         public async Task<User> ValidateUser(User user)
@@ -28,7 +27,6 @@ namespace RestT2_T3
             
             HttpResponseMessage responseMessage =
                 await client.GetAsync(Uri + $"user/{user.Username}&{user.Password}");
-
 
             return await HandleResponseGet<User>(responseMessage);
         }

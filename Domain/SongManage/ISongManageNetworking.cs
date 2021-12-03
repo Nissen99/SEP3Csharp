@@ -5,7 +5,8 @@ namespace Domain.SongManage
 {
     public interface ISongManageNetworking
     {
-        Task AddNewSongAsync(Song newSong);
+        Task<Song> AddNewSongAsync(Song newSong);
         Task RemoveSongAsync(Song songToRemove);
+        Task UploadMp3(Mp3 mp3);
     }
 }

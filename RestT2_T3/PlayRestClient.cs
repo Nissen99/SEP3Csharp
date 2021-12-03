@@ -14,7 +14,7 @@ namespace RestT2_T3
 {
     public class PlayRestClient : HttpClientBase, IPlayNetworking
     {
-        public async Task<Song> GetSongWithMP3(Song song)
+        public async Task<byte[]> GetSongWithMP3(Song song)
         {
             using HttpClient client = new HttpClient();
             // string stringAsync = await client.GetStringAsync(uri + $"songs/{song.Id}");
@@ -26,11 +26,9 @@ namespace RestT2_T3
             // });
             //
             // return  songWithMP3;
-            byte[] byteAsync = await client.GetByteArrayAsync(Uri + $"songs/{song.Id}");
+            byte[] byteAsync = await client.GetByteArrayAsync(Uri + $"mp3/{song.Mp3}");
             
-            song.Mp3 = byteAsync;
-
-            return song;
+            return byteAsync;
 
         }
 
@@ -38,7 +36,7 @@ namespace RestT2_T3
         {
             using HttpClient client = new HttpClient();
             
-            HttpResponseMessage responseMessage = await client.GetAsync(Uri + "songs");
+            HttpResponseMessage responseMessage = await client.GetAsync(Uri + "song");
 
             return await HandleResponseGet<IList<Song>>(responseMessage);
 
