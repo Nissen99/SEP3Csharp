@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Blazor.Authentication;
 using Blazor.Model.PlaylistModel;
+using Blazored.Modal;
 using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
 
@@ -18,22 +19,26 @@ namespace Blazor.Pages
         {
             var form = ModalService.Show<CreatePlaylist>("Create new Playlist");
             var result = await form.Result;
-            Entities.Playlist justCreated = (Entities.Playlist) result.Data;
-            justCreated.User = CustomAuthenticationStateProvider.cachedUser;
             
-
             if (!result.Cancelled)
             {
+                Entities.Playlist justCreated = (Entities.Playlist) result.Data;
+                justCreated.User = CustomAuthenticationStateProvider.cachedUser;
+
                 if (string.IsNullOrEmpty(justCreated.Title))
                 {
-                    ModalService.Show<ConfirmChoice>("Please type a playlist Title");
+                    ModalService.Show<Popup>("Please type a playlist Title");
                     return;
                 }
-
-                StateHasChanged();
                 await PlaylistModel.CreateNewPlatListAsync(justCreated);
+                Playlists= await PlaylistModel.GetAllPlaylistsForUserAsync(CustomAuthenticationStateProvider.cachedUser);
+                StateHasChanged();
+                
+                
+
             }
         }
+       
 
         private async Task RemovePlaylist(Entities.Playlist playlist)
         {

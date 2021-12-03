@@ -18,8 +18,4 @@
       <ProjectReference Include="..\RestT2_T3\RestT2_T3.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="PlaylistTest" />
-    </ItemGroup>
-
 </Project>
