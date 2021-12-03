@@ -32,7 +32,7 @@ else
             <tr>
                 <td>
                     <AuthorizeView Policy="MustBeLoggedIn">
-                        <i class="mr-2 oi oi-plus"/>
+                        <i class="mr-4 oi oi-plus" @onclick="() => PerformAddToPlaylist(song)"/>
                     </AuthorizeView>
                     
                     @if (CurrentSong != null && CurrentSong.Id == song.Id)
@@ -60,9 +60,9 @@ else
                 <td>@generateArtists(song)</td>
                 <td>@song.ReleaseYear</td>
                 <td>
-                     <button @onclick="@(() => removeSong(song))">
-                                           <i class="oi oi-trash" style="color:red"/>
-                                       </button>
+                    <button @onclick="@(() => remove(song))">
+                        <i class="oi oi-trash" style="color:red"/>
+                    </button>
                 </td>
             </tr>
         }

@@ -2,6 +2,7 @@ using Blazor.Authentication;
 using Blazor.Model.AlbumModel;
 using Blazor.Model.ArtistModel;
 using Blazor.Model.AudioTestModel;
+using Blazor.Model.PlaylistManageModel;
 using Blazor.Model.PlaylistModel;
 using Blazor.Model.PlayModel;
 using Blazor.Model.SongManagerModel;
@@ -48,6 +49,7 @@ namespace Blazor
             services.AddScoped<IAlbumModel, AlbumModel>();
             services.AddScoped<ISongManageModel, SongManageModel>();
             services.AddScoped<IPlayListModel, PlayListModel>();
+            services.AddScoped<IPlaylistManageModel, PlaylistManageModel>();
             
 
 

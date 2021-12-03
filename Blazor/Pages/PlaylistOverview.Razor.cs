@@ -60,7 +60,7 @@ namespace Blazor.Pages
         private void LoadPlaylist(Entities.Playlist playlist)
         {
             PlaylistModel.CurrentPlaylist = playlist;
-            NavigationManager.NavigateTo("/playlist");
+            NavigationManager.NavigateTo("/Playlist");
         }
     }
 }

@@ -1,0 +1,33 @@
+<h3>AddToPlaylist</h3>
+
+
+@if (playlists == null)
+{
+    <p>
+        Loading...
+    </p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (Entities.Playlist playlist in playlists)
+        {
+            <tr>
+                <td>@playlist.Title</td>
+                <td>
+                    <button class="btn btn-secondary" @onclick="() => choosePlaylist(playlist)">Add</button>
+                </td>
+            </tr>
+
+        }
+        </tbody>
+    </table>
+    
+    <button @onclick="()=>onCancel()" class="btn btn-secondary">Cancel</button>
+}
