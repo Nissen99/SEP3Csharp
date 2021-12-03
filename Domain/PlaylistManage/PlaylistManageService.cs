@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Entities;
 
@@ -13,6 +15,10 @@ namespace Domain.PlaylistManage
 
         public async Task AddSongToPlaylistAsync(Entities.Playlist playlist, Song song)
         {
+            if (playlist.Songs.FirstOrDefault(s =>s.Id == song.Id) != null)
+            {
+                throw new ArgumentException("That song is already in the playlist");
+            }
             await playlistMangeNetworking.AddSongToPlaylistAsync(playlist, song);
         }
 

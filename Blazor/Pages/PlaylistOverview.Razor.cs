@@ -23,10 +23,16 @@ namespace Blazor.Pages
 
             if (!result.Cancelled)
             {
+                Console.WriteLine("Result not canceled");
                 Entities.Playlist justCreated = (Entities.Playlist) result.Data;
                 justCreated.User = CustomAuthenticationStateProvider.cachedUser;
-                StateHasChanged();
+                Console.WriteLine($"before: {Playlists.Count}" );
+
                 await PlaylistModel.CreateNewPlatListAsync(justCreated);
+                Playlists = await PlaylistModel.GetAllPlaylistsForUserAsync(CustomAuthenticationStateProvider.cachedUser);
+                Console.WriteLine($"after: {Playlists.Count}" );
+
+                StateHasChanged();
             }
         }
 

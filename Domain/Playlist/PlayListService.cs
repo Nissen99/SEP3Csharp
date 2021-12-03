@@ -24,17 +24,7 @@ namespace Domain.Playlist
             return await playlistNetworking.GetAllPlaylistsForUserAsync(user);
         }
 
-        public  async Task RemoveSongFromPlaylistAsync(Entities.Playlist playlist, Song song)
-        {
-            await playlistNetworking.RemoveSongFromPlaylistAsync(playlist, song);
 
-        }
-
-        public async Task AddSongsToPlaylistAsync(Entities.Playlist playlist, IList<Song> songs)
-        {
-            await playlistNetworking.AddSongsToPlaylistAsync(playlist, songs);
-        }
-        
         public async Task CreateNewPlaylistAsync(Entities.Playlist playlist)
         {
              await playlistNetworking.CreateNewPlaylistAsync(playlist);

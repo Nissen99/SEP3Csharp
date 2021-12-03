@@ -61,7 +61,7 @@ namespace Blazor.Shared
         }
         private async Task updateProgressBar()
         {
-           progressValue = await Play.UpdateProgressBar();
+            progressValue = await Play.UpdateProgressBar();
             progressValuePercentage = progressValue / currentSong.Duration * 100;
             pVP = (int) progressValuePercentage;
             TimeSpan currentDurationSpan = new TimeSpan(0, (int)(currentSong.Duration * progressValuePercentage / 100 / 60), (int)(currentSong.Duration * progressValuePercentage / 100 % 60));

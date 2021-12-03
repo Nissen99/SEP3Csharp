@@ -19,7 +19,7 @@ namespace RestT2_T3
 
             HttpResponseMessage responseMessage = await client.PostAsync(Uri + "songs", content);
            
-            HandleResponsePostAndRemove(responseMessage);
+            HandleResponseNoReturn(responseMessage);
 
         }
 

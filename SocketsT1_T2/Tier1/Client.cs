@@ -103,7 +103,6 @@ namespace SocketsT1_T2.Tier1
         public async Task<IList<Playlist>> GetAllPlaylistsForUserAsync(User user)
         {
             using TcpClient client = GetTcpClient();
-            Console.WriteLine("På client, er vi her user: " + user.Username);
             await SendServerRequest("GETPLAYLISTS", user, client);
 
             return await serverResponse<IList<Playlist>>(client, 1000000);

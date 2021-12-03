@@ -155,7 +155,7 @@ namespace Blazor.Pages
 
         private async Task PerformAddToPlaylist(Song song)
         {
-            var form = ModalService.Show<AddToPlaylist>("Choose a playlist to add this song to");
+            var form = ModalService.Show<AddToPlaylist>($"Choose a playlist to add \"{song.Title}\" to");
             var result = await form.Result;
             if (!result.Cancelled)
             {

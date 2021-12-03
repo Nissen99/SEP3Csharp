@@ -21,7 +21,7 @@ namespace RestT2_T3
 
             HttpResponseMessage responseMessage = await httpClient.PostAsync(Uri + "/song", newSongAsStringContent);
             
-            HandleResponsePostAndRemove(responseMessage);
+            HandleResponseNoReturn(responseMessage);
             
         }
 
@@ -31,7 +31,7 @@ namespace RestT2_T3
 
             HttpResponseMessage responseMessage = await httpClient.DeleteAsync(Uri + $"/song/{songToRemove.Id}");
             
-            HandleResponsePostAndRemove(responseMessage);
+            HandleResponseNoReturn(responseMessage);
 
         }
         

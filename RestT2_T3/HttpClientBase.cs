@@ -13,6 +13,8 @@ namespace RestT2_T3
     
         protected async Task<T> HandleResponseGet<T>(HttpResponseMessage responseMessage)
         {
+            Console.WriteLine($"Handle Response print out: \n {responseMessage}");
+
             if (!responseMessage.IsSuccessStatusCode)
             {
                 Console.WriteLine("Not good");
@@ -26,8 +28,9 @@ namespace RestT2_T3
             return inFromServer;
         }
 
-        protected void HandleResponsePostAndRemove(HttpResponseMessage responseMessage)
+        protected void HandleResponseNoReturn(HttpResponseMessage responseMessage)
         {
+            Console.WriteLine($"Handle Response print out: \n {responseMessage}");
             if (!responseMessage.IsSuccessStatusCode)
             {
                 throw new Exception($@"Error: {responseMessage.StatusCode}, {responseMessage.ReasonPhrase}");
