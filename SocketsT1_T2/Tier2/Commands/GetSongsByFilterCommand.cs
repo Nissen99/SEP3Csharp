@@ -12,9 +12,9 @@ namespace SocketsT1_T2.Tier2.Commands
     public class GetSongsByFilterCommand: ICommand
     {
         private ISongSearchService songSearchService = new SongSearchService(new SongSearchRestClient());
-        public async Task Execute(NetworkStream stream, JsonElement tObj)
+        public async Task Execute(NetworkStream stream, string argFromTransfer)
         {
-            string[] toSearch = JsonElementConverter.ElementToObject<string[]>(tObj);
+            string[] toSearch = JsonElementConverter.ElementToObject<string[]>(argFromTransfer);
             IList<Song> songs = await songSearchService.GetSongsByFilterJsonAsync(toSearch);
             await ServerResponse.SendToClient(stream, songs);
         }

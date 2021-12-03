@@ -133,9 +133,10 @@ namespace SocketsT1_T2.Tier1
         private async Task SendServerRequest<T>(string action, T TObject, TcpClient client)
         {
             NetworkStream stream = client.GetStream();
-            TransferObj<T> transferObj = new TransferObj<T>
+            string TObjectAsJson = JsonSerializer.Serialize(TObject);
+            TransferObj transferObj = new TransferObj()
             {
-                Action = action, Arg = TObject
+                Action = action, Arg = TObjectAsJson
             };
             string transferAsJson = JsonSerializer.Serialize(transferObj);
             byte[] toServer = Encoding.UTF8.GetBytes(transferAsJson);
@@ -151,13 +152,27 @@ namespace SocketsT1_T2.Tier1
             int bytesRead = await stream.ReadAsync(dataFromServer, 0, dataFromServer.Length);
 
             string inFromServer = Encoding.UTF8.GetString(dataFromServer, 0, bytesRead);
-            TransferObj<T> objectFromServer = JsonSerializer.Deserialize<TransferObj<T>>(inFromServer,
+            
+            return ReturnFromServer<T>(inFromServer);
+        }
+
+        private T ReturnFromServer<T>(string inFromServer)
+        {
+            TransferObj objectFromServer = JsonSerializer.Deserialize<TransferObj>(inFromServer,
                 new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true
                 });
 
-            return objectFromServer.Arg;
+            if (objectFromServer.Action.Equals("Exeption"))
+            {
+                Exception exception = JsonSerializer.Deserialize<Exception>(objectFromServer.Arg);
+                throw exception;
+            }
+
+            T returnFromServer = JsonSerializer.Deserialize<T>(objectFromServer.Arg);
+
+            return returnFromServer;
         }
 
 

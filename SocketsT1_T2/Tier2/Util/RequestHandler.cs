@@ -33,7 +33,7 @@ namespace SocketsT1_T2.Tier2.Util
         };
 
         public string RequestAction { get; set; }
-        public JsonElement RequestArg { get; set; }
+        public string RequestArg { get; set; }
         private NetworkStream stream;
         private ICommand activeCommand;
 
@@ -45,9 +45,10 @@ namespace SocketsT1_T2.Tier2.Util
         
         private async Task SendToClient<T>(T TObject)
         {
-            TransferObj<T> transferObj = new TransferObj<T>
+            string objectAsJson = JsonSerializer.Serialize(TObject);
+            TransferObj transferObj = new TransferObj
             {
-                Action = "RETURN", Arg = TObject
+                Action = "RETURN", Arg = objectAsJson
             };
             string transferAsJson = JsonSerializer.Serialize(transferObj);
             byte[] toServer = Encoding.UTF8.GetBytes(transferAsJson);
@@ -59,7 +60,7 @@ namespace SocketsT1_T2.Tier2.Util
             byte[] dataFromServer = new byte[30000000];
             int bytesRead = await stream.ReadAsync(dataFromServer, 0, dataFromServer.Length);
             string readFromClient = Encoding.UTF8.GetString(dataFromServer, 0, bytesRead);
-            TransferObj<JsonElement> transferObj = JsonSerializer.Deserialize<TransferObj<JsonElement>>(readFromClient,
+            TransferObj transferObj = JsonSerializer.Deserialize<TransferObj>(readFromClient,
                 new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true,

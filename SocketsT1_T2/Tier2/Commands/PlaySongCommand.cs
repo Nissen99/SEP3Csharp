@@ -12,9 +12,9 @@ namespace SocketsT1_T2.Tier2.Commands
     public class PlaySongCommand : ICommand
     {
         private IPlayService playService = new PlayService(new PlayRestClient());
-        public async Task Execute(NetworkStream stream, JsonElement tObj)
+        public async Task Execute(NetworkStream stream, string argFromTransfer)
         {
-            Song tObjSong = JsonElementConverter.ElementToObject<Song>(tObj);
+            Song tObjSong = JsonElementConverter.ElementToObject<Song>(argFromTransfer);
             Song song = await playService.PlayAsync(tObjSong);
             await ServerResponse.SendToClient<Song>(stream, song);
         }

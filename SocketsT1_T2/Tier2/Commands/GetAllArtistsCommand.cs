@@ -13,7 +13,7 @@ namespace SocketsT1_T2.Tier2.Commands
     public class GetAllArtistsCommand : ICommand
     {
         private IArtistService artistService = new ArtistService(new ArtistRestClient());
-        public async Task Execute(NetworkStream stream, JsonElement tObj)
+        public async Task Execute(NetworkStream stream, string argFromTransfer)
         {
             IList<Artist> artists = await artistService.GetAllArtistsAsync();
             await ServerResponse.SendToClient(stream, artists);

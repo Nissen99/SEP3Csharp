@@ -11,9 +11,9 @@ namespace SocketsT1_T2.Tier2.Commands
     public class RemoveSongCommand: ICommand
     {
         private ISongManageService songManageService = new SongManageService(new SongManageRestClient());
-        public async Task Execute(NetworkStream stream, JsonElement tObj)
+        public async Task Execute(NetworkStream stream, string argFromTransfer)
         {
-            Song song = JsonElementConverter.ElementToObject<Song>(tObj);
+            Song song = JsonElementConverter.ElementToObject<Song>(argFromTransfer);
             await songManageService.RemoveSongAsync(song);
         }
     }

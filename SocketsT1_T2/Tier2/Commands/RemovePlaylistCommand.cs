@@ -14,10 +14,10 @@ namespace SocketsT1_T2.Tier2.Commands
     {
         private IPlayListService playListService = new PlayListService(new PlaylistRestClient());
 
-        public async Task Execute(NetworkStream stream, JsonElement tObj)
+        public async Task Execute(NetworkStream stream, string argFromTransfer)
         {
-            Playlist playlist = JsonElementConverter.ElementToObject<Playlist>(tObj);
-            await playListService.RemovePlayListAsync(playlist);
+            Playlist playlist = JsonElementConverter.ElementToObject<Playlist>(argFromTransfer);
+            await playListService.DeletePlayListAsync(playlist);
 
         }
     }

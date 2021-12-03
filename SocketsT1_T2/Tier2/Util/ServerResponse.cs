@@ -1,3 +1,4 @@
+using System;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
@@ -10,9 +11,16 @@ namespace SocketsT1_T2.Tier2.Util
     {
         public static async Task SendToClient<T>(NetworkStream stream, T TObject)
         {
-            TransferObj<T> transferObj = new TransferObj<T>
+            string objectAsJson = JsonSerializer.Serialize(TObject);
+            string action = "RETURN";
+            
+            if (TObject is Exception)
             {
-                Action = "RETURN", Arg = TObject
+                 action = "Exeption";
+            }
+            TransferObj transferObj = new TransferObj
+            {
+                Action = action, Arg = objectAsJson
             };
             string transferAsJson = JsonSerializer.Serialize(transferObj);
             byte[] toServer = Encoding.UTF8.GetBytes(transferAsJson);

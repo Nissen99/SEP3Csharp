@@ -4,10 +4,9 @@ namespace SocketsT1_T2.Tier2.Util
 {
     public class JsonElementConverter
     {
-        public static T ElementToObject<T>(JsonElement element)
+        public static T ElementToObject<T>(string element)
         {
-            string stringElement = element.GetRawText();
-            return JsonSerializer.Deserialize<T>(stringElement,new JsonSerializerOptions {PropertyNameCaseInsensitive = true});
+            return JsonSerializer.Deserialize<T>(element,new JsonSerializerOptions {PropertyNameCaseInsensitive = true});
         }
     }
 }

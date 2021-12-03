@@ -11,9 +11,9 @@ namespace SocketsT1_T2.Tier2.Commands
     public class RegisterUserCommand: ICommand
     {
         private IUserService userService = new UserService(new UserRestClient());
-        public async Task Execute(NetworkStream stream, JsonElement tObj)
+        public async Task Execute(NetworkStream stream, string argFromTransfer)
         {
-            User user = JsonElementConverter.ElementToObject<User>(tObj);
+            User user = JsonElementConverter.ElementToObject<User>(argFromTransfer);
             await userService.RegisterUser(user);
         }
     }

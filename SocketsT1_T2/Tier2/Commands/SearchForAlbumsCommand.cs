@@ -12,9 +12,9 @@ namespace SocketsT1_T2.Tier2.Commands
     public class SearchForAlbumsCommand: ICommand
     {
         private IAlbumService albumService = new AlbumService(new AlbumRestClient());
-        public async Task Execute(NetworkStream stream, JsonElement tObj)
+        public async Task Execute(NetworkStream stream, string argFromTransfer)
         {
-            string title = JsonElementConverter.ElementToObject<string>(tObj);
+            string title = JsonElementConverter.ElementToObject<string>(argFromTransfer);
             IList<Album> artists = await albumService.SearchForAlbums(title);
             await ServerResponse.SendToClient(stream, artists);
         }

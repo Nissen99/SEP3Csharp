@@ -16,7 +16,7 @@ namespace SocketsT1_T2.Tier2.Commands
         private IPlayService playService = new PlayService(new PlayRestClient());
         
 
-        public async Task Execute(NetworkStream stream, JsonElement tObj)
+        public async Task Execute(NetworkStream stream, string argFromTransfer)
         {
             //Parameter skal ikke bruges
             IList<Song> result = await playService.GetAllSongsAsync();

@@ -11,9 +11,9 @@ namespace SocketsT1_T2.Tier2.Commands
     public class AddNewSongCommand : ICommand
     {
         private ISongManageService songManageService = new SongManageService(new SongManageRestClient());
-        public async Task Execute(NetworkStream stream, JsonElement tObj)
+        public async Task Execute(NetworkStream stream, string argFromTransfer)
         {
-            Song toAdd = JsonElementConverter.ElementToObject<Song>(tObj);
+            Song toAdd = JsonElementConverter.ElementToObject<Song>(argFromTransfer);
             await songManageService.AddNewSongAsync(toAdd);
         }
     }

@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Domain.Util;
 using Entities;
 
 namespace Domain.Playlist
@@ -14,7 +16,7 @@ namespace Domain.Playlist
         }
         
 
-        public async Task DeleteExistingPlayListAsync(Entities.Playlist playlist)
+        public async Task DeletePlayListAsync(Entities.Playlist playlist)
         {
             await playlistNetworking.RemovePlaylistAsync(playlist);
         }

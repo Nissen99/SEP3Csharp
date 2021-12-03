@@ -12,7 +12,7 @@ namespace SocketsT1_T2.Tier2.Commands
     public class GetAllAlbumsCommand : ICommand
     {
         private IAlbumService albumService = new AlbumService(new AlbumRestClient());
-        public async Task Execute(NetworkStream stream, JsonElement tObj)
+        public async Task Execute(NetworkStream stream, string argFromTransfer)
         {
             IList<Album> albums = await albumService.GetAllAlbumsAsync();
             await ServerResponse.SendToClient(stream,albums);
