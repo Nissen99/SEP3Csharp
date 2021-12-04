@@ -2,26 +2,27 @@
 using System.Threading.Tasks;
 using Entities;
 using SocketsT1_T2.Tier1;
+using SocketsT1_T2.Tier1.Album;
 
 namespace Blazor.Model.AlbumModel
 {
     public class AlbumModel : IAlbumModel
     {
         
-        private IClient client;
+        private IAlbumNetworkClient albumNetworkClient;
 
-        public AlbumModel(IClient client)
+        public AlbumModel(IAlbumNetworkClient albumNetworkClient)
         {
-            this.client = client;
+            this.albumNetworkClient = albumNetworkClient;
         }
         public async Task<IList<Album>> SearchForAlbumsAsync(string title)
         {
-            return await client.SearchForAlbums(title);
+            return await albumNetworkClient.SearchForAlbums(title);
         }
 
         public async Task<IList<Album>> GetAllAlbumsAsync()
         {
-            return await client.GetAllAlbumsAsync();
+            return await albumNetworkClient.GetAllAlbumsAsync();
         }
     }
 }

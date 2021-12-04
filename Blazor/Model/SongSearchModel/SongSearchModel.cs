@@ -2,23 +2,24 @@
 using System.Threading.Tasks;
 using Entities;
 using SocketsT1_T2.Tier1;
+using SocketsT1_T2.Tier1.Song;
 
 namespace Blazor.Model.SongSearchModel
 {
     public class SongSearchModel :ISongSearchModel
     {
-        private IClient client;
+        private ISongSearchNetworkClient searchClient;
 
-        public SongSearchModel(IClient client)
+        public SongSearchModel(ISongSearchNetworkClient searchClient)
         {
-            this.client = client;
+            this.searchClient = searchClient;
         }
 
         public async Task<IList<Song>> GetSongsByFilterAsync(string filterOption, string searchField)
         {
             string[] args = {filterOption, searchField};
 
-            return await client.GetSongsByFilterAsync(args);
+            return await searchClient.GetSongsByFilterAsync(args);
             
         }
     }

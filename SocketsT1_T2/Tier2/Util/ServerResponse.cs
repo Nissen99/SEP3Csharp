@@ -4,6 +4,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Entities;
+using SocketsT1_T2.Shared;
 
 namespace SocketsT1_T2.Tier2.Util
 {

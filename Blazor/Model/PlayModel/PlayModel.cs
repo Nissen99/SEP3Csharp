@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 using Entities;
 using NAudio.Wave;
 using SocketsT1_T2.Tier1;
+using SocketsT1_T2.Tier1.Song;
 
 namespace Blazor.Model.PlayModel
 {
     public class PlayModel : IPlayModel
     {
-        private IClient client;
+        private IPlayNetworkClient playClient;
         private Mp3FileReader fileReader;
         private MemoryStream ms;
         private BufferedWaveProvider bufferedWaveProvider;
@@ -30,9 +31,9 @@ namespace Blazor.Model.PlayModel
         public Action ProgressBarUpdate { get; set; }
         public IList<Song> CurrentPlaylist { get; set; }
 
-        public PlayModel(IClient client)
+        public PlayModel(IPlayNetworkClient playClient)
         {
-            this.client = client;
+            this.playClient = playClient;
             waveOut = new WaveOutEvent();
             waveOut.Volume = 0.3f;
 
@@ -45,7 +46,7 @@ namespace Blazor.Model.PlayModel
 
             waveOut.Dispose();
             
-            byte[] songToPlay = await client.PlaySong(song);
+            byte[] songToPlay = await playClient.PlaySong(song);
             watch.Stop();
             Console.WriteLine("Time taken to play song: " + watch.Elapsed.ToString(@"m\:ss\.fff"));
             MemoryStream ms = new MemoryStream(songToPlay);

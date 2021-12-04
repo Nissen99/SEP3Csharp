@@ -1,7 +1,6 @@
 using System;
-using System.Text.Json;
 
-namespace Entities
+namespace SocketsT1_T2.Shared
 {
     [Serializable]
     public class TransferObj

@@ -17,7 +17,8 @@ namespace SocketsT1_T2.Tier2.Commands
         {
             Song tObjSong = JsonElementConverter.ElementToObject<Song>(argFromTransfer);
             byte[] song = await playService.PlayAsync(tObjSong);
-            await stream.WriteAsync(song, 0, song.Length);
+            await ServerResponse.SendToClient(stream, song);
+           // await stream.WriteAsync(song, 0, song.Length);
         }
     }
 }

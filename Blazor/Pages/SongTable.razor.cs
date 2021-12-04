@@ -44,6 +44,7 @@ namespace Blazor.Pages
 
         private string generateArtists(Song song)
         {
+            Console.WriteLine($"Is song null= {song.Title}" );
             IList<Artist> artists = song.Artists;
             string toReturn = artists[0].Name;
             int count = artists.Count;

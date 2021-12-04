@@ -7,7 +7,7 @@ namespace Blazor.Model.PlaylistModel
     public interface IPlayListModel
     {
         
-        Task CreateNewPlatListAsync(Playlist playlist);
+        Task CreateNewPlatlistAsync(Playlist playlist);
         Task<IList<Playlist>> GetAllPlaylistsForUserAsync(User user);
         Task<IList<Song>> GetAllSongFromPlaylist(Playlist playlist);
         Task RemovePlayListAsync(Playlist playlist);

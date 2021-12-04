@@ -30,7 +30,7 @@ namespace Blazor.Pages
                     ModalService.Show<Popup>("Please type a playlist Title");
                     return;
                 }
-                await PlaylistModel.CreateNewPlatListAsync(justCreated);
+                await PlaylistModel.CreateNewPlatlistAsync(justCreated);
                 Playlists= await PlaylistModel.GetAllPlaylistsForUserAsync(CustomAuthenticationStateProvider.cachedUser);
                 StateHasChanged();
                 

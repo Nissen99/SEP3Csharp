@@ -1,26 +1,27 @@
 using System.Threading.Tasks;
 using Entities;
 using SocketsT1_T2.Tier1;
+using SocketsT1_T2.Tier1.Playlist;
 
 namespace Blazor.Model.PlaylistManageModel
 {
     public class PlaylistManageModel : IPlaylistManageModel
     {
-        private IClient client;
+        private IPlaylistManageNetworkClient playlistManageClient;
 
-        public PlaylistManageModel(IClient client)
+        public PlaylistManageModel(IPlaylistManageNetworkClient playlistManageClient)
         {
-            this.client = client;
+            this.playlistManageClient = playlistManageClient;
         }
 
         public async Task AddSongToPlaylist(Playlist playlist, Song song)
         {
-            await client.AddSongToPlaylistAsync(playlist, song);
+            await playlistManageClient.AddSongToPlaylistAsync(playlist, song);
         }
 
         public async Task RemoveSongFromPlaylist(Playlist playlist, Song song)
         {
-            await client.RemoveSongFromPlaylistAsync(playlist, song);
+            await playlistManageClient.RemoveSongFromPlaylistAsync(playlist, song);
         }
     }
 }

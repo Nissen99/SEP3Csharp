@@ -1,28 +1,29 @@
 ﻿using System.Threading.Tasks;
 using Entities;
 using SocketsT1_T2.Tier1;
+using SocketsT1_T2.Tier1.User;
 
 namespace Blazor.Model.UserModel
 {
     public class UserModel : IUserModel
     {
-        private IClient client;
+        private IUserNetworkClient userClient;
 
-        public UserModel(IClient client)
+        public UserModel(IUserNetworkClient userClient)
         {
-            this.client = client;
+            this.userClient = userClient;
         }
 
 
         public async Task<User> ValidateUser(User user)
         {
-            return await client.validateUser(user);
+            return await userClient.ValidateUser(user);
            
         }
 
         public async Task RegisterUser(User user)
         {
-            await client.RegisterUser(user);
+            await userClient.RegisterUser(user);
         }
     }
 }

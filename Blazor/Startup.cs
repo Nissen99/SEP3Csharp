@@ -17,7 +17,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SocketsT1_T2.Tier1;
+using SocketsT1_T2.Tier1.Album;
+using SocketsT1_T2.Tier1.Artist;
+using SocketsT1_T2.Tier1.Library;
+using SocketsT1_T2.Tier1.Playlist;
+using SocketsT1_T2.Tier1.Song;
+using SocketsT1_T2.Tier1.User;
 using Syncfusion.Blazor;
 
 namespace Blazor
@@ -39,7 +44,17 @@ namespace Blazor
             services.AddRazorPages();
             services.AddServerSideBlazor();
 
-           services.AddScoped<IClient,Client>();
+            services.AddScoped<IAlbumNetworkClient, AlbumTcpClient>();
+            services.AddScoped<IArtistNetworkingClient, ArtistTcpClient>();
+            services.AddScoped<ILibraryNetworkClient, LibraryTcpClient>();
+            services.AddScoped<IPlaylistManageNetworkClient, PlaylistManageTcpClient>();
+            services.AddScoped<IPlaylistNetworkClient, PlaylistTcpClient>();
+            services.AddScoped<IPlaylistSongNetworkClient, PlaylistSongTcpClient>();
+            services.AddScoped<IPlayNetworkClient, PlayTcpClient>();
+            services.AddScoped<ISongSearchNetworkClient, SongSearchTcpClient>();
+            services.AddScoped<IUserNetworkClient, UserTcpClient>();
+
+            
             
             services.AddScoped<IAudioTestModel,AudioTestModel>();
             services.AddScoped<IPlayModel, PlayModel>();

@@ -3,7 +3,7 @@
 @using Blazor.Model.PlaylistModel
 <h3>Playlist</h3>
 
-<SongTable SongList="songs" Playlist="currentPlaylist"/>
+<SongTable Playlist="currentPlaylist"/>
 
 <p></p>
 
@@ -17,7 +17,6 @@
     protected async override Task OnInitializedAsync()
     {
         currentPlaylist = PlaylistModel.CurrentPlaylist;
-        songs = await PlaylistModel.GetAllSongFromPlaylist(currentPlaylist);
         
     }
 }

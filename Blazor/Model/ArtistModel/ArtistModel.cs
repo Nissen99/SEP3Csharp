@@ -1,27 +1,27 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Entities;
-using SocketsT1_T2.Tier1;
+using SocketsT1_T2.Tier1.Artist;
 
 namespace Blazor.Model.ArtistModel
 {
     public class ArtistModel : IArtistModel
     {
-        private IClient client;
+        private IArtistNetworkingClient artistNetworkClient;
 
-        public ArtistModel(IClient client)
+        public ArtistModel(IArtistNetworkingClient artistNetworkClient)
         {
-            this.client = client;
+            this.artistNetworkClient = artistNetworkClient;
         }
 
         public async Task<IList<Artist>> SearchForArtists(string name)
         {
-            return await client.SearchForArtists(name);
+            return await artistNetworkClient.SearchForArtists(name);
         }
 
         public async Task<IList<Artist>> GetAllArtistAsync()
         {
-            return await client.GetAllArtistAsync();
+            return await artistNetworkClient.GetAllArtistsAsync();
         }
     }
 }
