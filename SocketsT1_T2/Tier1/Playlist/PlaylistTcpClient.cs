@@ -11,7 +11,7 @@ namespace SocketsT1_T2.Tier1.Playlist
             using TcpClient client = GetTcpClient();
             await SendServerRequest("GETPLAYLISTS", user, client);
 
-            return await serverResponse<IList<Entities.Playlist>>(client, 1000000);
+            return await ServerResponse<IList<Entities.Playlist>>(client, 1000000);
         }
         
         public async Task CreateNewPlaylistAsync(Entities.Playlist playlist)

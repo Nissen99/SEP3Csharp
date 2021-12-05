@@ -10,7 +10,7 @@ namespace SocketsT1_T2.Tier1.Song
         {
             using TcpClient client = GetTcpClient();
             await SendServerRequest("GETSONGSBYFILTER", filterOptions, client);
-            return await serverResponse<IList<Entities.Song>>(client, 500000);
+            return await ServerResponse<IList<Entities.Song>>(client, 500000);
         }
 
 

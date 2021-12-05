@@ -28,7 +28,7 @@ namespace SocketsT1_T2.Tier1
         }
 
 
-        protected async Task<T> serverResponse<T>(TcpClient client, int bufferSize)
+        protected async Task<T> ServerResponse<T>(TcpClient client, int bufferSize)
         {
             NetworkStream stream = client.GetStream();
 
@@ -37,10 +37,10 @@ namespace SocketsT1_T2.Tier1
 
             string inFromServer = Encoding.UTF8.GetString(dataFromServer, 0, bytesRead);
             
-            return ReturnFromServer<T>(inFromServer);
+            return returnFromServer<T>(inFromServer);
         }
         
-        private T ReturnFromServer<T>(string inFromServer)
+        private T returnFromServer<T>(string inFromServer)
         {
             TransferObj objectFromServer = JsonSerializer.Deserialize<TransferObj>(inFromServer,
                 new JsonSerializerOptions

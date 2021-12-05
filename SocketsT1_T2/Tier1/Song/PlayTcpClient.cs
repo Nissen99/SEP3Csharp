@@ -10,7 +10,7 @@ namespace SocketsT1_T2.Tier1.Song
             using TcpClient client = GetTcpClient();
             await SendServerRequest("PLAYSONG", song, client);
  
-            return await serverResponse<byte[]>(client, 30000000);
+            return await ServerResponse<byte[]>(client, 30000000);
         }
 
 

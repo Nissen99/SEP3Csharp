@@ -15,7 +15,7 @@ namespace SocketsT1_T2.Tier1.User
         {
             using TcpClient client = GetTcpClient();
             await SendServerRequest("VALIDATEUSER", user, client);
-            return await serverResponse<Entities.User>(client, 5000);
+            return await ServerResponse<Entities.User>(client, 5000);
         }
 
     }

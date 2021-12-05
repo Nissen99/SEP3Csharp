@@ -10,14 +10,14 @@ namespace SocketsT1_T2.Tier1.Album
         {
             using TcpClient client = GetTcpClient();
             await SendServerRequest("SEARCHFORALBUMS", title, client);
-            return await serverResponse<IList<Entities.Album>>(client, 500000);
+            return await ServerResponse<IList<Entities.Album>>(client, 500000);
         }
 
         public async Task<IList<Entities.Album>> GetAllAlbumsAsync()
         {
             using TcpClient client = GetTcpClient();
             await SendServerRequest("GETALLALBUMS", "", client);
-            return await serverResponse<IList<Entities.Album>>(client, 500000);
+            return await ServerResponse<IList<Entities.Album>>(client, 500000);
         }
 
     }

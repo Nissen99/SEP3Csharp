@@ -55,7 +55,6 @@ namespace Blazor
             services.AddScoped<IUserNetworkClient, UserTcpClient>();
 
             
-            
             services.AddScoped<IAudioTestModel,AudioTestModel>();
             services.AddScoped<IPlayModel, PlayModel>();
             services.AddScoped<CircuitHandler, CircuitHandlerService>();

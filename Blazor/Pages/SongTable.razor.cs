@@ -7,6 +7,7 @@ using Blazor.Model.AudioTestModel;
 using Blazor.Model.PlaylistManageModel;
 using Blazor.Model.PlayModel;
 using Blazor.Model.SongManagerModel;
+using Blazor.Util;
 using Blazored.Modal.Services;
 using Entities;
 using Microsoft.AspNetCore.Components;
@@ -156,6 +157,7 @@ namespace Blazor.Pages
 
         private async Task PerformAddToPlaylist(Song song)
         {
+            
             var form = ModalService.Show<AddToPlaylist>($"Choose a playlist to add \"{song.Title}\" to");
             var result = await form.Result;
             if (!result.Cancelled)

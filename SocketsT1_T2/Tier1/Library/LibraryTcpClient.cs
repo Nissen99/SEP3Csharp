@@ -11,7 +11,7 @@ namespace SocketsT1_T2.Tier1.Library
         {
             using TcpClient client = GetTcpClient();
             await SendServerRequest("GETSONGS", "", client);
-            return await serverResponse<IList<Entities.Song>>(client, 100000);
+            return await ServerResponse<IList<Entities.Song>>(client, 100000);
         }
 
         public async Task AddNewSongAsync(Entities.Song newSong, Mp3 mp3)

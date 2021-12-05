@@ -10,7 +10,7 @@ namespace SocketsT1_T2.Tier1.Playlist
         {
             using TcpClient client = GetTcpClient();
             await SendServerRequest("GETSONGSFROMPLAYLIST", playlist, client);
-            return await serverResponse<IList<Entities.Song>>(client, 100000);
+            return await ServerResponse<IList<Entities.Song>>(client, 100000);
         }
 
     }
