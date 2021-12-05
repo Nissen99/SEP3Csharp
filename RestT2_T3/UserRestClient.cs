@@ -26,7 +26,7 @@ namespace RestT2_T3
             using HttpClient client = new HttpClient();
             
             HttpResponseMessage responseMessage =
-                await client.GetAsync(Uri + $"user/{user.Username}&{user.Password}");
+                await client.GetAsync(Uri + $"user?username={user.Username}&password={user.Password}");
 
             return await HandleResponseGet<User>(responseMessage);
         }

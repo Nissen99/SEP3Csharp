@@ -1,6 +1,6 @@
 @page "/SongTable"
 
-@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment env 
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment env
 
 
 @if (SongList == null)
@@ -16,7 +16,7 @@ else
 {
     <table class="table">
         <thead>
-        
+
         <tr>
             <th> </th>
             <th>Title</th>
@@ -31,10 +31,12 @@ else
         {
             <tr>
                 <td>
+
                     <AuthorizeView Policy="MustBeLoggedIn">
                         <i class="mr-4 oi oi-plus" @onclick="() => PerformAddToPlaylist(song)"/>
                     </AuthorizeView>
-                    
+
+
                     @if (CurrentSong != null && CurrentSong.Id == song.Id)
                     {
                         if (IsPlaying())
@@ -49,7 +51,6 @@ else
                     else
                     {
                         <i class="oi oi-media-play" @onclick="() => PlaySong(song)"/>
-
                     }
 
                 </td>
@@ -68,5 +69,4 @@ else
         }
         </tbody>
     </table>
-    
 }

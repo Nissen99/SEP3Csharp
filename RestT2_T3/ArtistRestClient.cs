@@ -12,8 +12,8 @@ namespace RestT2_T3
         public async Task<IList<Artist>> SearchForArtists(string name)
         {
             using HttpClient client = new HttpClient();
-            
-            HttpResponseMessage responseMessage = await client.GetAsync(Uri + $"artist/{name}");
+
+            HttpResponseMessage responseMessage = await client.GetAsync(Uri + $"artist?name={name}");
 
             return await HandleResponseGet<IList<Artist>>(responseMessage);
        

@@ -10,11 +10,13 @@ namespace RestT2_T3
     public class AlbumRestClient : HttpClientBase, IAlbumNetworking
     {
         
+        public AlbumRestClient(){}
+        
         public async Task<IList<Album>> SearchForAlbums(string title)
         {
             using HttpClient client = new HttpClient();
 
-            HttpResponseMessage responseMessage = await client.GetAsync(Uri + $"album/{title}");
+            HttpResponseMessage responseMessage = await client.GetAsync(Uri + $"album?title={title}");
 
             return await HandleResponseGet<IList<Album>>(responseMessage);
             

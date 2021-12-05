@@ -14,7 +14,7 @@ namespace RestT2_T3
         {
             using HttpClient httpClient = new HttpClient();
             
-            HttpResponseMessage responseMessage = await httpClient.GetAsync(Uri + $"songSearch/songTitle={songTitle}");
+            HttpResponseMessage responseMessage = await httpClient.GetAsync(Uri + $"songSearch?songTitle={songTitle}");
 
             return await HandleResponseGet<IList<Song>>(responseMessage);
         }
@@ -23,7 +23,7 @@ namespace RestT2_T3
         {
             using HttpClient httpClient = new HttpClient();
             HttpResponseMessage responseMessage =
-                await httpClient.GetAsync(Uri + $"songSearch/artistName={artistName}");
+                await httpClient.GetAsync(Uri + $"songSearch?artistName={artistName}");
 
             return await HandleResponseGet<IList<Song>>(responseMessage);
         }
@@ -32,7 +32,7 @@ namespace RestT2_T3
         {
             using HttpClient httpClient = new HttpClient();
             HttpResponseMessage responseMessage =
-                await httpClient.GetAsync(Uri + $"songSearch/albumTitle={albumTitle}");
+                await httpClient.GetAsync(Uri + $"songSearch?albumTitle={albumTitle}");
 
             return await HandleResponseGet<IList<Song>>(responseMessage);
         }

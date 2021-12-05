@@ -14,6 +14,7 @@ namespace Blazor.Pages
         
         
         [Inject] public IModalService ModalService { get; set; }
+        [Inject] public NavigationManager NavigationManager { get; set; }
         [Inject] public ISongManageModel SongManageModel { get; set; }
         private Song newSong = new Song();
         private Mp3 newMp3 = new Mp3();
@@ -50,6 +51,7 @@ namespace Blazor.Pages
 
             Console.WriteLine($"Title: {newSong.Title}");
             await SongManageModel.AddNewSongAsync(newSong, newMp3);
+            NavigationManager.NavigateTo("/Search");
 
         }
 

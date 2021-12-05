@@ -19,7 +19,7 @@ namespace RestT2_T3
             
             StringContent content = FromObjectToStringContentCamelCase(playlist);
 
-            HttpResponseMessage responseMessage = await client.PostAsync(Uri + "playlist/" , content);
+            HttpResponseMessage responseMessage = await client.PostAsync(Uri + "playlist" , content);
             
             HandleResponseNoReturn(responseMessage);
             
@@ -29,16 +29,14 @@ namespace RestT2_T3
         {
             using HttpClient client = new HttpClient();
             
-            HttpResponseMessage responseMessage = await client.GetAsync(Uri + "playlist/" + user.Username);
+            HttpResponseMessage responseMessage = await client.GetAsync(Uri + $"playlist?username={user.Username}");
 
             return await HandleResponseGet<IList<Playlist>>(responseMessage);
         }
         public async Task<IList<Song>> GetAllSongsFromPlaylistAsync(Playlist playlist)
         {
             using HttpClient client = new HttpClient();
-           
-            HttpResponseMessage responseMessage= await client.GetAsync(Uri + "playlistSongs/" + playlist.Id);
-
+            HttpResponseMessage responseMessage= await client.GetAsync(Uri + $"playlistSongs?playlistId={playlist.Id}");
             return await HandleResponseGet<IList<Song>>(responseMessage);
  
         }

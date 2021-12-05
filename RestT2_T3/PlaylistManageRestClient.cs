@@ -14,14 +14,14 @@ namespace RestT2_T3
         {
             using HttpClient client = new HttpClient();
             StringContent content = FromObjectToStringContentCamelCase(song);
-            HttpResponseMessage responseMessage = await client.PostAsync(Uri + $"playlist/{playlist.Id}/", content);
+            HttpResponseMessage responseMessage = await client.PostAsync(Uri + $"playlistManage/{playlist.Id}/", content);
             HandleResponseNoReturn(responseMessage);
         }
 
         public async Task RemoveSongFromPlaylistAsync(Playlist playlist, Song song)
         {
             using HttpClient client = new HttpClient();
-            HttpResponseMessage responseMessage = await client.DeleteAsync(Uri + $"playlist/{playlist.Id}/{song.Id}");
+            HttpResponseMessage responseMessage = await client.DeleteAsync(Uri + $"playlistManage/{playlist.Id}/{song.Id}");
             HandleResponseNoReturn(responseMessage);
 
         }
