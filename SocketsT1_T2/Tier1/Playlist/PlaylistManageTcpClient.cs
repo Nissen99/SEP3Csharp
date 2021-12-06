@@ -10,6 +10,8 @@ namespace SocketsT1_T2.Tier1.Playlist
             using TcpClient client = GetTcpClient();
             object[] toSent = {playlist, song};
             await SendServerRequest("ADDSONGTOPLAYLIST", toSent, client);
+            await ServerResponseCheckForException(client, 100000);
+
         }
 
         public async Task RemoveSongFromPlaylistAsync(Entities.Playlist playlist, Entities.Song song)
@@ -17,6 +19,8 @@ namespace SocketsT1_T2.Tier1.Playlist
             using TcpClient client = GetTcpClient();
             object[] toSent = {playlist, song};
             await SendServerRequest("REMOVESONGFROMPLAYLIST", toSent, client);
+            await ServerResponseCheckForException(client, 100000);
+
         }
 
     }

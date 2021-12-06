@@ -6,7 +6,7 @@ using Entities;
 
 namespace Domain.Playlist
 {
-    public class PlayListService:IPlayListService
+    public class PlayListService : IPlayListService
 
     {
         private IPlaylistNetworking playlistNetworking;
@@ -14,8 +14,8 @@ namespace Domain.Playlist
         {
             this.playlistNetworking = playlistNetworking;
         }
-        
 
+        
         public async Task DeletePlayListAsync(Entities.Playlist playlist)
         {
             await playlistNetworking.RemovePlaylistAsync(playlist);
@@ -37,9 +37,9 @@ namespace Domain.Playlist
             await playlistNetworking.CreateNewPlaylistAsync(playlist);
         }
 
-        public async Task<IList<Song>> GetAllSongsFromPlaylistAsync(Entities.Playlist playlist)
+        public async Task<Entities.Playlist> GetPlaylistFromIdAsync(int playlistId)
         {
-            return await playlistNetworking.GetAllSongsFromPlaylistAsync(playlist);
+            return await playlistNetworking.GetPlaylistFromIdAsync(playlistId);
         }
     }
 }

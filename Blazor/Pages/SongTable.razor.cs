@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Blazor.Model;
 using Blazor.Model.AudioTestModel;
@@ -25,7 +26,7 @@ namespace Blazor.Pages
         public IList<Song> SongList { get; set; }
         
         [Parameter]
-        public Entities.Playlist Playlist { get; set; }
+        public Playlist Playlist { get; set; }
 
         public Song CurrentSong;
 
@@ -33,19 +34,19 @@ namespace Blazor.Pages
         {
             if (Playlist != null)
             {
-                Console.WriteLine("Vi bruger squ playlisten nu");
+                Console.WriteLine("Vi bruger playlisten nu");
                 SongList = Playlist.Songs;
             }
-            
+        
             
             SongPlaying();
             PlayModel.UpdatePlayState += () => SongPlaying();
             StateHasChanged();
         }
+       
 
         private string generateArtists(Song song)
         {
-            Console.WriteLine($"Is song null= {song.Title}" );
             IList<Artist> artists = song.Artists;
             string toReturn = artists[0].Name;
             int count = artists.Count;

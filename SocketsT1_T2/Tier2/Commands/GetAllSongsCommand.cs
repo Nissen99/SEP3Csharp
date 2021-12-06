@@ -18,9 +18,17 @@ namespace SocketsT1_T2.Tier2.Commands
 
         public async Task Execute(NetworkStream stream, string argFromTransfer)
         {
-            //Parameter skal ikke bruges
-            IList<Song> result = await playService.GetAllSongsAsync();
-            await ServerResponse.SendToClient(stream, result);
+            try
+            {
+                //Parameter skal ikke bruges
+                IList<Song> result = await playService.GetAllSongsAsync();
+                await ServerResponse.SendToClientWithValueAsync(stream, result);
+            }
+            catch (Exception e)
+            {
+                await ServerResponse.SendExceptionToClientAsync(stream, e);
+            }
+           
             
 
 

@@ -9,6 +9,8 @@ namespace SocketsT1_T2.Tier1.User
         {
             using TcpClient client = GetTcpClient();
             await SendServerRequest("REGISTERUSER", user, client);
+            await ServerResponseCheckForException(client, 100000);
+
         }
 
         public async Task<Entities.User> ValidateUser(Entities.User user)

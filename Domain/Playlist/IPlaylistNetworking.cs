@@ -8,7 +8,7 @@ namespace Domain.Playlist
     {
         public Task CreateNewPlaylistAsync(Entities.Playlist playlist);
         Task<IList<Entities.Playlist>> GetAllPlaylistsForUserAsync(User user);
-        Task<IList<Song>> GetAllSongsFromPlaylistAsync(Entities.Playlist playlist);
+        Task<Entities.Playlist> GetPlaylistFromIdAsync(int playlistId);
         Task RemovePlaylistAsync(Entities.Playlist playlist);
     }
 }

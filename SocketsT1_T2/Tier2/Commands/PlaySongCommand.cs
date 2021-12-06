@@ -15,10 +15,17 @@ namespace SocketsT1_T2.Tier2.Commands
         private IPlayService playService = new PlayService(new PlayRestClient());
         public async Task Execute(NetworkStream stream, string argFromTransfer)
         {
+            try
+            {
             Song tObjSong = JsonElementConverter.ElementToObject<Song>(argFromTransfer);
             byte[] song = await playService.PlayAsync(tObjSong);
-            await ServerResponse.SendToClient(stream, song);
-           // await stream.WriteAsync(song, 0, song.Length);
+            await ServerResponse.SendToClientWithValueAsync(stream, song);
+            }
+            catch (Exception e)
+            {
+                await ServerResponse.SendExceptionToClientAsync(stream, e);
+            }
+          
         }
     }
 }

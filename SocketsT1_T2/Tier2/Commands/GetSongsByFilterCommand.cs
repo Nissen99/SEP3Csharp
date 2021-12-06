@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text.Json;
@@ -14,9 +15,17 @@ namespace SocketsT1_T2.Tier2.Commands
         private ISongSearchService songSearchService = new SongSearchService(new SongSearchRestClient());
         public async Task Execute(NetworkStream stream, string argFromTransfer)
         {
-            string[] toSearch = JsonElementConverter.ElementToObject<string[]>(argFromTransfer);
-            IList<Song> songs = await songSearchService.GetSongsByFilterJsonAsync(toSearch);
-            await ServerResponse.SendToClient(stream, songs);
+            try
+            {
+                string[] toSearch = JsonElementConverter.ElementToObject<string[]>(argFromTransfer);
+                IList<Song> songs = await songSearchService.GetSongsByFilterJsonAsync(toSearch);
+                await ServerResponse.SendToClientWithValueAsync(stream, songs);
+            }
+            catch (Exception e)
+            {
+                await ServerResponse.SendExceptionToClientAsync(stream, e);
+            }
+           
         }
     }
 }

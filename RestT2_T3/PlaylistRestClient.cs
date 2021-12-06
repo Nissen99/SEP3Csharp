@@ -33,11 +33,11 @@ namespace RestT2_T3
 
             return await HandleResponseGet<IList<Playlist>>(responseMessage);
         }
-        public async Task<IList<Song>> GetAllSongsFromPlaylistAsync(Playlist playlist)
+        public async Task<Playlist> GetPlaylistFromIdAsync(int playlistId)
         {
             using HttpClient client = new HttpClient();
-            HttpResponseMessage responseMessage= await client.GetAsync(Uri + $"playlistSongs?playlistId={playlist.Id}");
-            return await HandleResponseGet<IList<Song>>(responseMessage);
+            HttpResponseMessage responseMessage= await client.GetAsync(Uri + $"playlist?playlistId={playlistId}");
+            return await HandleResponseGet<Playlist>(responseMessage);
  
         }
         

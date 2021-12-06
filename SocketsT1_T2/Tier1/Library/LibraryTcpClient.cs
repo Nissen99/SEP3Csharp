@@ -19,12 +19,15 @@ namespace SocketsT1_T2.Tier1.Library
             using TcpClient client = GetTcpClient();
             object[] toSent = {newSong, mp3};
             await SendServerRequest("UPLOADSONG", toSent, client);
+            await ServerResponseCheckForException(client, 100000);
         }
 
         public async Task RemoveSongAsync(Entities.Song song)
         {
             using TcpClient client = GetTcpClient();
             await SendServerRequest("REMOVESONG", song, client);
+            await ServerResponseCheckForException(client, 100000);
+
         }
 
     }

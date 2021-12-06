@@ -15,6 +15,12 @@ namespace Blazor.Pages
         [Inject] private IModalService ModalService { get; set; }
         public IList<Entities.Playlist> Playlists { get; set; }
 
+        
+        protected override async Task OnInitializedAsync()
+        {
+            Playlists = await PlaylistModel.GetAllPlaylistsForUserAsync(CustomAuthenticationStateProvider.cachedUser);
+        }
+
         public async Task PerformCreatePlaylist()
         {
             var form = ModalService.Show<CreatePlaylist>("Create new Playlist");
@@ -30,7 +36,7 @@ namespace Blazor.Pages
                     ModalService.Show<Popup>("Please type a playlist Title");
                     return;
                 }
-                await PlaylistModel.CreateNewPlatlistAsync(justCreated);
+                await PlaylistModel.CreateNewPlaylistAsync(justCreated);
                 Playlists= await PlaylistModel.GetAllPlaylistsForUserAsync(CustomAuthenticationStateProvider.cachedUser);
                 StateHasChanged();
                 
@@ -56,16 +62,10 @@ namespace Blazor.Pages
         }
 
 
-        protected async override Task OnInitializedAsync()
-        {
-            Playlists = await PlaylistModel.GetAllPlaylistsForUserAsync(CustomAuthenticationStateProvider.cachedUser);
-            // StateHasChanged();
-        }
-
+   
         private void LoadPlaylist(Entities.Playlist playlist)
         {
-            PlaylistModel.CurrentPlaylist = playlist;
-            NavigationManager.NavigateTo("/Playlist");
+            NavigationManager.NavigateTo($"/PlaylistDisplay/{playlist.Id}");
         }
     }
 }

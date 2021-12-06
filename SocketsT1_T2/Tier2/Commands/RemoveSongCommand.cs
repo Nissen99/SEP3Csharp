@@ -1,3 +1,4 @@
+using System;
 using System.Net.Sockets;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -13,8 +14,17 @@ namespace SocketsT1_T2.Tier2.Commands
         private ISongManageService songManageService = new SongManageService(new SongManageRestClient());
         public async Task Execute(NetworkStream stream, string argFromTransfer)
         {
-            Song song = JsonElementConverter.ElementToObject<Song>(argFromTransfer);
-            await songManageService.RemoveSongAsync(song);
+            try
+            {
+                Song song = JsonElementConverter.ElementToObject<Song>(argFromTransfer);
+                await songManageService.RemoveSongAsync(song);
+                await ServerResponse.SendToClientNoValueAsync(stream);
+            }
+            catch (Exception e)
+            {
+                await ServerResponse.SendExceptionToClientAsync(stream, e);
+            }
+           
         }
     }
 }

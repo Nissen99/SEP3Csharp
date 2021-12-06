@@ -1,4 +1,5 @@
-﻿using System.Net.Sockets;
+﻿using System;
+using System.Net.Sockets;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Domain.Play;
@@ -16,8 +17,17 @@ namespace SocketsT1_T2.Tier2.Commands
 
         public async Task Execute(NetworkStream stream, string argFromTransfer)
         {
-            Playlist playlist = JsonElementConverter.ElementToObject<Playlist>(argFromTransfer);
-            await playListService.DeletePlayListAsync(playlist);
+            try
+            {
+                Playlist playlist = JsonElementConverter.ElementToObject<Playlist>(argFromTransfer);
+                await playListService.DeletePlayListAsync(playlist);
+                await ServerResponse.SendToClientNoValueAsync(stream);
+            }
+            catch (Exception e)
+            {
+                await ServerResponse.SendExceptionToClientAsync(stream, e);
+            }
+            
 
         }
     }

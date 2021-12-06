@@ -1,0 +1,31 @@
+﻿@page "/PlaylistDisplay/{PlaylistToDisplay}"
+@using Entities
+@using Blazor.Model.PlaylistModel
+
+@if (currentPlaylist != null)
+{
+    <h3>@currentPlaylist.Title</h3>
+
+    <SongTable Playlist="currentPlaylist"/>
+}
+else
+{
+    <p>Loading..... </p>
+}
+
+<p></p>
+
+@code {
+    [Inject]
+    public IPlayListModel PlaylistModel { get; set; }
+    [Parameter]
+    public string PlaylistToDisplay { get; set; }
+
+    private Playlist currentPlaylist;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        currentPlaylist = await PlaylistModel.GetPlaylistFromIdAsync(int.Parse(PlaylistToDisplay));
+        StateHasChanged();
+    }
+}

@@ -49,7 +49,6 @@ namespace Blazor
             services.AddScoped<ILibraryNetworkClient, LibraryTcpClient>();
             services.AddScoped<IPlaylistManageNetworkClient, PlaylistManageTcpClient>();
             services.AddScoped<IPlaylistNetworkClient, PlaylistTcpClient>();
-            services.AddScoped<IPlaylistSongNetworkClient, PlaylistSongTcpClient>();
             services.AddScoped<IPlayNetworkClient, PlayTcpClient>();
             services.AddScoped<ISongSearchNetworkClient, SongSearchTcpClient>();
             services.AddScoped<IUserNetworkClient, UserTcpClient>();

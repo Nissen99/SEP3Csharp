@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text.Json;
@@ -14,9 +15,18 @@ namespace SocketsT1_T2.Tier2.Commands
         private IAlbumService albumService = new AlbumService(new AlbumRestClient());
         public async Task Execute(NetworkStream stream, string argFromTransfer)
         {
-            string title = JsonElementConverter.ElementToObject<string>(argFromTransfer);
-            IList<Album> artists = await albumService.SearchForAlbums(title);
-            await ServerResponse.SendToClient(stream, artists);
+            try
+            {
+                string title = JsonElementConverter.ElementToObject<string>(argFromTransfer);
+                IList<Album> artists = await albumService.SearchForAlbums(title);
+                await ServerResponse.SendToClientWithValueAsync(stream, artists);
+            }
+            catch (Exception e)
+            {
+                await ServerResponse.SendExceptionToClientAsync(stream, e);
+
+            }
+            
         }
     }
 }

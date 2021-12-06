@@ -21,7 +21,6 @@ namespace Blazor.Model.PlayModel
         private IList<Song> previouslySongs = new List<Song>();
         private Song currentSong;
 
-
         public bool IsPlaying
         {
             get { return waveOut.PlaybackState == PlaybackState.Playing; }
@@ -51,8 +50,6 @@ namespace Blazor.Model.PlayModel
             Console.WriteLine("Time taken to play song: " + watch.Elapsed.ToString(@"m\:ss\.fff"));
             MemoryStream ms = new MemoryStream(songToPlay);
             fileReader = new Mp3FileReader(ms);
-            
-            
             
             waveOut.Init(fileReader);
             waveOut.Play();

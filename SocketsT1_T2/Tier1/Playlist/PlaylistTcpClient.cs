@@ -14,16 +14,27 @@ namespace SocketsT1_T2.Tier1.Playlist
             return await ServerResponse<IList<Entities.Playlist>>(client, 1000000);
         }
         
+        public async Task<Entities.Playlist> GetPlaylistFromIdAsync(int playlistId)
+        {
+            using TcpClient client = GetTcpClient();
+            await SendServerRequest("GETPLAYLISTFROMID", playlistId, client);
+            return await ServerResponse<Entities.Playlist>(client, 100000);
+        }
+        
         public async Task CreateNewPlaylistAsync(Entities.Playlist playlist)
         {
             using TcpClient client = GetTcpClient();
             await SendServerRequest("CREATENEWPLAYLIST", playlist, client);
+            await ServerResponseCheckForException(client, 100000);
+
         }
 
         public async Task RemovePlaylistAsync(Entities.Playlist playlist)
         {
             using TcpClient client = GetTcpClient();
             await SendServerRequest("REMOVEPLAYLIST", playlist, client);
+            await ServerResponseCheckForException(client, 100000);
+
         }
     }
 }

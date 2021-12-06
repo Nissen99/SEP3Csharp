@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using Domain.Album;
 using Entities;
 using RestT2_T3;
+using SocketsT1_T2.Shared;
 using SocketsT1_T2.Tier2.Util;
 
 namespace SocketsT1_T2.Tier2.Commands
@@ -13,8 +15,16 @@ namespace SocketsT1_T2.Tier2.Commands
         private IAlbumService albumService = new AlbumService(new AlbumRestClient());
         public async Task Execute(NetworkStream stream, string argFromTransfer)
         {
-            IList<Album> albums = await albumService.GetAllAlbumsAsync();
-            await ServerResponse.SendToClient(stream,albums);
+            try
+            {
+                IList<Album> albums = await albumService.GetAllAlbumsAsync();
+                await ServerResponse.SendToClientWithValueAsync(stream,albums);
+            }
+            catch (Exception e)
+            {
+                await ServerResponse.SendExceptionToClientAsync(stream, e);
+            }
+           
         }
     }
 }

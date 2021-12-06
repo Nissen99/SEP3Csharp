@@ -26,7 +26,7 @@ namespace SocketsT1_T2.Tier2.Util
             {"GETALLALBUMS", new GetAllAlbumsCommand()},
             {"GETALLARTISTS", new GetAllArtistsCommand()},
             {"GETPLAYLISTS", new GetPlaylistsCommand()},
-            {"GETSONGSFROMPLAYLIST", new GetSongsFromPlaylistCommand()},
+            {"GETPLAYLISTFROMID", new GetPlaylistFromId()},
             {"CREATENEWPLAYLIST", new CreateNewPlaylistCommand()},
             {"REMOVEPLAYLIST",new RemovePlaylistCommand()},
             {"ADDSONGTOPLAYLIST", new AddSongToPlaylistCommand()},

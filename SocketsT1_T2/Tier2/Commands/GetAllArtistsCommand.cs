@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text.Json;
@@ -15,8 +16,16 @@ namespace SocketsT1_T2.Tier2.Commands
         private IArtistService artistService = new ArtistService(new ArtistRestClient());
         public async Task Execute(NetworkStream stream, string argFromTransfer)
         {
-            IList<Artist> artists = await artistService.GetAllArtistsAsync();
-            await ServerResponse.SendToClient(stream, artists);
+            try
+            {
+                IList<Artist> artists = await artistService.GetAllArtistsAsync();
+                await ServerResponse.SendToClientWithValueAsync(stream, artists);
+            }
+            catch (Exception e)
+            {
+                await ServerResponse.SendExceptionToClientAsync(stream, e);
+            }
+
         }
     }
 }

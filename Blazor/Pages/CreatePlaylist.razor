@@ -6,6 +6,8 @@
 <div style="color:red">@errorMessage</div>
 
 <button @onclick="PerformCreatePlaylist"> Create Playlist </button>
+
+<button @onclick="Cancel"> Cancel </button>
 <div/>
 
 @code {
@@ -15,7 +17,7 @@
 
     private string Title;
     private string errorMessage;
-    private Entities.Playlist Playlist = new Entities.Playlist();
+    private Entities.Playlist Playlist = new();
 
 
     public async Task PerformCreatePlaylist()

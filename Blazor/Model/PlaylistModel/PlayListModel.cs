@@ -10,18 +10,14 @@ namespace Blazor.Model.PlaylistModel
     public class PlayListModel : IPlayListModel
     {
         private IPlaylistNetworkClient playlistClient;
-        private IPlaylistSongNetworkClient playlistSongClient;
         
-        public Playlist CurrentPlaylist { get; set; }
 
-
-        public PlayListModel(IPlaylistNetworkClient playlistClient, IPlaylistSongNetworkClient playlistSongClient)
+        public PlayListModel(IPlaylistNetworkClient playlistClient)
         {
             this.playlistClient = playlistClient;
-            this.playlistSongClient = playlistSongClient;
         }
 
-        public async Task CreateNewPlatlistAsync(Playlist playlist)
+        public async Task CreateNewPlaylistAsync(Playlist playlist)
         {
           await playlistClient.CreateNewPlaylistAsync(playlist);
         }
@@ -31,9 +27,9 @@ namespace Blazor.Model.PlaylistModel
             return await playlistClient.GetAllPlaylistsForUserAsync(user);
         }
 
-        public async Task<IList<Song>> GetAllSongFromPlaylist(Playlist playlist)
+        public async Task<Playlist> GetPlaylistFromIdAsync(int playlistId)
         {
-            return await playlistSongClient.GetAllSongsFromPlaylistAsync(playlist);
+            return await playlistClient.GetPlaylistFromIdAsync(playlistId);
         }
         
 

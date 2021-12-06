@@ -15,9 +15,17 @@ namespace SocketsT1_T2.Tier2.Commands
         private IPlayListService playListService = new PlayListService(new PlaylistRestClient());
         public async Task Execute(NetworkStream stream, string argFromTransfer)
         {
-            User user = JsonElementConverter.ElementToObject<User>(argFromTransfer);
-            IList<Playlist> result = await playListService.GetAllPlaylistsForUserAsync(user);
-            await ServerResponse.SendToClient(stream, result);
+            try
+            {
+                User user = JsonElementConverter.ElementToObject<User>(argFromTransfer);
+                IList<Playlist> result = await playListService.GetAllPlaylistsForUserAsync(user);
+                await ServerResponse.SendToClientWithValueAsync(stream, result);
+            }
+            catch (Exception e)
+            {
+                await ServerResponse.SendExceptionToClientAsync(stream, e);
+            }
+
         }
     }
 }
