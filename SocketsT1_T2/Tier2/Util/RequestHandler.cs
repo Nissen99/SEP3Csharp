@@ -68,7 +68,7 @@ namespace SocketsT1_T2.Tier2.Util
         {
             activeCommand = null;
             if (!commands.TryGetValue(id, out activeCommand))
-                activeCommand = null;
+                activeCommand = new NullCommand();
 
         }
 
@@ -76,14 +76,7 @@ namespace SocketsT1_T2.Tier2.Util
         {
             return activeCommand;
         }
-
-        public async Task HandleRequest()
-        {
-            await GetRequest();
-            SetCommand(RequestAction);
-
-        }
-
+        
 
     }
 }
