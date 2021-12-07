@@ -6,18 +6,29 @@ using Domain.PlaylistManage;
 using Entities;
 using Factory;
 using RestT2_T3;
+using SocketsT1_T2.Shared;
 using SocketsT1_T2.Tier2.Util;
 
 namespace SocketsT1_T2.Tier2.Commands
 {
     public class AddSongToPlaylistCommand : ICommand
     {
-        private IPlaylistManageService playlistManageService = ServicesFactory.GetPlaylistManageService();
-        public async Task Execute(NetworkStream stream, string argFromTransfer)
+        private IPlaylistManageService playlistManageService;
+        private NetworkStream stream;
+        private TransferObj requestObj;
+
+        public AddSongToPlaylistCommand(NetworkStream stream, TransferObj requestObj)
+        {
+            playlistManageService = ServicesFactory.GetPlaylistManageService();
+            this.stream = stream;
+            this.requestObj = requestObj;
+        }
+
+        public async Task Execute()
         {
             try
             {
-                JsonElement[] args = JsonElementConverter.ElementToObject<JsonElement[]>(argFromTransfer);
+                JsonElement[] args = JsonElementConverter.ElementToObject<JsonElement[]>(requestObj.Arg);
                 Playlist playlist = JsonElementConverter.ElementToObject<Playlist>(args[0].GetRawText());
                 Song song = JsonElementConverter.ElementToObject<Song>(args[1].GetRawText());
                 await playlistManageService.AddSongToPlaylistAsync(playlist, song);

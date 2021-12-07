@@ -50,7 +50,7 @@ namespace Blazor.Shared
        
         private async Task updatePlayState()
         { 
-            isPlaying = Play.IsPlaying;
+            isPlaying = Play.Context.IsPlaying;
             currentSong = await Play.GetCurrentSongAsync();
             songTitle = currentSong.Title;
             artistTitle = currentSong.Artists[0].Name; //Giver kun første artist på listen - skal flyttes ud i modellen.

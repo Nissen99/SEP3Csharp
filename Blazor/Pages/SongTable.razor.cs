@@ -78,7 +78,7 @@ namespace Blazor.Pages
 
         private bool IsPlaying()
         {
-            return PlayModel.IsPlaying;
+            return PlayModel.Context.IsPlaying;
         }
         private void TogglePlay()
         {

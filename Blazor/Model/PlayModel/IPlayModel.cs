@@ -17,8 +17,6 @@ namespace Blazor.Model.PlayModel
         Task PlayPreviousSong();
         Task PlayNextSongAsync();
 
-         bool IsPlaying { get; }
-        
         IList<Song> CurrentPlaylist { get; set; }
         IList<Song> GetPreviouslySongs();
         string UpdateDisplay();

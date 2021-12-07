@@ -32,8 +32,10 @@ namespace SocketsT1_T2.Tier2
             Console.WriteLine("LISTEN");
 
             RequestHandler rHandler = new RequestHandler(client.GetStream());
+            Console.WriteLine("Efter RequestHandler constructor");
             ICommand command = await rHandler.GetCommand();
-            await command.Execute(client.GetStream(),rHandler.RequestArg );
+            Console.WriteLine("Efter rHandler.GetCommand");
+            await command.Execute();
             
             //client.Dispose();
         }

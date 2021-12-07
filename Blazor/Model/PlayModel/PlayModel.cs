@@ -18,11 +18,6 @@ namespace Blazor.Model.PlayModel
         private Song currentSong;
         
         
-        public bool IsPlaying
-        {
-            get { return Context.CurrentState.State == PlaybackState.Playing; }
-        }
-        
         public IList<Song> CurrentPlaylist { get; set; }
         
         public IPlaystateContext Context { get; set; }
@@ -66,8 +61,8 @@ namespace Blazor.Model.PlayModel
 
         public async Task SetVolumeAsync(int percentage)
         {
-            float toSet = (float) percentage / 100;
-            Context.WaveOut.Volume = toSet;
+            await Context.SetVolume(percentage);
+            
         }
         
         public async Task PlayPreviousSong()
@@ -77,7 +72,6 @@ namespace Blazor.Model.PlayModel
             {
                 previouslySongs.RemoveAt(previouslySongs.Count - 1);
                 await PlaySongAsync(previouslySongs[^1]);
-                
             }
         }
         
@@ -92,8 +86,6 @@ namespace Blazor.Model.PlayModel
             {
                 index++;
             }
-        
-            Console.WriteLine(index);
             await PlaySongAsync(CurrentPlaylist[index]);
         }
 

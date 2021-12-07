@@ -13,16 +13,21 @@ namespace Blazor.Util.Playstate
 {
     public class PlaystateContext : IPlaystateContext
     {
-        public Mp3FileReader FileReader { get; private set; }
-        private MemoryStream ms;
-        //private BufferedWaveProvider bufferedWaveProvider;
-        public IWavePlayer WaveOut { get; set; }
-        private IPlayNetworkClient client;
+        
         public IPlaystate CurrentState { get; set; }
-        
-        
+        public bool IsPlaying
+        {
+            get { return CurrentState.State == PlaybackState.Playing; }
+        }
         public Action UpdatePlayState { get; set; }
         public Action ProgressBarUpdate { get; set; }
+        public Mp3FileReader FileReader { get; private set; } 
+        public IWavePlayer WaveOut { get; set; }
+        
+        
+        private MemoryStream ms;
+        private IPlayNetworkClient client;
+        
         public PlaystateContext(IPlayNetworkClient client)
         {
             WaveOut = new WaveOutEvent();
@@ -44,7 +49,13 @@ namespace Blazor.Util.Playstate
         {
             return FileReader.CurrentTime.TotalSeconds;
         }
-        
+
+        public async Task SetVolume(int percentage)
+        {
+            float toSet = (float) percentage / 100;
+            WaveOut.Volume = toSet;
+        }
+
         public async Task PlaySong(Song song)
         {
             //State = new Stopped(this);
