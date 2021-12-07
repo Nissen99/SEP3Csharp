@@ -13,6 +13,17 @@ namespace RestT2_T3
     
         protected async Task<T> HandleResponseGet<T>(HttpResponseMessage responseMessage)
         {
+            CheckForBadStatusCode(responseMessage);
+            
+            string inFromServerJson = await responseMessage.Content.ReadAsStringAsync();
+
+            T inFromServer = JsonSerializer.Deserialize<T>(inFromServerJson,
+                new JsonSerializerOptions() {PropertyNameCaseInsensitive = true});
+            return inFromServer;
+        }
+
+        public void CheckForBadStatusCode(HttpResponseMessage responseMessage)
+        {
             Console.WriteLine($"Handle Response print out: \n {responseMessage}");
 
             if (!responseMessage.IsSuccessStatusCode)
@@ -21,11 +32,6 @@ namespace RestT2_T3
                 throw new Exception($"Error: {responseMessage.StatusCode}, " +
                                     $"{responseMessage.ReasonPhrase}");
             }
-            string inFromServerJson = await responseMessage.Content.ReadAsStringAsync();
-
-            T inFromServer = JsonSerializer.Deserialize<T>(inFromServerJson,
-                new JsonSerializerOptions() {PropertyNameCaseInsensitive = true});
-            return inFromServer;
         }
 
         protected void HandleResponseNoReturn(HttpResponseMessage responseMessage)

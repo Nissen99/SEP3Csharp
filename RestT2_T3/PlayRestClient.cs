@@ -17,19 +17,14 @@ namespace RestT2_T3
         public async Task<byte[]> GetSongWithMP3(Song song)
         {
             using HttpClient client = new HttpClient();
-            // string stringAsync = await client.GetStringAsync(uri + $"songs/{song.Id}");
-            //
-            // Song songWithMP3 = JsonSerializer.Deserialize<Song>(stringAsync, new JsonSerializerOptions()
-            // {
-            //     PropertyNameCaseInsensitive = true,
-            //     Converters = { new ByteArrayConverter() }
-            // });
-            //
-            // return  songWithMP3;
-            byte[] byteAsync = await client.GetByteArrayAsync(Uri + $"mp3/{song.Mp3}");
+            
+            HttpResponseMessage responseMessage = await client.GetAsync(Uri + $"mp3?songPath={song.Mp3}");
+
+            CheckForBadStatusCode(responseMessage);
+            
+            byte[] byteAsync = await responseMessage.Content.ReadAsByteArrayAsync();
             
             return byteAsync;
-
         }
 
         public async Task<IList<Song>> GetAllSongs()
