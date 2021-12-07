@@ -1,14 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Blazor.Model;
 using Blazor.Model.AudioTestModel;
 using Blazor.Model.PlaylistManageModel;
 using Blazor.Model.PlayModel;
 using Blazor.Model.SongManagerModel;
-using Blazor.Util;
 using Blazored.Modal.Services;
 using Entities;
 using Microsoft.AspNetCore.Components;
@@ -26,7 +24,7 @@ namespace Blazor.Pages
         public IList<Song> SongList { get; set; }
         
         [Parameter]
-        public Playlist Playlist { get; set; }
+        public Entities.Playlist Playlist { get; set; }
 
         public Song CurrentSong;
 
@@ -34,16 +32,15 @@ namespace Blazor.Pages
         {
             if (Playlist != null)
             {
-                Console.WriteLine("Vi bruger playlisten nu");
+                Console.WriteLine("Vi bruger squ playlisten nu");
                 SongList = Playlist.Songs;
             }
-        
+            
             
             SongPlaying();
-            PlayModel.UpdatePlayState += () => SongPlaying();
+            PlayModel.Context.UpdatePlayState += () => SongPlaying();
             StateHasChanged();
         }
-       
 
         private string generateArtists(Song song)
         {
@@ -158,8 +155,7 @@ namespace Blazor.Pages
 
         private async Task PerformAddToPlaylist(Song song)
         {
-            
-            var form = ModalService.Show<AddToPlaylist>($"Choose a playlist to add \"{song.Title}\" to");
+            var form = ModalService.Show<AddToPlaylist>("Choose a playlist to add this song to");
             var result = await form.Result;
             if (!result.Cancelled)
             {

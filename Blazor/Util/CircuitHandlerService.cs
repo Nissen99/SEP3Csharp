@@ -2,6 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Blazor.Model;
 using Blazor.Model.PlayModel;
+using Blazor.Util.Playstate;
 using Microsoft.AspNetCore.Components.Server.Circuits;
 
 namespace Blazor.Util
@@ -17,7 +18,7 @@ namespace Blazor.Util
         
         public override async Task OnCircuitClosedAsync(Circuit circuit, CancellationToken cancellationToken)
         {
-            _play.StopPlaying();
+            _play.Context.StopPlaying();
             
         }
         
