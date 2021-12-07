@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Domain.SongSearch;
 using Entities;
+using Factory;
 using RestT2_T3;
 using SocketsT1_T2.Tier2.Util;
 
@@ -12,7 +13,7 @@ namespace SocketsT1_T2.Tier2.Commands
 {
     public class GetSongsByFilterCommand: ICommand
     {
-        private ISongSearchService songSearchService = new SongSearchService(new SongSearchRestClient());
+        private ISongSearchService songSearchService = ServicesFactory.GetSongSearchService();
         public async Task Execute(NetworkStream stream, string argFromTransfer)
         {
             try

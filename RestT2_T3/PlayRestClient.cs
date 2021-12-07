@@ -27,16 +27,7 @@ namespace RestT2_T3
             return byteAsync;
         }
 
-        public async Task<IList<Song>> GetAllSongs()
-        {
-            using HttpClient client = new HttpClient();
-            
-            HttpResponseMessage responseMessage = await client.GetAsync(Uri + "song");
-
-            return await HandleResponseGet<IList<Song>>(responseMessage);
-
-        }
-        
+    
       
     }
 }

@@ -7,8 +7,6 @@ namespace Domain.Play
     public interface IPlayService
     {
         Task<byte[]> PlayAsync(Song song);
-
-        Task<IList<Song>> GetAllSongsAsync();
         
     }
 }

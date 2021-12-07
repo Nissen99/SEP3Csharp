@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Domain.Play;
 using Entities;
+using Factory;
 using RestT2_T3;
 using SocketsT1_T2.Tier2.Util;
 
@@ -12,7 +13,7 @@ namespace SocketsT1_T2.Tier2.Commands
 {
     public class PlaySongCommand : ICommand
     {
-        private IPlayService playService = new PlayService(new PlayRestClient());
+        private IPlayService playService = ServicesFactory.GetPlayService();
         public async Task Execute(NetworkStream stream, string argFromTransfer)
         {
             try

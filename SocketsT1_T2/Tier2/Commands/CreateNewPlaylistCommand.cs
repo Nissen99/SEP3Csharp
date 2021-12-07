@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Domain.Play;
 using Domain.Playlist;
 using Entities;
+using Factory;
 using RestT2_T3;
 using SocketsT1_T2.Tier2.Util;
 
@@ -13,7 +14,7 @@ namespace SocketsT1_T2.Tier2.Commands
     public class CreateNewPlaylistCommand:ICommand
     {
 
-        private IPlayListService playListService = new PlayListService(new PlaylistRestClient());
+        private IPlayListService playListService = ServicesFactory.GetPlayListService();
         public async Task Execute(NetworkStream stream, string argFromTransfer)
         {
             try
