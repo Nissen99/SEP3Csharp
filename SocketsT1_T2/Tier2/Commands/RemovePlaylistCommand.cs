@@ -34,11 +34,11 @@ namespace SocketsT1_T2.Tier2.Commands
             {
                 Playlist playlist = JsonElementConverter.ElementToObject<Playlist>(requestObj.Arg);
                 await playListService.DeletePlayListAsync(playlist);
-                ResponseObj = await ServerResponse.PrepareTransferObjectNoValueAsync(stream);
+                ResponseObj = await ServerResponse.PrepareTransferObjectNoValueAsync();
             }
             catch (Exception e)
             {
-                ResponseObj = await ServerResponse.SendExceptionToClientAsync(stream, e);
+                ResponseObj = await ServerResponse.SendExceptionToClientAsync(e);
             }
             
 

@@ -32,11 +32,11 @@ namespace SocketsT1_T2.Tier2.Commands
             {
                 User user = JsonElementConverter.ElementToObject<User>(requestObj.Arg);
                 await userService.RegisterUser(user);
-                ResponseObj = await ServerResponse.PrepareTransferObjectNoValueAsync(stream);
+                ResponseObj = await ServerResponse.PrepareTransferObjectNoValueAsync();
             }
             catch (Exception e)
             {
-                ResponseObj = await ServerResponse.SendExceptionToClientAsync(stream, e);
+                ResponseObj = await ServerResponse.SendExceptionToClientAsync(e);
 
             }
             

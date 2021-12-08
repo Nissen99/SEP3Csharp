@@ -33,11 +33,11 @@ namespace SocketsT1_T2.Tier2.Commands
             {
                 string title = JsonElementConverter.ElementToObject<string>(requestObj.Arg);
                 IList<Album> artists = await albumService.SearchForAlbums(title);
-                ResponseObj = await ServerResponse.PrepareTransferObjectWithValueAsync(stream, artists);
+                ResponseObj = await ServerResponse.PrepareTransferObjectWithValueAsync( artists);
             }
             catch (Exception e)
             {
-                ResponseObj = await ServerResponse.SendExceptionToClientAsync(stream, e);
+                ResponseObj = await ServerResponse.SendExceptionToClientAsync(e);
 
             }
             

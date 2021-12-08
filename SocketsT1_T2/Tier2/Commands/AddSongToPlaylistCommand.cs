@@ -34,11 +34,11 @@ namespace SocketsT1_T2.Tier2.Commands
                 Playlist playlist = JsonElementConverter.ElementToObject<Playlist>(args[0].GetRawText());
                 Song song = JsonElementConverter.ElementToObject<Song>(args[1].GetRawText());
                 await playlistManageService.AddSongToPlaylistAsync(playlist, song);
-                ResponseObj = await ServerResponse.PrepareTransferObjectNoValueAsync(stream);
+                ResponseObj = await ServerResponse.PrepareTransferObjectNoValueAsync();
             }
             catch (Exception e)
             {
-                ResponseObj =  await ServerResponse.SendExceptionToClientAsync(stream, e);
+                ResponseObj =  await ServerResponse.SendExceptionToClientAsync(e);
             }
 
         }

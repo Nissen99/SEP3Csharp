@@ -28,11 +28,11 @@ namespace SocketsT1_T2.Tier2.Commands
             try
             {
                 IList<Album> albums = await albumService.GetAllAlbumsAsync();
-                ResponseObj = await ServerResponse.PrepareTransferObjectWithValueAsync(stream,albums);
+                ResponseObj = await ServerResponse.PrepareTransferObjectWithValueAsync(albums);
             }
             catch (Exception e)
             {
-                ResponseObj = await ServerResponse.SendExceptionToClientAsync(stream, e);
+                ResponseObj = await ServerResponse.SendExceptionToClientAsync(e);
             }
            
         }

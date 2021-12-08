@@ -10,7 +10,7 @@ namespace SocketsT1_T2.Tier2.Util
 {
     public class ServerResponse
     {
-        public static async Task<TransferObj> PrepareTransferObjectWithValueAsync<T>(NetworkStream stream, T TObject)
+        public static async Task<TransferObj> PrepareTransferObjectWithValueAsync<T>(T TObject)
         {
             string objectAsJson = JsonSerializer.Serialize(TObject);
             string action = "RETURN";
@@ -27,7 +27,7 @@ namespace SocketsT1_T2.Tier2.Util
 
         }
 
-        public static async Task<TransferObj> PrepareTransferObjectNoValueAsync(NetworkStream stream)
+        public static async Task<TransferObj> PrepareTransferObjectNoValueAsync()
         {
             string action = "RETURN";
             
@@ -38,10 +38,10 @@ namespace SocketsT1_T2.Tier2.Util
             return transferObj;
         }
 
-        public static async Task<TransferObj> SendExceptionToClientAsync(NetworkStream stream, Exception exception)
+        public static async Task<TransferObj> SendExceptionToClientAsync(Exception exception)
         {
             Error error = new Error(exception);
-            return await PrepareTransferObjectWithValueAsync(stream, error);
+            return await PrepareTransferObjectWithValueAsync(error);
         }
     }
 }

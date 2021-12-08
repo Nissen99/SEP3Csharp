@@ -33,7 +33,6 @@ namespace SocketsT1_T2.Tier2
             requestObject = await GetRequestObjAsync();
             RequestHandler rHandler = new RequestHandler(client.GetStream(), requestObject);
             await rHandler.ExecuteCommand();
-            
             ICommand command = rHandler.GetCommand();
             TransferObj responseObj = command.ResponseObj;
             await SendTransferObjectToClient(client.GetStream(), responseObj);

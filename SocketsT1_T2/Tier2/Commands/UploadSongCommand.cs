@@ -35,11 +35,11 @@ namespace SocketsT1_T2.Tier2.Commands
                 Song toAdd = JsonElementConverter.ElementToObject<Song>(args[0].GetRawText());
                 Mp3 mp3 = JsonElementConverter.ElementToObject<Mp3>(args[1].GetRawText());
                 await songManageService.AddNewSongAsync(toAdd, mp3);
-                ResponseObj = await ServerResponse.PrepareTransferObjectNoValueAsync(stream);
+                ResponseObj = await ServerResponse.PrepareTransferObjectNoValueAsync();
             }
             catch (Exception e)
             {
-                ResponseObj = await ServerResponse.SendExceptionToClientAsync(stream, e);
+                ResponseObj = await ServerResponse.SendExceptionToClientAsync(e);
             }
             
         }

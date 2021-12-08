@@ -31,11 +31,11 @@ namespace SocketsT1_T2.Tier2.Commands
             try
             {
                 IList<Song> result = await libraryService.GetAllSongsAsync();
-                ResponseObj =  await ServerResponse.PrepareTransferObjectWithValueAsync(stream, result);
+                ResponseObj =  await ServerResponse.PrepareTransferObjectWithValueAsync(result);
             }
             catch (Exception e)
             {
-                ResponseObj =  await ServerResponse.SendExceptionToClientAsync(stream, e);
+                ResponseObj =  await ServerResponse.SendExceptionToClientAsync( e);
             }
            
             
