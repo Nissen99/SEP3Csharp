@@ -16,7 +16,6 @@ namespace SocketsT1_T2.Tier2
             listener.Start();
             Console.WriteLine("SERVER STARED");
             
-            //libraryService.SendSongListToDBAsync();
             
             while (true)
             {

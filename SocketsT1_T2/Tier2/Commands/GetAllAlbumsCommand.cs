@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using Domain.Album;
-using Domain.Artist;
 using Entities;
 using Factory;
-using RestT2_T3;
-using SocketsT1_T2.Shared;
 using SocketsT1_T2.Tier2.Util;
 
 namespace SocketsT1_T2.Tier2.Commands
