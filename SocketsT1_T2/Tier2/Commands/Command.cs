@@ -7,6 +7,7 @@ namespace SocketsT1_T2.Tier2.Commands
 {
     public interface ICommand
     {
-        Task Execute(NetworkStream stream, string tObj);
+        Task Execute();
+        //Task Execute(NetworkStream stream, string tObj);
     }
 }

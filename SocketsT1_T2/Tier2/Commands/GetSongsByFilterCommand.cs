@@ -7,18 +7,29 @@ using Domain.SongSearch;
 using Entities;
 using Factory;
 using RestT2_T3;
+using SocketsT1_T2.Shared;
 using SocketsT1_T2.Tier2.Util;
 
 namespace SocketsT1_T2.Tier2.Commands
 {
     public class GetSongsByFilterCommand: ICommand
     {
-        private ISongSearchService songSearchService = ServicesFactory.GetSongSearchService();
-        public async Task Execute(NetworkStream stream, string argFromTransfer)
+        private ISongSearchService songSearchService;
+        private NetworkStream stream;
+        private TransferObj requestObj;
+
+        public GetSongsByFilterCommand(NetworkStream stream, TransferObj requestObj)
+        {
+            songSearchService = ServicesFactory.GetSongSearchService();
+            this.stream = stream;
+            this.requestObj = requestObj;
+        }
+
+        public async Task Execute()
         {
             try
             {
-                string[] toSearch = JsonElementConverter.ElementToObject<string[]>(argFromTransfer);
+                string[] toSearch = JsonElementConverter.ElementToObject<string[]>(requestObj.Arg);
                 IList<Song> songs = await songSearchService.GetSongsByFilterJsonAsync(toSearch);
                 await ServerResponse.SendToClientWithValueAsync(stream, songs);
             }

@@ -8,6 +8,7 @@ using Domain.Play;
 using Entities;
 using Factory;
 using RestT2_T3;
+using SocketsT1_T2.Shared;
 using SocketsT1_T2.Tier2.Util;
 
 namespace SocketsT1_T2.Tier2.Commands
@@ -15,14 +16,18 @@ namespace SocketsT1_T2.Tier2.Commands
     public class GetAllSongsCommand : ICommand
     {
         //TODO Factory pattern
-        private ILibraryService libraryService = ServicesFactory.GetLibraryService();
-        
+        private ILibraryService libraryService;
+        private NetworkStream stream;
+        public GetAllSongsCommand(NetworkStream stream)
+        {
+            this.stream = stream;
+            libraryService = ServicesFactory.GetLibraryService();
+        }
 
-        public async Task Execute(NetworkStream stream, string argFromTransfer)
+        public async Task Execute()
         {
             try
             {
-                //Parameter skal ikke bruges
                 IList<Song> result = await libraryService.GetAllSongsAsync();
                 await ServerResponse.SendToClientWithValueAsync(stream, result);
             }

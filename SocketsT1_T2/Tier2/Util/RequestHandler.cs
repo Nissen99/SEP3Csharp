@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -12,51 +13,43 @@ namespace SocketsT1_T2.Tier2.Util
 {
     public class RequestHandler
     {
-        private Dictionary<string, ICommand> commands = new()
-        {
-            {"GETSONGS", new GetAllSongsCommand()},
-            {"PLAYSONG", new PlaySongCommand()},
-            {"UPLOADSONG", new UploadSongCommand()},
-            {"GETSONGSBYFILTER", new GetSongsByFilterCommand()},
-            {"REGISTERUSER", new RegisterUserCommand()},
-            {"REMOVESONG", new RemoveSongCommand()},
-            {"SEARCHFORALBUMS", new SearchForAlbumsCommand()},
-            {"SEARCHFORARTISTS", new SearchForArtistsCommand()},
-            {"VALIDATEUSER", new ValidateUserCommand()},
-            {"GETALLALBUMS", new GetAllAlbumsCommand()},
-            {"GETALLARTISTS", new GetAllArtistsCommand()},
-            {"GETPLAYLISTS", new GetPlaylistsCommand()},
-            {"GETPLAYLISTFROMID", new GetPlaylistFromId()},
-            {"CREATENEWPLAYLIST", new CreateNewPlaylistCommand()},
-            {"REMOVEPLAYLIST",new RemovePlaylistCommand()},
-            {"ADDSONGTOPLAYLIST", new AddSongToPlaylistCommand()},
-            {"REMOVESONGFROMPLAYLIST",new RemoveSongFromPlaylistCommand()}
-        };
+        private Dictionary<string, ICommand> commands;
 
         public string RequestAction { get; set; }
         public string RequestArg { get; set; }
         private NetworkStream stream;
         private ICommand activeCommand;
+        private TransferObj requestObj;
 
         public RequestHandler(NetworkStream stream)
         {
             this.stream = stream;
+            requestObj = Task.Run(async () => await GetRequest()).Result;
+            commands = new()
+            {
+                {"GETSONGS", new GetAllSongsCommand(stream)},
+                {"PLAYSONG", new PlaySongCommand(stream, requestObj)},
+                {"UPLOADSONG", new UploadSongCommand(stream, requestObj)},
+                {"GETSONGSBYFILTER", new GetSongsByFilterCommand(stream, requestObj)},
+                {"REGISTERUSER", new RegisterUserCommand(stream,requestObj)},
+                {"REMOVESONG", new RemoveSongCommand(stream,requestObj)},
+                {"SEARCHFORALBUMS", new SearchForAlbumsCommand(stream,requestObj)},
+                {"SEARCHFORARTISTS", new SearchForArtistsCommand(stream,requestObj)},
+                {"VALIDATEUSER", new ValidateUserCommand(stream,requestObj)},
+                {"GETALLALBUMS", new GetAllAlbumsCommand(stream)},
+                {"GETALLARTISTS", new GetAllArtistsCommand(stream)},
+                {"GETPLAYLISTS", new GetPlaylistsCommand(stream,requestObj)},
+                {"GETPLAYLISTFROMID", new GetPlaylistFromId(stream,requestObj)},
+                {"CREATENEWPLAYLIST", new CreateNewPlaylistCommand(stream,requestObj)},
+                {"REMOVEPLAYLIST",new RemovePlaylistCommand(stream,requestObj)},
+                {"ADDSONGTOPLAYLIST", new AddSongToPlaylistCommand(stream,requestObj)},
+                {"REMOVESONGFROMPLAYLIST",new RemoveSongFromPlaylistCommand(stream,requestObj)}
+            };
+            SetCommand(requestObj.Action);
             
         }
         
-        private async Task SendToClient<T>(T TObject)
-        {
-            string objectAsJson = JsonSerializer.Serialize(TObject);
-            TransferObj transferObj = new TransferObj
-            {
-                Action = "RETURN", Arg = objectAsJson
-            };
-            string transferAsJson = JsonSerializer.Serialize(transferObj);
-            byte[] toServer = Encoding.UTF8.GetBytes(transferAsJson);
-            await stream.WriteAsync(toServer, 0, toServer.Length);
-        }
-
-        private async Task GetRequest()
+        private async Task<TransferObj> GetRequest()
         {
             byte[] dataFromServer = new byte[30000000];
             int bytesRead = await stream.ReadAsync(dataFromServer, 0, dataFromServer.Length);
@@ -66,32 +59,24 @@ namespace SocketsT1_T2.Tier2.Util
                 {
                     PropertyNameCaseInsensitive = true,
                 });
-            RequestAction = transferObj.Action;
-            RequestArg = transferObj.Arg;
+            // RequestAction = transferObj.Action;
+            // RequestArg = transferObj.Arg;
+            return transferObj;
         }
 
         private void SetCommand(string id)
         {
             activeCommand = null;
             if (!commands.TryGetValue(id, out activeCommand))
-                activeCommand = null;
+                activeCommand = new NullCommand();
 
         }
 
         public async Task<ICommand> GetCommand()
         {
-            await GetRequest();
-            SetCommand(RequestAction);
             return activeCommand;
         }
-
-        public async Task HandleRequest()
-        {
-            await GetRequest();
-            SetCommand(RequestAction);
-
-        }
-
+        
 
     }
 }

@@ -11,8 +11,16 @@ namespace SocketsT1_T2.Tier2.Commands
 {
     public class GetAllAlbumsCommand : ICommand
     {
-        private IAlbumService albumService = ServicesFactory.GetAlbumService();
-        public async Task Execute(NetworkStream stream, string argFromTransfer)
+        private IAlbumService albumService;
+        private NetworkStream stream;
+
+        public GetAllAlbumsCommand(NetworkStream stream)
+        {
+            albumService = ServicesFactory.GetAlbumService();
+            this.stream = stream;
+        }
+
+        public async Task Execute()
         {
             try
             {

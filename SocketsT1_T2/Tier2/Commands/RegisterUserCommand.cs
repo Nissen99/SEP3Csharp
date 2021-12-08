@@ -6,18 +6,29 @@ using Domain.Users;
 using Entities;
 using Factory;
 using RestT2_T3;
+using SocketsT1_T2.Shared;
 using SocketsT1_T2.Tier2.Util;
 
 namespace SocketsT1_T2.Tier2.Commands
 {
     public class RegisterUserCommand: ICommand
     {
-        private IUserService userService = ServicesFactory.GetUserService();
-        public async Task Execute(NetworkStream stream, string argFromTransfer)
+        private IUserService userService;
+        private NetworkStream stream;
+        private TransferObj requestObj;
+
+        public RegisterUserCommand(NetworkStream stream, TransferObj requestObj)
+        {
+            userService = ServicesFactory.GetUserService();
+            this.stream = stream;
+            this.requestObj = requestObj;
+        }
+
+        public async Task Execute()
         {
             try
             {
-                User user = JsonElementConverter.ElementToObject<User>(argFromTransfer);
+                User user = JsonElementConverter.ElementToObject<User>(requestObj.Arg);
                 await userService.RegisterUser(user);
                 await ServerResponse.SendToClientNoValueAsync(stream);
             }

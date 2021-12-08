@@ -9,6 +9,7 @@ using Blazor.Model.SongManagerModel;
 using Blazor.Model.SongSearchModel;
 using Blazor.Model.UserModel;
 using Blazor.Util;
+using Blazor.Util.Playstate;
 using Blazored.Modal;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -63,7 +64,7 @@ namespace Blazor
             services.AddScoped<ISongManageModel, SongManageModel>();
             services.AddScoped<IPlayListModel, PlayListModel>();
             services.AddScoped<IPlaylistManageModel, PlaylistManageModel>();
-            
+
 
 
             services.AddBlazoredModal();

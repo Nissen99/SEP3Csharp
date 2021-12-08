@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Blazor.Util.Playstate;
 using Entities;
+using NAudio.Wave;
 
 namespace Blazor.Model.PlayModel
 {
     public interface IPlayModel
     {
+        IPlaystateContext Context { get; set; }
         Task PlaySongAsync(Song song);
         Task PlayPauseToggleAsync();
         Task PlayFromAsync(float progress);
@@ -14,13 +17,10 @@ namespace Blazor.Model.PlayModel
         Task PlayPreviousSong();
         Task PlayNextSongAsync();
 
-        bool IsPlaying { get; }
-        Action UpdatePlayState { get; set; } 
-        Action ProgressBarUpdate { get; set; }
         IList<Song> CurrentPlaylist { get; set; }
+        IList<Song> GetPreviouslySongs();
         string UpdateDisplay();
-        void StopPlaying();
-        Task<double> UpdateProgressBar();
+
         Task<Song> GetCurrentSongAsync();
     }
 }

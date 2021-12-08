@@ -30,8 +30,8 @@ namespace Blazor.Shared
 
         protected override async Task OnInitializedAsync()
         {
-            Play.UpdatePlayState = () => updatePlayState();
-            Play.ProgressBarUpdate = () => updateProgressBar();
+            Play.Context.UpdatePlayState = () => updatePlayState();
+            Play.Context.ProgressBarUpdate = () => updateProgressBar();
         }
         private async Task TogglePlay()
         {
@@ -50,7 +50,7 @@ namespace Blazor.Shared
        
         private async Task updatePlayState()
         { 
-            isPlaying = Play.IsPlaying;
+            isPlaying = Play.Context.IsPlaying;
             currentSong = await Play.GetCurrentSongAsync();
             songTitle = currentSong.Title;
             artistTitle = currentSong.Artists[0].Name; //Giver kun første artist på listen - skal flyttes ud i modellen.
@@ -61,7 +61,7 @@ namespace Blazor.Shared
         }
         private async Task updateProgressBar()
         {
-            progressValue = await Play.UpdateProgressBar();
+            progressValue = await Play.Context.UpdateProgressBar();
             progressValuePercentage = progressValue / currentSong.Duration * 100;
             pVP = (int) progressValuePercentage;
             TimeSpan currentDurationSpan = new TimeSpan(0, (int)(currentSong.Duration * progressValuePercentage / 100 / 60), (int)(currentSong.Duration * progressValuePercentage / 100 % 60));
