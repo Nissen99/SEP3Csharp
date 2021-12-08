@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain.Library;
 using Domain.Util;
 using Entities;
 using NAudio.Wave;
@@ -12,10 +13,12 @@ namespace Domain.SongManage
     public class SongManageService : ISongManageService
     {
         private ISongManageNetworking songManageNetworking;
+        private ILibraryNetworking libraryNetworking;
 
-        public SongManageService(ISongManageNetworking songManageNetworking)
+        public SongManageService(ISongManageNetworking songManageNetworking, ILibraryNetworking libraryNetworking)
         {
             this.songManageNetworking = songManageNetworking;
+            this.libraryNetworking = libraryNetworking;
         }
 
         //TODO Input checks
@@ -29,9 +32,9 @@ namespace Domain.SongManage
             int duration = (int) fileReader.TotalTime.TotalSeconds;
             newSong.Duration = duration;
             
-            Song song = await songManageNetworking.AddNewSongAsync(newSong);
-            Console.WriteLine(song.Title);
-            mp3.path = song.Mp3;
+            Song newSongWithCorrectPath = await songManageNetworking.AddNewSongAsync(newSong);
+            
+            mp3.path = newSongWithCorrectPath.Mp3;
             await songManageNetworking.UploadMp3(mp3);
         }
         

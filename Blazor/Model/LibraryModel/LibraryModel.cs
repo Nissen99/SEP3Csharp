@@ -1,17 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Entities;
-using SocketsT1_T2.Tier1;
 using SocketsT1_T2.Tier1.Library;
 
-namespace Blazor.Model.AudioTestModel
+namespace Blazor.Model.LibraryModel
 {
-    public class AudioTestModel : IAudioTestModel
+    public class LibraryModel : ILibraryModel
     {
         private ILibraryNetworkClient libraryNetworkClient;
 
 
-        public AudioTestModel(ILibraryNetworkClient libraryNetworkClient)
+        public LibraryModel(ILibraryNetworkClient libraryNetworkClient)
         {
             this.libraryNetworkClient = libraryNetworkClient;
         }
@@ -20,6 +19,6 @@ namespace Blazor.Model.AudioTestModel
         {
             return await libraryNetworkClient.GetAllSongs();
         }
-        
+
     }
 }

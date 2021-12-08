@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Domain.Library;
 using Domain.Play;
 using Domain.SongSearch;
 using Entities;
@@ -13,9 +15,9 @@ namespace DomainTest.SongSearchServiceTest
 {
     public class SongSearchServiceTest
     {
-         private ISongSearchService songSearchService = new SongSearchService(new SongSearchRestClient());
-        private IPlayService playService = new PlayService(new PlayRestClient());
-        
+        private ISongSearchService songSearchService = new SongSearchService(new SongSearchRestClient());
+        private ILibraryService libraryService = new LibraryService(new LibraryRestClient());
+         
 
         [Test]
         public async Task TestIfCorrectSongIsFoundByTitle()
@@ -41,7 +43,7 @@ namespace DomainTest.SongSearchServiceTest
 
             var listOfAllSongs = await GetListOfAllSongs();
 
-            string songArtistName = listOfAllSongs[songNumberTest].Artists[0].ArtistName;
+            string songArtistName = listOfAllSongs[songNumberTest].Artists[0].Name;
 
             string[] args = {"Artist", songArtistName};
 
@@ -71,12 +73,8 @@ namespace DomainTest.SongSearchServiceTest
         public async Task SearchBySomethingNotImplemented()
         {
             string[] args = {"HandSize", "HandSizeObject"};
-
-            string arg = JsonSerializer.Serialize(args);
-            TransferObj transferObj = new TransferObj() {Action = "GETSONGSBYFILTER", Arg = arg};
-
-
-            Assert.ThrowsAsync<Exception>(() => songSearchService.GetSongsByFilterJsonAsync(transferObj));
+            
+            Assert.ThrowsAsync<Exception>(() => songSearchService.GetSongsByFilterJsonAsync(args));
         }
 
 
@@ -89,12 +87,10 @@ namespace DomainTest.SongSearchServiceTest
 
             string songAlbumTitle = listOfAllSongs[songNumberTest].Album.Title;
             string[] args = {null, songAlbumTitle};
-
-            string arg = JsonSerializer.Serialize(args);
-            TransferObj transferObj = new TransferObj() {Action = "GETSONGSBYFILTER", Arg = arg};
+            
 
 
-            Assert.ThrowsAsync<Exception>(() => songSearchService.GetSongsByFilterJsonAsync(transferObj));
+            Assert.ThrowsAsync<Exception>(() => songSearchService.GetSongsByFilterJsonAsync(args));
         }
 
 
@@ -103,16 +99,12 @@ namespace DomainTest.SongSearchServiceTest
 
         {
             int songNumberTest = 0;
-            var listOfAllSongs = await GetListOfAllSongs();
+            IList<Song> listOfAllSongs = await GetListOfAllSongs();
 
             string songAlbumTitle = listOfAllSongs[songNumberTest].Album.Title;
             string[] args = {"", songAlbumTitle};
 
-            string arg = JsonSerializer.Serialize(args);
-            TransferObj transferObj = new TransferObj() {Action = "GETSONGSBYFILTER", Arg = arg};
-
-
-            Assert.ThrowsAsync<Exception>(() => songSearchService.GetSongsByFilterJsonAsync(transferObj));
+            Assert.ThrowsAsync<Exception>(() => songSearchService.GetSongsByFilterJsonAsync(args));
         }
 
         [Test]
@@ -120,11 +112,7 @@ namespace DomainTest.SongSearchServiceTest
         {
             string[] args = {"Title", ""};
 
-            string arg = JsonSerializer.Serialize(args);
-            TransferObj transferObj = new TransferObj() {Action = "GETSONGSBYFILTER", Arg = arg};
-
-
-            Assert.ThrowsAsync<Exception>(() => songSearchService.GetSongsByFilterJsonAsync(transferObj));
+            Assert.ThrowsAsync<Exception>(() => songSearchService.GetSongsByFilterJsonAsync(args));
         }
 
         [Test]
@@ -132,11 +120,10 @@ namespace DomainTest.SongSearchServiceTest
         {
             string[] args = {"Title", null};
 
-            string arg = JsonSerializer.Serialize(args);
-            TransferObj transferObj = new TransferObj() {Action = "GETSONGSBYFILTER", Arg = arg};
+            
 
 
-            Assert.ThrowsAsync<Exception>(() => songSearchService.GetSongsByFilterJsonAsync(transferObj));
+            Assert.ThrowsAsync<Exception>(() => songSearchService.GetSongsByFilterJsonAsync(args));
         }
 
         [Test]
@@ -156,10 +143,8 @@ namespace DomainTest.SongSearchServiceTest
         public void ArtistNameIsEmpty()
         {
             string[] args = {"Artist", ""};
-
-            string arg = JsonSerializer.Serialize(args);
-            TransferObj transferObj = new TransferObj() {Action = "GETSONGSBYFILTER", Arg = arg};
-            Assert.ThrowsAsync<Exception>(() => songSearchService.GetSongsByFilterJsonAsync(transferObj));
+            
+            Assert.ThrowsAsync<Exception>(() => songSearchService.GetSongsByFilterJsonAsync(args));
         }
 
         [Test]
@@ -167,11 +152,7 @@ namespace DomainTest.SongSearchServiceTest
         {
             string[] args = {"Artist", null};
 
-            string arg = JsonSerializer.Serialize(args);
-            TransferObj transferObj = new TransferObj() {Action = "GETSONGSBYFILTER", Arg = arg};
-
-
-            Assert.ThrowsAsync<Exception>(() => songSearchService.GetSongsByFilterJsonAsync(transferObj));
+            Assert.ThrowsAsync<Exception>(() => songSearchService.GetSongsByFilterJsonAsync(args));
         }
 
         [Test]
@@ -191,9 +172,7 @@ namespace DomainTest.SongSearchServiceTest
         {
             string[] args = {"Album", ""};
 
-            string arg = JsonSerializer.Serialize(args);
-            TransferObj transferObj = new TransferObj() {Action = "GETSONGSBYFILTER", Arg = arg};
-            Assert.ThrowsAsync<Exception>(() => songSearchService.GetSongsByFilterJsonAsync(transferObj));
+            Assert.ThrowsAsync<Exception>(() => songSearchService.GetSongsByFilterJsonAsync(args));
         }
 
         
@@ -202,11 +181,7 @@ namespace DomainTest.SongSearchServiceTest
         {
             string[] args = {"Album", null};
 
-            string arg = JsonSerializer.Serialize(args);
-            TransferObj transferObj = new TransferObj() {Action = "GETSONGSBYFILTER", Arg = arg};
-
-
-            Assert.ThrowsAsync<Exception>(() => songSearchService.GetSongsByFilterJsonAsync(transferObj));
+            Assert.ThrowsAsync<Exception>(() => songSearchService.GetSongsByFilterJsonAsync(args));
         }
 
         [Test]
@@ -224,28 +199,18 @@ namespace DomainTest.SongSearchServiceTest
         
 
         //Help Method
-        private List<Song> ListOfSongSearchFor(string[] args)
+        private IList<Song> ListOfSongSearchFor(string[] args)
         {
-            string arg = JsonSerializer.Serialize(args);
-            TransferObj transferObj = new TransferObj() {Action = "GETSONGSBYFILTER", Arg = arg};
-
-            string songWithTitle = songSearchService.GetSongsByFilterJsonAsync(transferObj).Result;
-
-            List<Song> listOfDeserilizedSong = JsonSerializer.Deserialize<List<Song>>(songWithTitle,
-                new JsonSerializerOptions() {PropertyNameCaseInsensitive = true});
-            return listOfDeserilizedSong;
+            IList<Song> songWithTitle = songSearchService.GetSongsByFilterJsonAsync(args).Result;
+            
+            return  songWithTitle;
         }
 
             //Help Method
         private async Task<IList<Song>> GetListOfAllSongs()
-        {
-            string listWithEverySongInDatabase = await playService.GetAllSongsAsync();
-
-            TransferObj transferObj = JsonSerializer.Deserialize<TransferObj>(listWithEverySongInDatabase);
-
-            IList<Song> listOfAllSongs = JsonSerializer.Deserialize<IList<Song>>(transferObj.Arg,
-                new JsonSerializerOptions() {PropertyNameCaseInsensitive = true});
-            return listOfAllSongs;
+        { 
+            return await libraryService.GetAllSongsAsync();
+            
         }
     }
 }

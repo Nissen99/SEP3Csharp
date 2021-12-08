@@ -6,10 +6,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Domain.Album;
 using Domain.Artist;
+using Domain.Library;
 using Domain.Play;
 using Domain.SongManage;
 using Domain.SongSearch;
 using Entities;
+using Factory;
 using NUnit.Framework;
 using RestT2_T3;
 
@@ -21,11 +23,11 @@ namespace DomainTest.SongManageTest
 {
     public class SongManageServiceTest
     {
-        private ISongManageService songManageService = new SongManageService(new SongManageRestClient());
-        private ISongSearchService songSearchService = new SongSearchService(new SongSearchRestClient());
-        private IArtistService artistService = new ArtistService(new ArtistRestClient());
-        private IAlbumService albumService = new AlbumService(new AlbumRestClient());
-        private IPlayService playService = new PlayService(new PlayRestClient());
+        private ISongManageService songManageService = ServicesFactory.GetSongManageService();
+        private ISongSearchService songSearchService = ServicesFactory.GetSongSearchService();
+        private IArtistService artistService = ServicesFactory.GetArtistService();
+        private IAlbumService albumService = ServicesFactory.GetAlbumService();
+        private ILibraryService libraryService = ServicesFactory.GetLibraryService();
 
         private string songTitle;
         private Album album;
@@ -42,7 +44,7 @@ namespace DomainTest.SongManageTest
             album = new Album() {Title = "TestAlbum"};
             artists = new List<Artist>() {new Artist() {Name = "Test"}};
             releaseYear = 2020;
-            mp3 = @"C:\Users\mathi\RiderProjects\SEP3Csharp\DomainTest\audio\test.mp3";
+            mp3 = @"C:\Users\Mikkel\RiderProjects\SEP3Csharp\DomainTest\audio\test.mp3";
         }
 
 
@@ -134,7 +136,6 @@ namespace DomainTest.SongManageTest
         [Test]
         public async Task RemoveSongNotInDatabase()
         {
-            int countBefore = (await playService.GetAllSongsAsync()).Count;
             Song notRealSong = new Song()
             {
                 Id = -500,
@@ -144,9 +145,8 @@ namespace DomainTest.SongManageTest
                 ReleaseYear = releaseYear
             };
             
-            await songManageService.RemoveSongAsync(notRealSong);
-            int countAfter = (await playService.GetAllSongsAsync()).Count;
-            Assert.AreEqual(countAfter, countBefore);
+            Assert.ThrowsAsync<Exception>(() => songManageService.RemoveSongAsync(notRealSong));
+           
         }
 
 
@@ -159,7 +159,6 @@ namespace DomainTest.SongManageTest
         {
             IList<Song> allSongsOnFilterBefore =
                 await songSearchService.GetSongsByFilterJsonAsync(new[] {"Title", songTitle});
-
             Song newSong = await CreateNewSongAndSave();
 
             IList<Song> allSongsOnFilterAfter =
@@ -224,11 +223,11 @@ namespace DomainTest.SongManageTest
         [Test]
         public async Task AddSongOnlyAddsOneSongToDatabase()
         {
-            IList<Song> allSongsBefore = await playService.GetAllSongsAsync();
+            IList<Song> allSongsBefore = await libraryService.GetAllSongsAsync();
 
             await CreateNewSongAndSave();
 
-            IList<Song> allSongsAfter = await playService.GetAllSongsAsync();
+            IList<Song> allSongsAfter = await libraryService.GetAllSongsAsync();
 
             Assert.AreEqual(allSongsBefore.Count + 1, allSongsAfter.Count);
         }
@@ -239,11 +238,11 @@ namespace DomainTest.SongManageTest
             Song newSong = await CreateNewSongAndSave();
             Song newSongWithId = (await songSearchService.GetSongsByFilterJsonAsync(new string[] {"Title", newSong.Title}))[0];
 
-            int countBefore = (await playService.GetAllSongsAsync()).Count;
+            int countBefore = (await libraryService.GetAllSongsAsync()).Count;
             
             await songManageService.RemoveSongAsync(newSongWithId);
 
-            int countAfter = (await playService.GetAllSongsAsync()).Count;
+            int countAfter = (await libraryService.GetAllSongsAsync()).Count;
             
             Assert.AreEqual(countAfter, countBefore - 1 );
         }
@@ -257,7 +256,7 @@ namespace DomainTest.SongManageTest
             
             await songManageService.RemoveSongAsync(newSongWithId);
 
-            IList<Song> allSongs = await playService.GetAllSongsAsync();
+            IList<Song> allSongs = await libraryService.GetAllSongsAsync();
                         
             Assert.False(allSongs.Any(song => song.Id == newSongWithId.Id));
         }
@@ -337,8 +336,10 @@ namespace DomainTest.SongManageTest
                 Artists = artists,
                 Mp3 = mp3
             };
-
-            //await songManageService.AddNewSongAsync(newSong);
+            byte[] mp3File =
+                System.IO.File.ReadAllBytes(@"C:\Users\Mikkel\RiderProjects\SEP3Csharp\DomainTest\audio\test.mp3");
+            Mp3 dataForMp3 = new Mp3(){Data = mp3File};
+            await songManageService.AddNewSongAsync(newSong, dataForMp3);
             return newSong;
         }
     }

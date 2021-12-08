@@ -84,9 +84,8 @@ namespace DomainTest.PlaylistTest
                 User = await UserService.ValidateUser(user)
             };
 
-            await PlayListService.DeletePlayListAsync(notRealPlaylist);
-            int countAfter = PlayListService.GetAllPlaylistsForUserAsync(user).Result.Count;
-            Assert.AreEqual(countAfter, countBefore);
+            Assert.ThrowsAsync<Exception>(() =>PlayListService.DeletePlayListAsync(notRealPlaylist));
+
         }
 
 

@@ -2,11 +2,11 @@
 using System.Threading.Tasks;
 using Entities;
 
-namespace Blazor.Model.AudioTestModel
+namespace Blazor.Model.LibraryModel
 {
-    public interface IAudioTestModel
+    public interface ILibraryModel
     {
-       
         Task<IList<Song>> GetAllSongs();
+
     }
 }
