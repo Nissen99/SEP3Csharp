@@ -50,8 +50,13 @@ namespace SocketsT1_T2.Tier2.Util
             activeCommand = null;
             if (!commands.TryGetValue(requestAction, out activeCommand))
                 activeCommand = new NullCommand();
-
         }
+
+        public async Task ExecuteCommand()
+        {
+           await activeCommand.Execute();
+        }
+
         public ICommand GetCommand()
         {
             return activeCommand;
