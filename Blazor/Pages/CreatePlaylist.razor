@@ -1,4 +1,6 @@
-﻿
+﻿@using Microsoft.AspNetCore.Components
+
+
 <div class="form-group">
     <label>Playlist Title:</label>
     <input type="text" placeholder="Title" @bind-value="Playlist.Title"/>
@@ -12,22 +14,6 @@
 
 @code {
 
-    [CascadingParameter]
-    public BlazoredModalInstance BlazoredModal { get; set; }
-
-    private string Title;
-    private string errorMessage;
-    private Entities.Playlist Playlist = new();
-
-
-    public async Task PerformCreatePlaylist()
-    {
-        await BlazoredModal.CloseAsync(ModalResult.Ok(Playlist));
-    }
-    
-    private async Task Cancel()
-    {
-        await BlazoredModal.CancelAsync();
-    }
+   
 
 }

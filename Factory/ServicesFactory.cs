@@ -6,7 +6,7 @@ using Domain.Playlist;
 using Domain.PlaylistManage;
 using Domain.SongManage;
 using Domain.SongSearch;
-using Domain.Users;
+using Domain.User;
 using RestT2_T3;
 
 namespace Factory

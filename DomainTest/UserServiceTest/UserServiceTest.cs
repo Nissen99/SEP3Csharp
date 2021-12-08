@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using Domain.Users;
+using Domain.User;
 using Entities;
 using NUnit.Framework;
 using RestT2_T3;

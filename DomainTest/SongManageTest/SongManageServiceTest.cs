@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.Album;
 using Domain.Artist;
-using Domain.Library;
 using Domain.Play;
 using Domain.SongManage;
 using Domain.SongSearch;
 using Entities;
-using Factory;
 using NUnit.Framework;
 using RestT2_T3;
 
@@ -23,18 +20,17 @@ namespace DomainTest.SongManageTest
 {
     public class SongManageServiceTest
     {
-        private ISongManageService songManageService = ServicesFactory.GetSongManageService();
-        private ISongSearchService songSearchService = ServicesFactory.GetSongSearchService();
-        private IArtistService artistService = ServicesFactory.GetArtistService();
-        private IAlbumService albumService = ServicesFactory.GetAlbumService();
-        private ILibraryService libraryService = ServicesFactory.GetLibraryService();
+        private ISongManageService songManageService = new SongManageService(new SongManageRestClient());
+        private ISongSearchService songSearchService = new SongSearchService(new SongSearchRestClient());
+        private IArtistService artistService = new ArtistService(new ArtistRestClient());
+        private IAlbumService albumService = new AlbumService(new AlbumRestClient());
+        private IPlayService playService = new PlayService(new PlayRestClient());
 
         private string songTitle;
         private Album album;
         private IList<Artist> artists;
         private int releaseYear;
-        private string mp3;
-        private byte[] data;
+        private byte[] mp3;
 
 
         [SetUp]
@@ -44,7 +40,7 @@ namespace DomainTest.SongManageTest
             album = new Album() {Title = "TestAlbum"};
             artists = new List<Artist>() {new Artist() {Name = "Test"}};
             releaseYear = 2020;
-            mp3 = @"C:\Users\Mikkel\RiderProjects\SEP3Csharp\DomainTest\audio\test.mp3";
+            mp3 = File.ReadAllBytes(@"C:\Users\mathi\RiderProjects\SEP3Csharp\DomainTest\audio\test.mp3");
         }
 
 
@@ -105,19 +101,19 @@ namespace DomainTest.SongManageTest
             Assert.ThrowsAsync<ArgumentException>(CreateNewSongAndSave);
         }
 
-        // [Test]
-        // public async Task AddSongWithEmptyMp3()
-        // {
-        //     mp3 = Array.Empty<byte>();
-        //     Assert.ThrowsAsync<InvalidDataException>( CreateNewSongAndSave);
-        // }
-        //
-        // [Test]
-        // public async Task AddSongWithWrongFileType()
-        // {
-        //     mp3 = File.ReadAllBytes(mp3);
-        //     Assert.ThrowsAsync<InvalidDataException>(CreateNewSongAndSave);
-        // }
+        [Test]
+        public async Task AddSongWithEmptyMp3()
+        {
+            mp3 = Array.Empty<byte>();
+            Assert.ThrowsAsync<InvalidDataException>( CreateNewSongAndSave);
+        }
+
+        [Test]
+        public async Task AddSongWithWrongFileType()
+        {
+            mp3 = File.ReadAllBytes(@"C:\Users\mathi\RiderProjects\SEP3Csharp\DomainTest\audio\test.txt");
+            Assert.ThrowsAsync<InvalidDataException>(CreateNewSongAndSave);
+        }
 
         [Test]
         public async Task AddSongWithNullMp3()
@@ -136,6 +132,7 @@ namespace DomainTest.SongManageTest
         [Test]
         public async Task RemoveSongNotInDatabase()
         {
+            int countBefore = (await playService.GetAllSongsAsync()).Count;
             Song notRealSong = new Song()
             {
                 Id = -500,
@@ -145,8 +142,9 @@ namespace DomainTest.SongManageTest
                 ReleaseYear = releaseYear
             };
             
-            Assert.ThrowsAsync<Exception>(() => songManageService.RemoveSongAsync(notRealSong));
-           
+            await songManageService.RemoveSongAsync(notRealSong);
+            int countAfter = (await playService.GetAllSongsAsync()).Count;
+            Assert.AreEqual(countAfter, countBefore);
         }
 
 
@@ -159,6 +157,7 @@ namespace DomainTest.SongManageTest
         {
             IList<Song> allSongsOnFilterBefore =
                 await songSearchService.GetSongsByFilterJsonAsync(new[] {"Title", songTitle});
+
             Song newSong = await CreateNewSongAndSave();
 
             IList<Song> allSongsOnFilterAfter =
@@ -223,11 +222,11 @@ namespace DomainTest.SongManageTest
         [Test]
         public async Task AddSongOnlyAddsOneSongToDatabase()
         {
-            IList<Song> allSongsBefore = await libraryService.GetAllSongsAsync();
+            IList<Song> allSongsBefore = await playService.GetAllSongsAsync();
 
             await CreateNewSongAndSave();
 
-            IList<Song> allSongsAfter = await libraryService.GetAllSongsAsync();
+            IList<Song> allSongsAfter = await playService.GetAllSongsAsync();
 
             Assert.AreEqual(allSongsBefore.Count + 1, allSongsAfter.Count);
         }
@@ -238,11 +237,11 @@ namespace DomainTest.SongManageTest
             Song newSong = await CreateNewSongAndSave();
             Song newSongWithId = (await songSearchService.GetSongsByFilterJsonAsync(new string[] {"Title", newSong.Title}))[0];
 
-            int countBefore = (await libraryService.GetAllSongsAsync()).Count;
+            int countBefore = (await playService.GetAllSongsAsync()).Count;
             
             await songManageService.RemoveSongAsync(newSongWithId);
 
-            int countAfter = (await libraryService.GetAllSongsAsync()).Count;
+            int countAfter = (await playService.GetAllSongsAsync()).Count;
             
             Assert.AreEqual(countAfter, countBefore - 1 );
         }
@@ -256,7 +255,7 @@ namespace DomainTest.SongManageTest
             
             await songManageService.RemoveSongAsync(newSongWithId);
 
-            IList<Song> allSongs = await libraryService.GetAllSongsAsync();
+            IList<Song> allSongs = await playService.GetAllSongsAsync();
                         
             Assert.False(allSongs.Any(song => song.Id == newSongWithId.Id));
         }
@@ -336,10 +335,8 @@ namespace DomainTest.SongManageTest
                 Artists = artists,
                 Mp3 = mp3
             };
-            byte[] mp3File =
-                System.IO.File.ReadAllBytes(@"C:\Users\Mikkel\RiderProjects\SEP3Csharp\DomainTest\audio\test.mp3");
-            Mp3 dataForMp3 = new Mp3(){Data = mp3File};
-            await songManageService.AddNewSongAsync(newSong, dataForMp3);
+
+            await songManageService.AddNewSongAsync(newSong);
             return newSong;
         }
     }

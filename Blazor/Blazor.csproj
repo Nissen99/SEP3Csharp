@@ -12,7 +12,6 @@
     <ItemGroup>
       <PackageReference Include="Blazored.Modal" Version="6.0.1" />
       <PackageReference Include="NAudio" Version="1.9.0" />
-      <PackageReference Include="Syncfusion.Blazor.Buttons" Version="19.3.0.56" />
     </ItemGroup>
 
     <ItemGroup>

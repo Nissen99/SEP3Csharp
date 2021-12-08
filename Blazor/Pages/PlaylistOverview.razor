@@ -39,13 +39,13 @@ else
         {
             <tr>
                 <td>
-                    
+
                     <button @onclick="@(() => LoadPlaylist(playlist))">
                         <i class="oi oi-media-play" style="color:blue"/>
                     </button> @playlist.Title
                 </td>
-                 <button @onclick="() => RemovePlaylist(playlist)"> <i class="oi oi-trash" style="color:blue"/>
-                      Remove Playlist  </button>
+                <button @onclick="() => RemovePlaylist(playlist)"> <i class="oi oi-trash" style="color:blue"/>
+                    Remove Playlist </button>
                 <td>
 
                 </td>
@@ -53,6 +53,11 @@ else
         }
         </tbody>
     </table>
+
+
+
 @code {
 
-}}
+}
+
+}

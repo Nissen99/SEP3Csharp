@@ -2,7 +2,7 @@ using System;
 using System.Net.Sockets;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Domain.Users;
+using Domain.User;
 using Entities;
 using Factory;
 using RestT2_T3;

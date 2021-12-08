@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Entities;
 
-namespace Domain.Users
+namespace Domain.User
 {
     public class UserService : IUserService
     {
@@ -13,15 +11,15 @@ namespace Domain.Users
             this.userNetworking = userNetworking;
         }
 
-        public async Task RegisterUser(User user)
+        public async Task RegisterUser(Entities.User user)
         {
             ValidateInput(user);
             await userNetworking.RegisterUser(user);
         }
 
-        public async Task<User> ValidateUser(User user)
+        public async Task<Entities.User> ValidateUser(Entities.User user)
         {
-            User toReturn;
+            Entities.User toReturn;
             ValidateInput(user);
             try
             {
@@ -35,7 +33,7 @@ namespace Domain.Users
             return toReturn;
         }
 
-        private void ValidateInput(User user)
+        private void ValidateInput(Entities.User user)
         {
             if (string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.Password))
                 throw new ArgumentException("Field is missing");
