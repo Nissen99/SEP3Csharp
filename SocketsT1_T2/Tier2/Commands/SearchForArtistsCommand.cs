@@ -17,6 +17,8 @@ namespace SocketsT1_T2.Tier2.Commands
         private IArtistService artistService;
         private NetworkStream stream;
         private TransferObj requestObj;
+        
+        public TransferObj ResponseObj { get; private set; }
 
         public SearchForArtistsCommand(NetworkStream stream, TransferObj requestObj)
         {
@@ -31,11 +33,11 @@ namespace SocketsT1_T2.Tier2.Commands
             {
                 string name = JsonElementConverter.ElementToObject<string>(requestObj.Arg);
                 IList<Artist> artists = await artistService.SearchForArtists(name);
-                await ServerResponse.SendToClientWithValueAsync(stream, artists);
+                ResponseObj = await ServerResponse.PrepareTransferObjectWithValueAsync(stream, artists);
             }
             catch (Exception e)
             {
-                await ServerResponse.SendExceptionToClientAsync(stream, e);
+                ResponseObj = await ServerResponse.SendExceptionToClientAsync(stream, e);
 
             }
             

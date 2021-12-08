@@ -16,6 +16,8 @@ namespace SocketsT1_T2.Tier2.Commands
     {
         private IAlbumService albumService;
         private NetworkStream stream;
+        
+        public TransferObj ResponseObj { get; private set; }
 
         public GetAllAlbumsCommand(NetworkStream stream)
         {
@@ -28,11 +30,11 @@ namespace SocketsT1_T2.Tier2.Commands
             try
             {
                 IList<Album> albums = await albumService.GetAllAlbumsAsync();
-                await ServerResponse.SendToClientWithValueAsync(stream,albums);
+                ResponseObj = await ServerResponse.PrepareTransferObjectWithValueAsync(stream,albums);
             }
             catch (Exception e)
             {
-                await ServerResponse.SendExceptionToClientAsync(stream, e);
+                ResponseObj = await ServerResponse.SendExceptionToClientAsync(stream, e);
             }
            
         }

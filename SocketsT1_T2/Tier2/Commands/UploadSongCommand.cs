@@ -16,6 +16,8 @@ namespace SocketsT1_T2.Tier2.Commands
         private ISongManageService songManageService;
         private NetworkStream stream;
         private TransferObj requestObj;
+        
+        public TransferObj ResponseObj { get; private set; }
 
         public UploadSongCommand(NetworkStream stream, TransferObj requestObj)
         {
@@ -33,11 +35,11 @@ namespace SocketsT1_T2.Tier2.Commands
                 Song toAdd = JsonElementConverter.ElementToObject<Song>(args[0].GetRawText());
                 Mp3 mp3 = JsonElementConverter.ElementToObject<Mp3>(args[1].GetRawText());
                 await songManageService.AddNewSongAsync(toAdd, mp3);
-                await ServerResponse.SendToClientNoValueAsync(stream);
+                ResponseObj = await ServerResponse.PrepareTransferObjectNoValueAsync(stream);
             }
             catch (Exception e)
             {
-                await ServerResponse.SendExceptionToClientAsync(stream, e);
+                ResponseObj = await ServerResponse.SendExceptionToClientAsync(stream, e);
             }
             
         }

@@ -18,6 +18,8 @@ namespace SocketsT1_T2.Tier2.Commands
         //TODO Factory pattern
         private ILibraryService libraryService;
         private NetworkStream stream;
+        
+        public TransferObj ResponseObj { get; private set; }
         public GetAllSongsCommand(NetworkStream stream)
         {
             this.stream = stream;
@@ -29,11 +31,11 @@ namespace SocketsT1_T2.Tier2.Commands
             try
             {
                 IList<Song> result = await libraryService.GetAllSongsAsync();
-                await ServerResponse.SendToClientWithValueAsync(stream, result);
+                ResponseObj =  await ServerResponse.PrepareTransferObjectWithValueAsync(stream, result);
             }
             catch (Exception e)
             {
-                await ServerResponse.SendExceptionToClientAsync(stream, e);
+                ResponseObj =  await ServerResponse.SendExceptionToClientAsync(stream, e);
             }
            
             

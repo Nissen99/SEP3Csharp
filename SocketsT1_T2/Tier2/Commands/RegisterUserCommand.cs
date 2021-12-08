@@ -16,6 +16,8 @@ namespace SocketsT1_T2.Tier2.Commands
         private IUserService userService;
         private NetworkStream stream;
         private TransferObj requestObj;
+        
+        public TransferObj ResponseObj { get; private set; }
 
         public RegisterUserCommand(NetworkStream stream, TransferObj requestObj)
         {
@@ -30,11 +32,11 @@ namespace SocketsT1_T2.Tier2.Commands
             {
                 User user = JsonElementConverter.ElementToObject<User>(requestObj.Arg);
                 await userService.RegisterUser(user);
-                await ServerResponse.SendToClientNoValueAsync(stream);
+                ResponseObj = await ServerResponse.PrepareTransferObjectNoValueAsync(stream);
             }
             catch (Exception e)
             {
-                await ServerResponse.SendExceptionToClientAsync(stream, e);
+                ResponseObj = await ServerResponse.SendExceptionToClientAsync(stream, e);
 
             }
             

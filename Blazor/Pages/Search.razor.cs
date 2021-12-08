@@ -15,11 +15,6 @@ namespace Blazor.Pages
         [Inject] private ISongSearchModel SongSearchModel { get; set; }
         [Inject] private IPlayModel PlayModel { get; set; }
         
-        
-        public bool ShowTrack { get; set; }
-
-
-        
         private IList<Song> songsToShow;
         private string filterOption = "Title";
         private string searchField = "";

@@ -14,17 +14,15 @@ namespace SocketsT1_T2.Tier2.Util
     public class RequestHandler
     {
         private Dictionary<string, ICommand> commands;
-
-        public string RequestAction { get; set; }
-        public string RequestArg { get; set; }
+            
         private NetworkStream stream;
         private ICommand activeCommand;
         private TransferObj requestObj;
 
-        public RequestHandler(NetworkStream stream)
+        public RequestHandler(NetworkStream stream, TransferObj requestObj)
         {
             this.stream = stream;
-            requestObj = Task.Run(async () => await GetRequest()).Result;
+            this.requestObj = requestObj;
             commands = new()
             {
                 {"GETSONGS", new GetAllSongsCommand(stream)},
@@ -45,34 +43,16 @@ namespace SocketsT1_T2.Tier2.Util
                 {"ADDSONGTOPLAYLIST", new AddSongToPlaylistCommand(stream,requestObj)},
                 {"REMOVESONGFROMPLAYLIST",new RemoveSongFromPlaylistCommand(stream,requestObj)}
             };
-            SetCommand(requestObj.Action);
-            
+            SetActiveCommand(requestObj.Action);
         }
-        
-        private async Task<TransferObj> GetRequest()
-        {
-            byte[] dataFromServer = new byte[30000000];
-            int bytesRead = await stream.ReadAsync(dataFromServer, 0, dataFromServer.Length);
-            string readFromClient = Encoding.UTF8.GetString(dataFromServer, 0, bytesRead);
-            TransferObj transferObj = JsonSerializer.Deserialize<TransferObj>(readFromClient,
-                new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true,
-                });
-            // RequestAction = transferObj.Action;
-            // RequestArg = transferObj.Arg;
-            return transferObj;
-        }
-
-        private void SetCommand(string id)
+        private void SetActiveCommand(string requestAction)
         {
             activeCommand = null;
-            if (!commands.TryGetValue(id, out activeCommand))
+            if (!commands.TryGetValue(requestAction, out activeCommand))
                 activeCommand = new NullCommand();
 
         }
-
-        public async Task<ICommand> GetCommand()
+        public ICommand GetCommand()
         {
             return activeCommand;
         }
