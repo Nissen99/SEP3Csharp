@@ -21,7 +21,13 @@ namespace RestT2_T3
 
             HttpResponseMessage responseMessage = await httpClient.PostAsync(Uri + "/song", newSongAsStringContent);
 
-            return await HandleResponseGet<Song>(responseMessage);
+            HandleResponseNoReturn(responseMessage);
+            Uri uri = responseMessage.Headers.Location;
+
+            HttpResponseMessage songResponseMessage = await httpClient.GetAsync(uri);
+
+            return await HandleResponseGet<Song>(songResponseMessage);
+
         }
 
         public async Task RemoveSongAsync(Song songToRemove)

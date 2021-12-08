@@ -1,7 +1,7 @@
 using Blazor.Authentication;
 using Blazor.Model.AlbumModel;
 using Blazor.Model.ArtistModel;
-using Blazor.Model.AudioTestModel;
+using Blazor.Model.LibraryModel;
 using Blazor.Model.PlaylistManageModel;
 using Blazor.Model.PlaylistModel;
 using Blazor.Model.PlayModel;
@@ -9,7 +9,6 @@ using Blazor.Model.SongManagerModel;
 using Blazor.Model.SongSearchModel;
 using Blazor.Model.UserModel;
 using Blazor.Util;
-using Blazor.Util.Playstate;
 using Blazored.Modal;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -24,7 +23,6 @@ using SocketsT1_T2.Tier1.Library;
 using SocketsT1_T2.Tier1.Playlist;
 using SocketsT1_T2.Tier1.Song;
 using SocketsT1_T2.Tier1.User;
-using Syncfusion.Blazor;
 
 namespace Blazor
 {
@@ -55,7 +53,7 @@ namespace Blazor
             services.AddScoped<IUserNetworkClient, UserTcpClient>();
 
             
-            services.AddScoped<IAudioTestModel,AudioTestModel>();
+            services.AddScoped<ILibraryModel,LibraryModel>();
             services.AddScoped<IPlayModel, PlayModel>();
             services.AddScoped<CircuitHandler, CircuitHandlerService>();
             services.AddScoped<ISongSearchModel, SongSearchModel>();
@@ -68,7 +66,6 @@ namespace Blazor
 
 
             services.AddBlazoredModal();
-            services.AddSyncfusionBlazor();
             services.AddScoped<IUserModel, UserModel>();
             
             
