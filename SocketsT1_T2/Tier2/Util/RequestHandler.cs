@@ -25,23 +25,23 @@ namespace SocketsT1_T2.Tier2.Util
             this.requestObj = requestObj;
             commands = new()
             {
-                {"GETSONGS", new GetAllSongsCommand(stream)},
-                {"PLAYSONG", new PlaySongCommand(stream, requestObj)},
-                {"UPLOADSONG", new UploadSongCommand(stream, requestObj)},
-                {"GETSONGSBYFILTER", new GetSongsByFilterCommand(stream, requestObj)},
-                {"REGISTERUSER", new RegisterUserCommand(stream,requestObj)},
-                {"REMOVESONG", new RemoveSongCommand(stream,requestObj)},
-                {"SEARCHFORALBUMS", new SearchForAlbumsCommand(stream,requestObj)},
-                {"SEARCHFORARTISTS", new SearchForArtistsCommand(stream,requestObj)},
-                {"VALIDATEUSER", new ValidateUserCommand(stream,requestObj)},
-                {"GETALLALBUMS", new GetAllAlbumsCommand(stream)},
-                {"GETALLARTISTS", new GetAllArtistsCommand(stream)},
-                {"GETPLAYLISTS", new GetPlaylistsCommand(stream,requestObj)},
-                {"GETPLAYLISTFROMID", new GetPlaylistFromId(stream,requestObj)},
-                {"CREATENEWPLAYLIST", new CreateNewPlaylistCommand(stream,requestObj)},
-                {"REMOVEPLAYLIST",new RemovePlaylistCommand(stream,requestObj)},
-                {"ADDSONGTOPLAYLIST", new AddSongToPlaylistCommand(stream,requestObj)},
-                {"REMOVESONGFROMPLAYLIST",new RemoveSongFromPlaylistCommand(stream,requestObj)}
+                {"GETSONGS", new GetAllSongsCommand()},
+                {"PLAYSONG", new PlaySongCommand(requestObj)},
+                {"UPLOADSONG", new UploadSongCommand(requestObj)},
+                {"GETSONGSBYFILTER", new GetSongsByFilterCommand(requestObj)},
+                {"REGISTERUSER", new RegisterUserCommand(requestObj)},
+                {"REMOVESONG", new RemoveSongCommand(requestObj)},
+                {"SEARCHFORALBUMS", new SearchForAlbumsCommand(requestObj)},
+                {"SEARCHFORARTISTS", new SearchForArtistsCommand(requestObj)},
+                {"VALIDATEUSER", new ValidateUserCommand(requestObj)},
+                {"GETALLALBUMS", new GetAllAlbumsCommand()},
+                {"GETALLARTISTS", new GetAllArtistsCommand()},
+                {"GETPLAYLISTS", new GetPlaylistsCommand(requestObj)},
+                {"GETPLAYLISTFROMID", new GetPlaylistFromId(requestObj)},
+                {"CREATENEWPLAYLIST", new CreateNewPlaylistCommand(requestObj)},
+                {"REMOVEPLAYLIST",new RemovePlaylistCommand(requestObj)},
+                {"ADDSONGTOPLAYLIST", new AddSongToPlaylistCommand(requestObj)},
+                {"REMOVESONGFROMPLAYLIST",new RemoveSongFromPlaylistCommand(requestObj)}
             };
             SetActiveCommand(requestObj.Action);
         }
@@ -52,9 +52,9 @@ namespace SocketsT1_T2.Tier2.Util
                 activeCommand = new NullCommand();
         }
 
-        public async Task ExecuteCommand()
+        public async Task<TransferObj> ExecuteCommand()
         {
-           await activeCommand.Execute();
+           return await activeCommand.Execute();
         }
 
         public ICommand GetCommand()

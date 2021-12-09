@@ -15,29 +15,26 @@ namespace SocketsT1_T2.Tier2.Commands
     public class GetPlaylistsCommand : ICommand
     {
         private IPlayListService playListService;
-        private NetworkStream stream;
         private TransferObj requestObj;
         
-        public TransferObj ResponseObj { get; private set; }
 
-        public GetPlaylistsCommand(NetworkStream stream, TransferObj requestObj)
+        public GetPlaylistsCommand(TransferObj requestObj)
         {
             playListService = ServicesFactory.GetPlayListService();
-            this.stream = stream;
             this.requestObj = requestObj;
         }
 
-        public async Task Execute()
+        public async Task<TransferObj> Execute()
         {
             try
             {
                 User user = JsonElementConverter.ElementToObject<User>(requestObj.Arg);
                 IList<Playlist> result = await playListService.GetAllPlaylistsForUserAsync(user);
-                ResponseObj = await ServerResponse.PrepareTransferObjectWithValueAsync(result);
+                return await ServerResponse.PrepareTransferObjectWithValueAsync(result);
             }
             catch (Exception e)
             {
-                ResponseObj = await ServerResponse.SendExceptionToClientAsync(e);
+                return await ServerResponse.SendExceptionToClientAsync(e);
             }
 
         }

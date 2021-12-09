@@ -15,31 +15,27 @@ namespace SocketsT1_T2.Tier2.Commands
     public class PlaySongCommand : ICommand
     {
         private IPlayService playService;
-        private NetworkStream stream;
         private TransferObj requestObj;
         
-        public TransferObj ResponseObj { get; private set; }
 
 
-        public PlaySongCommand(NetworkStream stream, TransferObj requestObj)
+        public PlaySongCommand( TransferObj requestObj)
         {
-            this.stream = stream;
             playService = ServicesFactory.GetPlayService();
             this.requestObj = requestObj;
-            //this.tObjAsJson = tObjAsJson;
         }
 
-        public async Task Execute()
+        public async Task<TransferObj> Execute()
         {
             try
             {
                 Song tObjSong = JsonElementConverter.ElementToObject<Song>(requestObj.Arg);
                 byte[] song = await playService.PlayAsync(tObjSong);
-                ResponseObj = await ServerResponse.PrepareTransferObjectWithValueAsync(song);
+                return await ServerResponse.PrepareTransferObjectWithValueAsync(song);
             }
             catch (Exception e)
             {
-                ResponseObj = await ServerResponse.SendExceptionToClientAsync(e);
+                return await ServerResponse.SendExceptionToClientAsync(e);
             }
           
         }

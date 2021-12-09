@@ -32,9 +32,7 @@ namespace SocketsT1_T2.Tier2
             Console.WriteLine("LISTEN");
             requestObject = await GetRequestObjAsync();
             RequestHandler rHandler = new RequestHandler(client.GetStream(), requestObject);
-            await rHandler.ExecuteCommand();
-            ICommand command = rHandler.GetCommand();
-            TransferObj responseObj = command.ResponseObj;
+            TransferObj responseObj = await rHandler.ExecuteCommand();
             await SendTransferObjectToClient(client.GetStream(), responseObj);
             client.Dispose();
         }

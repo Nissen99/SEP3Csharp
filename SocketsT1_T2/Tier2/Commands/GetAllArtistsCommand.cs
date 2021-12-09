@@ -16,26 +16,23 @@ namespace SocketsT1_T2.Tier2.Commands
     public class GetAllArtistsCommand : ICommand
     {
         private IArtistService artistService;
-        private NetworkStream stream;
         
-        public TransferObj ResponseObj { get; private set; }
 
-        public GetAllArtistsCommand(NetworkStream stream)
+        public GetAllArtistsCommand()
         {
             artistService = ServicesFactory.GetArtistService();
-            this.stream = stream;
         }
 
-        public async Task Execute()
+        public async Task<TransferObj> Execute()
         {
             try
             {
                 IList<Artist> artists = await artistService.GetAllArtistsAsync();
-                ResponseObj = await ServerResponse.PrepareTransferObjectWithValueAsync(artists);
+                return await ServerResponse.PrepareTransferObjectWithValueAsync(artists);
             }
             catch (Exception e)
             {
-                ResponseObj = await ServerResponse.SendExceptionToClientAsync( e);
+                return await ServerResponse.SendExceptionToClientAsync( e);
             }
 
         }

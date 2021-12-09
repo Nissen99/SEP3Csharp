@@ -14,29 +14,26 @@ namespace SocketsT1_T2.Tier2.Commands
     public class RemoveSongCommand: ICommand
     {
         private ISongManageService songManageService;
-        private NetworkStream stream;
         private TransferObj requestObj;
         
-        public TransferObj ResponseObj { get; private set; }
 
-        public RemoveSongCommand(NetworkStream stream, TransferObj requestObj)
+        public RemoveSongCommand( TransferObj requestObj)
         {
             songManageService = ServicesFactory.GetSongManageService();
-            this.stream = stream;
             this.requestObj = requestObj;
         }
 
-        public async Task Execute()
+        public async Task<TransferObj> Execute()
         {
             try
             {
                 Song song = JsonElementConverter.ElementToObject<Song>(requestObj.Arg);
                 await songManageService.RemoveSongAsync(song);
-                ResponseObj = await ServerResponse.PrepareTransferObjectNoValueAsync();
+                return await ServerResponse.PrepareTransferObjectNoValueAsync();
             }
             catch (Exception e)
             {
-                ResponseObj = await ServerResponse.SendExceptionToClientAsync(e);
+                return await ServerResponse.SendExceptionToClientAsync(e);
             }
            
         }

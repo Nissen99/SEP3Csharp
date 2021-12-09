@@ -13,26 +13,22 @@ namespace SocketsT1_T2.Tier2.Commands
     public class GetAllAlbumsCommand : ICommand
     {
         private IAlbumService albumService;
-        private NetworkStream stream;
         
-        public TransferObj ResponseObj { get; private set; }
-
-        public GetAllAlbumsCommand(NetworkStream stream)
+        public GetAllAlbumsCommand()
         {
             albumService = ServicesFactory.GetAlbumService();
-            this.stream = stream;
         }
 
-        public async Task Execute()
+        public async Task<TransferObj> Execute()
         {
             try
             {
                 IList<Album> albums = await albumService.GetAllAlbumsAsync();
-                ResponseObj = await ServerResponse.PrepareTransferObjectWithValueAsync(albums);
+                return await ServerResponse.PrepareTransferObjectWithValueAsync(albums);
             }
             catch (Exception e)
             {
-                ResponseObj = await ServerResponse.SendExceptionToClientAsync(e);
+                return await ServerResponse.SendExceptionToClientAsync(e);
             }
            
         }

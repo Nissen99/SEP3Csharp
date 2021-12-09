@@ -14,29 +14,26 @@ namespace SocketsT1_T2.Tier2.Commands
     public class RegisterUserCommand: ICommand
     {
         private IUserService userService;
-        private NetworkStream stream;
         private TransferObj requestObj;
         
-        public TransferObj ResponseObj { get; private set; }
 
-        public RegisterUserCommand(NetworkStream stream, TransferObj requestObj)
+        public RegisterUserCommand(TransferObj requestObj)
         {
             userService = ServicesFactory.GetUserService();
-            this.stream = stream;
             this.requestObj = requestObj;
         }
 
-        public async Task Execute()
+        public async Task<TransferObj> Execute()
         {
             try
             {
                 User user = JsonElementConverter.ElementToObject<User>(requestObj.Arg);
                 await userService.RegisterUser(user);
-                ResponseObj = await ServerResponse.PrepareTransferObjectNoValueAsync();
+                return await ServerResponse.PrepareTransferObjectNoValueAsync();
             }
             catch (Exception e)
             {
-                ResponseObj = await ServerResponse.SendExceptionToClientAsync(e);
+                return await ServerResponse.SendExceptionToClientAsync(e);
 
             }
             

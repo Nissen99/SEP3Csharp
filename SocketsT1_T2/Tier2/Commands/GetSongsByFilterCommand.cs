@@ -15,29 +15,26 @@ namespace SocketsT1_T2.Tier2.Commands
     public class GetSongsByFilterCommand: ICommand
     {
         private ISongSearchService songSearchService;
-        private NetworkStream stream;
         private TransferObj requestObj;
         
-        public TransferObj ResponseObj { get; private set; }
 
-        public GetSongsByFilterCommand(NetworkStream stream, TransferObj requestObj)
+        public GetSongsByFilterCommand(TransferObj requestObj)
         {
             songSearchService = ServicesFactory.GetSongSearchService();
-            this.stream = stream;
             this.requestObj = requestObj;
         }
 
-        public async Task Execute()
+        public async Task<TransferObj> Execute()
         {
             try
             {
                 string[] toSearch = JsonElementConverter.ElementToObject<string[]>(requestObj.Arg);
                 IList<Song> songs = await songSearchService.GetSongsByFilterJsonAsync(toSearch);
-                ResponseObj = await ServerResponse.PrepareTransferObjectWithValueAsync(songs);
+                return await ServerResponse.PrepareTransferObjectWithValueAsync(songs);
             }
             catch (Exception e)
             {
-                ResponseObj =  await ServerResponse.SendExceptionToClientAsync(e);
+                return await ServerResponse.SendExceptionToClientAsync(e);
             }
            
         }

@@ -14,28 +14,25 @@ namespace SocketsT1_T2.Tier2.Commands
     public class ValidateUserCommand: ICommand
     {
         private IUserService userService;
-        private NetworkStream stream;
         private TransferObj requestObj;
-        public TransferObj ResponseObj { get; private set; }
 
-        public ValidateUserCommand(NetworkStream stream, TransferObj requestObj)
+        public ValidateUserCommand(TransferObj requestObj)
         {
             userService = ServicesFactory.GetUserService();
-            this.stream = stream;
             this.requestObj = requestObj;
         }
 
-        public async Task Execute()
+        public async Task<TransferObj> Execute()
         {
             try
             {
                 User user = JsonElementConverter.ElementToObject<User>(requestObj.Arg);
                 User toReturn = await userService.ValidateUser(user);
-                ResponseObj = await ServerResponse.PrepareTransferObjectWithValueAsync(toReturn);
+                return await ServerResponse.PrepareTransferObjectWithValueAsync(toReturn);
             }
             catch (Exception e)
             {
-                ResponseObj = await ServerResponse.SendExceptionToClientAsync(e);
+                return await ServerResponse.SendExceptionToClientAsync(e);
 
             }
             

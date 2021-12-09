@@ -15,29 +15,26 @@ namespace SocketsT1_T2.Tier2.Commands
     public class SearchForAlbumsCommand: ICommand
     {
         private IAlbumService albumService;
-        private NetworkStream stream;
         private TransferObj requestObj;
         
-        public TransferObj ResponseObj { get; private set; }
 
-        public SearchForAlbumsCommand(NetworkStream stream, TransferObj requestObj)
+        public SearchForAlbumsCommand(TransferObj requestObj)
         {
             albumService = ServicesFactory.GetAlbumService();
-            this.stream = stream;
             this.requestObj = requestObj;
         }
 
-        public async Task Execute()
+        public async Task<TransferObj> Execute()
         {
             try
             {
                 string title = JsonElementConverter.ElementToObject<string>(requestObj.Arg);
                 IList<Album> artists = await albumService.SearchForAlbums(title);
-                ResponseObj = await ServerResponse.PrepareTransferObjectWithValueAsync( artists);
+                return await ServerResponse.PrepareTransferObjectWithValueAsync( artists);
             }
             catch (Exception e)
             {
-                ResponseObj = await ServerResponse.SendExceptionToClientAsync(e);
+                return await ServerResponse.SendExceptionToClientAsync(e);
 
             }
             

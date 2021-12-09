@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Blazor.Model.AudioTestModel;
+using Blazor.Model.LibraryModel;
 using Blazor.Model.SongSearchModel;
 using Entities;
 using NUnit.Framework;
@@ -13,7 +13,7 @@ namespace BlazorTest.Model
 {
     public class SongSearchModelTest
     {
-        private IAudioTestModel audioTestModel = new AudioTestModel(new LibraryTcpClient());
+        private ILibraryModel libraryModel = new LibraryModel(new LibraryTcpClient());
         private ISongSearchModel songSearchModel = new SongSearchModel(new SongSearchTcpClient());
 
 
@@ -22,7 +22,7 @@ namespace BlazorTest.Model
         {
             int songNumberTest = 0;
 
-            IList<Song> listOfAllSongs = await audioTestModel.GetAllSongs();
+            IList<Song> listOfAllSongs = await libraryModel.GetAllSongs();
             string songTitleTest = listOfAllSongs[songNumberTest].Title;
 
             IList<Song> songList = await songSearchModel.GetSongsByFilterAsync("Title", songTitleTest);
@@ -35,7 +35,7 @@ namespace BlazorTest.Model
         {
             int songNumberTest = 0;
 
-            IList<Song> listOfAllSongs = await audioTestModel.GetAllSongs();
+            IList<Song> listOfAllSongs = await libraryModel.GetAllSongs();
             string artistName = listOfAllSongs[songNumberTest].Artists[0].Name;
 
             IList<Song> songList = await songSearchModel.GetSongsByFilterAsync("Artist", artistName);
@@ -56,7 +56,7 @@ namespace BlazorTest.Model
         {
             int songNumberTest = 0;
 
-            IList<Song> listOfAllSongs = await audioTestModel.GetAllSongs();
+            IList<Song> listOfAllSongs = await libraryModel.GetAllSongs();
             string albumTitle = listOfAllSongs[songNumberTest].Album.Title;
             
             Assert.ThrowsAsync<Exception>(() => songSearchModel.GetSongsByFilterAsync(null,albumTitle));
@@ -69,7 +69,7 @@ namespace BlazorTest.Model
         {
             int songNumberTest = 0;
 
-            IList<Song> listOfAllSongs = await audioTestModel.GetAllSongs();
+            IList<Song> listOfAllSongs = await libraryModel.GetAllSongs();
             string albumTitle = listOfAllSongs[songNumberTest].Album.Title;
         
         

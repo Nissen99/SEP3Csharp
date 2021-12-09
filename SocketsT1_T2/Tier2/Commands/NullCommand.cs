@@ -6,8 +6,7 @@ namespace SocketsT1_T2.Tier2.Commands
     public class NullCommand : ICommand
     
     {
-        public TransferObj ResponseObj { get; private set; }
-        public Task Execute()
+        public Task<TransferObj> Execute()
         {
             throw new System.NotImplementedException("Den sendte request er ikke registreret commando");
         }

@@ -16,29 +16,26 @@ namespace SocketsT1_T2.Tier2.Commands
 
     {
         private IPlayListService playListService;
-        private NetworkStream stream;
         private TransferObj requestObj;
         
-        public TransferObj ResponseObj { get; private set; }
 
-        public RemovePlaylistCommand(NetworkStream stream, TransferObj requestObj)
+        public RemovePlaylistCommand(TransferObj requestObj)
         {
             playListService = ServicesFactory.GetPlayListService();
-            this.stream = stream;
             this.requestObj = requestObj;
         }
 
-        public async Task Execute()
+        public async Task<TransferObj> Execute()
         {
             try
             {
                 Playlist playlist = JsonElementConverter.ElementToObject<Playlist>(requestObj.Arg);
                 await playListService.DeletePlayListAsync(playlist);
-                ResponseObj = await ServerResponse.PrepareTransferObjectNoValueAsync();
+                return await ServerResponse.PrepareTransferObjectNoValueAsync();
             }
             catch (Exception e)
             {
-                ResponseObj = await ServerResponse.SendExceptionToClientAsync(e);
+                return await ServerResponse.SendExceptionToClientAsync(e);
             }
             
 
