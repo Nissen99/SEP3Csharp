@@ -38,7 +38,7 @@ namespace SocketsT1_T2.Tier2.Util
             return transferObj;
         }
 
-        public static async Task<TransferObj> SendExceptionToClientAsync(Exception exception)
+        public static async Task<TransferObj> PrepareTransferObjectWithException(Exception exception)
         {
             Error error = new Error(exception);
             return await PrepareTransferObjectWithValueAsync(error);
