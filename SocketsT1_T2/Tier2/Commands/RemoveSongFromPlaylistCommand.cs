@@ -35,7 +35,7 @@ namespace SocketsT1_T2.Tier2.Commands
             }
             catch (Exception e)
             {
-                return await ServerResponse.PrepareTransferObjectWithException(e);
+                return await ServerResponse.PrepareTransferObjectWithExceptionAsync(e);
 
             }
             
