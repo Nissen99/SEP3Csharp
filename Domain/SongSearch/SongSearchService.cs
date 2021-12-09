@@ -19,13 +19,13 @@ namespace Domain.SongSearch
             switch (args[0])
             {
                 case "Title":
-                    return await getSongFromTitle(args[1]);
+                    return await GetSongFromTitle(args[1]);
 
                 case "Artist":
-                    return await getSongFromArtist(args[1]);
+                    return await GetSongFromArtist(args[1]);
 
                 case "Album":
-                    return await getSongFromAlbum(args[1]);
+                    return await GetSongFromAlbum(args[1]);
                 
                 default:
                     throw new Exception("You have tried to search " + args[0] + " which is not valid");
@@ -33,18 +33,18 @@ namespace Domain.SongSearch
             
         }
 
-        private async Task<IList<Song>> getSongFromArtist(string artistName)
+        private async Task<IList<Song>> GetSongFromArtist(string artistName)
         {
             return await songSearchNetworking.GetSongsByArtistNameAsync(artistName);
         }
 
-        private async Task<IList<Song>>  getSongFromAlbum(string albumTitle)
+        private async Task<IList<Song>>  GetSongFromAlbum(string albumTitle)
         {
             return await songSearchNetworking.GetSongsByAlbumTitleAsync(albumTitle);
             
         }
 
-        private async Task<IList<Song>> getSongFromTitle(string songTitle)
+        private async Task<IList<Song>> GetSongFromTitle(string songTitle)
         {
             return await songSearchNetworking.GetSongsByTitleAsync(songTitle);
             
