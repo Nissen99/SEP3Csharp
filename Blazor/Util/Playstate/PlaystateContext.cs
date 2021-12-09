@@ -58,7 +58,6 @@ namespace Blazor.Util.Playstate
 
         public async Task PlaySong(Song song)
         {
-            //State = new Stopped(this);
             var watch = new Stopwatch();
             watch.Start();
             byte[] songToPlay = await client.PlaySong(song);

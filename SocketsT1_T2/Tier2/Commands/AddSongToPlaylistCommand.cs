@@ -37,7 +37,6 @@ namespace SocketsT1_T2.Tier2.Commands
             {
                 return await ServerResponse.PrepareTransferObjectWithExceptionAsync(e);
             }
-
         }
     }
 }

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Net.Sockets;
 using System.Threading.Tasks;
 using SocketsT1_T2.Shared;
 using SocketsT1_T2.Tier2.Commands;
@@ -9,15 +8,10 @@ namespace SocketsT1_T2.Tier2.Util
     public class RequestHandler : IRequestHandler
     {
         private Dictionary<string, ICommand> commands;
-            
-        private NetworkStream stream;
         private ICommand activeCommand;
-        private TransferObj requestObj;
 
-        public RequestHandler(NetworkStream networkStream, TransferObj tObj)
+        public RequestHandler(TransferObj requestObj)
         {
-            stream = networkStream;
-            requestObj = tObj;
             commands = new()
             {
                 {"GETSONGS", new GetAllSongsCommand()},
