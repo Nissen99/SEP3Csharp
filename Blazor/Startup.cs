@@ -1,7 +1,6 @@
 using Blazor.Authentication;
 using Blazor.Model.AlbumModel;
 using Blazor.Model.ArtistModel;
-using Blazor.Model.AudioTestModel;
 using Blazor.Model.PlaylistManageModel;
 using Blazor.Model.PlaylistModel;
 using Blazor.Model.PlayModel;
@@ -53,7 +52,6 @@ namespace Blazor
             services.AddScoped<IUserNetworkClient, UserTcpClient>();
 
 
-            services.AddScoped<IAudioTestModel, AudioTestModel>();
             services.AddScoped<IPlayModel, PlayModel>();
             services.AddScoped<CircuitHandler, CircuitHandlerService>();
             services.AddScoped<ISongSearchModel, SongSearchModel>();
