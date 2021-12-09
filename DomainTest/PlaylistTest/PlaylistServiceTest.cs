@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Domain.Playlist;
-using Domain.Users;
+using Domain.User;
 using Entities;
 using NUnit.Framework;
 using RestT2_T3;
@@ -84,8 +84,9 @@ namespace DomainTest.PlaylistTest
                 User = await UserService.ValidateUser(user)
             };
 
-            Assert.ThrowsAsync<Exception>(() =>PlayListService.DeletePlayListAsync(notRealPlaylist));
-
+            await PlayListService.DeletePlayListAsync(notRealPlaylist);
+            int countAfter = PlayListService.GetAllPlaylistsForUserAsync(user).Result.Count;
+            Assert.AreEqual(countAfter, countBefore);
         }
 
 

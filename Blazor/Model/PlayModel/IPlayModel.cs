@@ -16,10 +16,7 @@ namespace Blazor.Model.PlayModel
         Task SetVolumeAsync(int percentage);
         Task PlayPreviousSong();
         Task PlayNextSongAsync();
-
         IList<Song> CurrentPlaylist { get; set; }
-        IList<Song> GetPreviouslySongs();
-        string UpdateDisplay();
 
         Task<Song> GetCurrentSongAsync();
     }

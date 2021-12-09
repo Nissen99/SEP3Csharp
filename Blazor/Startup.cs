@@ -1,7 +1,7 @@
 using Blazor.Authentication;
 using Blazor.Model.AlbumModel;
 using Blazor.Model.ArtistModel;
-using Blazor.Model.LibraryModel;
+using Blazor.Model.AudioTestModel;
 using Blazor.Model.PlaylistManageModel;
 using Blazor.Model.PlaylistModel;
 using Blazor.Model.PlayModel;
@@ -52,8 +52,8 @@ namespace Blazor
             services.AddScoped<ISongSearchNetworkClient, SongSearchTcpClient>();
             services.AddScoped<IUserNetworkClient, UserTcpClient>();
 
-            
-            services.AddScoped<ILibraryModel,LibraryModel>();
+
+            services.AddScoped<IAudioTestModel, AudioTestModel>();
             services.AddScoped<IPlayModel, PlayModel>();
             services.AddScoped<CircuitHandler, CircuitHandlerService>();
             services.AddScoped<ISongSearchModel, SongSearchModel>();
@@ -64,20 +64,18 @@ namespace Blazor
             services.AddScoped<IPlaylistManageModel, PlaylistManageModel>();
 
 
-
             services.AddBlazoredModal();
             services.AddScoped<IUserModel, UserModel>();
-            
-            
+
+
             services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("MustBeLoggedIn", a =>
                     a.RequireAuthenticatedUser().RequireClaim("Role", "StandardUser", "Admin"));
-                options.AddPolicy("MustBeAdmin",  a => 
+                options.AddPolicy("MustBeAdmin", a =>
                     a.RequireAuthenticatedUser().RequireClaim("Role", "Admin"));
-                
             });
         }
 

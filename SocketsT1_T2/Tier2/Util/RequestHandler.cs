@@ -1,17 +1,12 @@
-using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
-using Entities;
 using SocketsT1_T2.Shared;
 using SocketsT1_T2.Tier2.Commands;
 
 namespace SocketsT1_T2.Tier2.Util
 {
-    public class RequestHandler
+    public class RequestHandler : IRequestHandler
     {
         private Dictionary<string, ICommand> commands;
             
@@ -19,10 +14,10 @@ namespace SocketsT1_T2.Tier2.Util
         private ICommand activeCommand;
         private TransferObj requestObj;
 
-        public RequestHandler(NetworkStream stream, TransferObj requestObj)
+        public RequestHandler(NetworkStream networkStream, TransferObj tObj)
         {
-            this.stream = stream;
-            this.requestObj = requestObj;
+            stream = networkStream;
+            requestObj = tObj;
             commands = new()
             {
                 {"GETSONGS", new GetAllSongsCommand()},

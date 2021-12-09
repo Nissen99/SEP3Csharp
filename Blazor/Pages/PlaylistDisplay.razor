@@ -16,16 +16,5 @@ else
 <p></p>
 
 @code {
-    [Inject]
-    public IPlayListModel PlaylistModel { get; set; }
-    [Parameter]
-    public string PlaylistToDisplay { get; set; }
-
-    private Playlist currentPlaylist;
-    
-    protected override async Task OnInitializedAsync()
-    {
-        currentPlaylist = await PlaylistModel.GetPlaylistFromIdAsync(int.Parse(PlaylistToDisplay));
-        StateHasChanged();
-    }
+  
 }

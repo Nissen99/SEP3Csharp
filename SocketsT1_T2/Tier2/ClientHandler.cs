@@ -9,7 +9,6 @@ using Domain.Album;
 using Domain.Artist;
 using Domain.Play;
 using Domain.SongSearch;
-using Domain.Users;
 using Entities;
 using SocketsT1_T2.Shared;
 using SocketsT1_T2.Tier2.Commands;
