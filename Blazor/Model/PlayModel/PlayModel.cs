@@ -14,7 +14,7 @@ namespace Blazor.Model.PlayModel
 {
     public class PlayModel : IPlayModel
     {
-        public IList<Song> previouslySongs = new List<Song>();
+        private IList<Song> previouslySongs = new List<Song>();
         private Song currentSong;
         
         
@@ -26,13 +26,6 @@ namespace Blazor.Model.PlayModel
         {
             Context = new PlaystateContext(client);
         }
-
-        public IList<Song> GetPreviouslySongs()
-        {
-            return previouslySongs;
-        }
-        
-        
         public async Task PlaySongAsync(Song song)
         {
             currentSong = song;
@@ -88,19 +81,7 @@ namespace Blazor.Model.PlayModel
             }
             await PlaySongAsync(CurrentPlaylist[index]);
         }
-
-        public string UpdateDisplay()
-        {
-            if (currentSong.Artists.Count < 2)
-            {
-                return currentSong.Title + " " + currentSong.Artists[0].Name + currentSong.Duration;
-            }
-            else
-            {
-                return currentSong.Title + " Various Artists";
-            }
-            
-        }
+        
         
         public async Task<Song> GetCurrentSongAsync()
         {

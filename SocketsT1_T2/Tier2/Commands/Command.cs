@@ -10,6 +10,6 @@ namespace SocketsT1_T2.Tier2.Commands
     {
         TransferObj ResponseObj { get; }
         Task Execute();
-        //Task Execute(NetworkStream stream, string tObj);
+        
     }
 }
