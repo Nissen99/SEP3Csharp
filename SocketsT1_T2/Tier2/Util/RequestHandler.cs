@@ -9,11 +9,9 @@ namespace SocketsT1_T2.Tier2.Util
     {
         private Dictionary<string, ICommand> commands;
         private ICommand activeCommand;
-        private TransferObj requestObj;
 
-        public RequestHandler(TransferObj tObj)
+        public RequestHandler(TransferObj requestObj)
         {
-            requestObj = tObj;
             commands = new()
             {
                 {"GETSONGS", new GetAllSongsCommand()},

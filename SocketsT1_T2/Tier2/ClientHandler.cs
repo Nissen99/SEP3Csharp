@@ -1,17 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Domain.Album;
-using Domain.Artist;
-using Domain.Play;
-using Domain.SongSearch;
-using Entities;
 using SocketsT1_T2.Shared;
-using SocketsT1_T2.Tier2.Commands;
 using SocketsT1_T2.Tier2.Util;
 
 namespace SocketsT1_T2.Tier2
