@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Domain.Album;
 using Entities;
 using Factory;
+using SocketsT1_T2.Shared;
 using SocketsT1_T2.Tier2.Util;
 
 namespace SocketsT1_T2.Tier2.Commands
@@ -13,6 +14,8 @@ namespace SocketsT1_T2.Tier2.Commands
     {
         private IAlbumService albumService;
         private NetworkStream stream;
+        
+        public TransferObj ResponseObj { get; private set; }
 
         public GetAllAlbumsCommand(NetworkStream stream)
         {
@@ -25,11 +28,11 @@ namespace SocketsT1_T2.Tier2.Commands
             try
             {
                 IList<Album> albums = await albumService.GetAllAlbumsAsync();
-                await ServerResponse.SendToClientWithValueAsync(stream,albums);
+                ResponseObj = await ServerResponse.PrepareTransferObjectWithValueAsync(albums);
             }
             catch (Exception e)
             {
-                await ServerResponse.SendExceptionToClientAsync(stream, e);
+                ResponseObj = await ServerResponse.SendExceptionToClientAsync(e);
             }
            
         }

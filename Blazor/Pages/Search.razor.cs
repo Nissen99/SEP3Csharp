@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Blazor.Model;
-using Blazor.Model.AudioTestModel;
+using Blazor.Model.LibraryModel;
 using Blazor.Model.PlayModel;
 using Blazor.Model.SongSearchModel;
 using Entities;
@@ -11,14 +10,10 @@ namespace Blazor.Pages
 {
     public partial class Search : ComponentBase
     {
-        [Inject] private IAudioTestModel AudioTestModel { get; set; }
+        [Inject] private ILibraryModel LibraryModel { get; set; }
         [Inject] private ISongSearchModel SongSearchModel { get; set; }
         [Inject] private IPlayModel PlayModel { get; set; }
         
-        
-        public bool ShowTrack { get; set; }
-
-
         
         private IList<Song> songsToShow;
         private string filterOption = "Title";
@@ -26,7 +21,7 @@ namespace Blazor.Pages
         
         protected override async Task OnInitializedAsync()
         {
-            songsToShow = await AudioTestModel.GetAllSongs();
+            songsToShow = await LibraryModel.GetAllSongs();
             PlayModel.CurrentPlaylist = songsToShow;
         }
 
@@ -39,7 +34,7 @@ namespace Blazor.Pages
             }
             else
             {
-                songsToShow = await AudioTestModel.GetAllSongs();
+                songsToShow = await LibraryModel.GetAllSongs();
             }
             
             PlayModel.CurrentPlaylist = songsToShow;

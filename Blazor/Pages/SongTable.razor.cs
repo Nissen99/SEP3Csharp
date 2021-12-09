@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Blazor.Model;
-using Blazor.Model.AudioTestModel;
+using Blazor.Model.LibraryModel;
 using Blazor.Model.PlaylistManageModel;
 using Blazor.Model.PlayModel;
 using Blazor.Model.SongManagerModel;
@@ -15,7 +15,7 @@ namespace Blazor.Pages
 {
     public partial class SongTable : ComponentBase
     {
-        [Inject] public IAudioTestModel Model { get; set; }
+        
         [Inject] public ISongManageModel SongManageModel { get; set; }
         [Inject] public IPlaylistManageModel PlaylistManageModel { get; set; }
         [Inject] public IPlayModel PlayModel { get; set; }
@@ -24,7 +24,7 @@ namespace Blazor.Pages
         public IList<Song> SongList { get; set; }
         
         [Parameter]
-        public Entities.Playlist Playlist { get; set; }
+        public Playlist Playlist { get; set; }
 
         public Song CurrentSong;
 
@@ -155,14 +155,23 @@ namespace Blazor.Pages
 
         private async Task PerformAddToPlaylist(Song song)
         {
-            var form = ModalService.Show<AddToPlaylist>("Choose a playlist to add this song to");
-            var result = await form.Result;
-            if (!result.Cancelled)
-            {
-                Entities.Playlist playlist = (Entities.Playlist)result.Data;
-                await PlaylistManageModel.AddSongToPlaylist(playlist, song);
-                Console.WriteLine($"Added {song.Title} to playlist: {playlist.Title}");
+            try
+            { 
+                var form = ModalService.Show<AddToPlaylist>("Choose a playlist to add this song to");
+                var result = await form.Result;
+                if (!result.Cancelled)
+                {
+                    Playlist playlist = (Playlist)result.Data;
+                    await PlaylistManageModel.AddSongToPlaylist(playlist, song);
+                    Console.WriteLine($"Added {song.Title} to playlist: {playlist.Title}");
+                }
+
             }
+            catch (Exception e)
+            {
+                ModalService.Show<Popup>(e.Message);
+            }
+           
         }
     }
 }

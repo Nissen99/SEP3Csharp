@@ -17,6 +17,8 @@ namespace SocketsT1_T2.Tier2.Commands
         private IPlayListService playListService;
         private NetworkStream stream;
         private TransferObj requestObj;
+        
+        public TransferObj ResponseObj { get; private set; }
 
         public GetPlaylistFromId(NetworkStream stream, TransferObj requestObj)
         {
@@ -31,11 +33,11 @@ namespace SocketsT1_T2.Tier2.Commands
             {
                 int playlistId = JsonElementConverter.ElementToObject<int>(requestObj.Arg);
                 Playlist playlist = await playListService.GetPlaylistFromIdAsync(playlistId);
-                await ServerResponse.SendToClientWithValueAsync(stream, playlist);
+                ResponseObj = await ServerResponse.PrepareTransferObjectWithValueAsync(playlist);
             }
             catch (Exception e)
             {
-                await ServerResponse.SendExceptionToClientAsync(stream, e);
+                ResponseObj =  await ServerResponse.SendExceptionToClientAsync(e);
             }
             
         }

@@ -25,37 +25,37 @@ namespace Factory
 
         public static ILibraryService GetLibraryService()
         {
-            return new LibraryService(new LibraryRestClient());
+            return new LibraryService(NetworkingFactory.GetLibraryNetworking());
         }
 
         public static IPlayService GetPlayService()
         {
-            return new PlayService(new PlayRestClient());
+            return new PlayService(NetworkingFactory.GetPlayNetworking());
         }
 
         public static IPlayListService GetPlayListService()
         {
-            return new PlayListService(new PlaylistRestClient());
+            return new PlayListService(NetworkingFactory.GetPlaylistNetworking());
         }
 
         public static IPlaylistManageService GetPlaylistManageService()
         {
-            return new PlaylistManageService(new PlaylistManageRestClient());
+            return new PlaylistManageService(NetworkingFactory.GetPlaylistMangeNetworking());
         }
 
         public static ISongManageService GetSongManageService()
         {
-            return new SongManageService(new SongManageRestClient());
+            return new SongManageService(NetworkingFactory.GetSongManageNetworking(), NetworkingFactory.GetLibraryNetworking());
         }
 
         public static ISongSearchService GetSongSearchService()
         {
-            return new SongSearchService(new SongSearchRestClient());
+            return new SongSearchService(NetworkingFactory.GetSongSearchNetworking());
         }
 
         public static IUserService GetUserService()
         {
-            return new UserService(new UserRestClient());
+            return new UserService(NetworkingFactory.GetUserNetworking());
         }
         
         

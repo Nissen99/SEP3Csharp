@@ -10,7 +10,7 @@ namespace SocketsT1_T2.Tier2.Util
 {
     public class ServerResponse
     {
-        public static async Task SendToClientWithValueAsync<T>(NetworkStream stream, T TObject)
+        public static async Task<TransferObj> PrepareTransferObjectWithValueAsync<T>(T TObject)
         {
             string objectAsJson = JsonSerializer.Serialize(TObject);
             string action = "RETURN";
@@ -23,11 +23,11 @@ namespace SocketsT1_T2.Tier2.Util
             {
                 Action = action, Arg = objectAsJson
             };
-            await SendTransferObjectToClient(stream, transferObj);
+            return transferObj;
 
         }
 
-        public static async Task SendToClientNoValueAsync(NetworkStream stream)
+        public static async Task<TransferObj> PrepareTransferObjectNoValueAsync()
         {
             string action = "RETURN";
             
@@ -35,20 +35,13 @@ namespace SocketsT1_T2.Tier2.Util
             {
                 Action = action
             };
-            await SendTransferObjectToClient(stream, transferObj);
+            return transferObj;
         }
 
-        private static async Task SendTransferObjectToClient(NetworkStream stream, TransferObj transferObj)
-        {
-            string transferAsJson = JsonSerializer.Serialize(transferObj);
-            byte[] toServer = Encoding.UTF8.GetBytes(transferAsJson);
-            await stream.WriteAsync(toServer, 0, toServer.Length);
-        }
-
-        public static async Task SendExceptionToClientAsync(NetworkStream stream, Exception exception)
+        public static async Task<TransferObj> SendExceptionToClientAsync(Exception exception)
         {
             Error error = new Error(exception);
-            await SendToClientWithValueAsync(stream, error);
+            return await PrepareTransferObjectWithValueAsync(error);
         }
     }
 }

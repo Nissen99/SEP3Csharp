@@ -16,6 +16,8 @@ namespace SocketsT1_T2.Tier2.Commands
         private IPlaylistManageService playlistManageService;
         private NetworkStream stream;
         private TransferObj requestObj;
+        
+        public TransferObj ResponseObj { get; private set; }
 
         public RemoveSongFromPlaylistCommand(NetworkStream stream, TransferObj requestObj)
         {
@@ -32,11 +34,11 @@ namespace SocketsT1_T2.Tier2.Commands
                 Playlist playlist = JsonElementConverter.ElementToObject<Playlist>(args[0].GetRawText());
                 Song song = JsonElementConverter.ElementToObject<Song>(args[1].GetRawText());
                 await playlistManageService.RemoveSongFromPlaylistAsync(playlist, song);
-                await ServerResponse.SendToClientNoValueAsync(stream);
+                ResponseObj = await ServerResponse.PrepareTransferObjectNoValueAsync();
             }
             catch (Exception e)
             {
-                await ServerResponse.SendExceptionToClientAsync(stream, e);
+                ResponseObj = await ServerResponse.SendExceptionToClientAsync(e);
 
             }
             

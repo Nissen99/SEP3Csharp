@@ -16,6 +16,7 @@ namespace SocketsT1_T2.Tier2.Commands
         private IUserService userService;
         private NetworkStream stream;
         private TransferObj requestObj;
+        public TransferObj ResponseObj { get; private set; }
 
         public ValidateUserCommand(NetworkStream stream, TransferObj requestObj)
         {
@@ -30,11 +31,11 @@ namespace SocketsT1_T2.Tier2.Commands
             {
                 User user = JsonElementConverter.ElementToObject<User>(requestObj.Arg);
                 User toReturn = await userService.ValidateUser(user);
-                await ServerResponse.SendToClientWithValueAsync(stream, toReturn);
+                ResponseObj = await ServerResponse.PrepareTransferObjectWithValueAsync(toReturn);
             }
             catch (Exception e)
             {
-                await ServerResponse.SendExceptionToClientAsync(stream, e);
+                ResponseObj = await ServerResponse.SendExceptionToClientAsync(e);
 
             }
             

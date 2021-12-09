@@ -1,12 +1,14 @@
 
 using System.Threading.Tasks;
+using SocketsT1_T2.Shared;
 
 
 namespace SocketsT1_T2.Tier2.Commands
 {
     public interface ICommand
     {
+        TransferObj ResponseObj { get; }
         Task Execute();
-        //Task Execute(NetworkStream stream, string tObj);
+        
     }
 }
