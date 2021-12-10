@@ -1,6 +1,7 @@
 using Blazor.Authentication;
 using Blazor.Model.AlbumModel;
 using Blazor.Model.ArtistModel;
+using Blazor.Model.LibraryModel;
 using Blazor.Model.PlaylistManageModel;
 using Blazor.Model.PlaylistModel;
 using Blazor.Model.PlayModel;
@@ -51,7 +52,7 @@ namespace Blazor
             services.AddScoped<ISongSearchNetworkClient, SongSearchTcpClient>();
             services.AddScoped<IUserNetworkClient, UserTcpClient>();
 
-
+            services.AddScoped<ILibraryModel, LibraryModel>();
             services.AddScoped<IPlayModel, PlayModel>();
             services.AddScoped<CircuitHandler, CircuitHandlerService>();
             services.AddScoped<ISongSearchModel, SongSearchModel>();
