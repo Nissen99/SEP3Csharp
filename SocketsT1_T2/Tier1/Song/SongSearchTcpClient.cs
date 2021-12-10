@@ -12,7 +12,5 @@ namespace SocketsT1_T2.Tier1.Song
             await SendServerRequest("GETSONGSBYFILTER", filterOptions, client);
             return await ServerResponse<IList<Entities.Song>>(client, 500000);
         }
-
-
     }
 }

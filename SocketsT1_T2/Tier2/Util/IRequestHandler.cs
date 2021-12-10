@@ -7,6 +7,5 @@ namespace SocketsT1_T2.Tier2.Util
     public interface IRequestHandler
     {
         Task<TransferObj> ExecuteCommand();
-        ICommand GetCommand();
     }
 }

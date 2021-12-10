@@ -13,7 +13,6 @@ namespace Blazor.Util.Playstate
         public PlaybackState State
         {
             get { return PlaybackState.Paused; }
-            set { throw new NotImplementedException(); }
         }
         
         public PausedPost5(PlaystateContext playstateContext)
@@ -21,10 +20,10 @@ namespace Blazor.Util.Playstate
             this.playstateContext = playstateContext;
             waveOut = playstateContext.WaveOut;
             fileReader = playstateContext.FileReader;
-            Init();
+            init();
         }
 
-        private void Init()
+        private void init()
         {
             waveOut.Pause();
         }

@@ -1,24 +1,16 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Blazor.Model.PlayModel;
-using Entities;
 using NAudio.Wave;
 
 namespace Blazor.Util.Playstate
 {
     public class PlayingSub5 : IPlaystate
     {
-        
         private IWavePlayer waveOut;
         private Mp3FileReader fileReader;
-        
         public PlaybackState State
         {
             get { return PlaybackState.Playing; }
-            set { throw new NotImplementedException(); }
         }
         private PlaystateContext playstateContext;
         public PlayingSub5(PlaystateContext playstateContext)
@@ -26,19 +18,18 @@ namespace Blazor.Util.Playstate
             this.playstateContext = playstateContext;
             waveOut = playstateContext.WaveOut;
             fileReader = playstateContext.FileReader;
-            Init();
+            init();
             Task.Factory.StartNew(elapsedTime);
         }
 
-        private async Task Init()
+        private async Task init()
         {
             if(waveOut != null) waveOut.Dispose();
             waveOut.Init(fileReader);
             waveOut.Play();
-
         }
 
-        private async Task elapsedTime()
+        private void elapsedTime()
         {
             double time;
             do

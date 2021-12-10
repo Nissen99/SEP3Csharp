@@ -16,14 +16,12 @@ namespace SocketsT1_T2.Tier2
             listener.Start();
             Console.WriteLine("SERVER STARED");
             
-            
             while (true)
             {
                 TcpClient client = listener.AcceptTcpClient();
                 IClientHandler clientHandler = new ClientHandler(client);
                 new Thread(clientHandler.ListenToClientAsync).Start();
             }
-            
         }
 
     }

@@ -11,7 +11,6 @@ namespace SocketsT1_T2.Tier1.Playlist
             object[] toSent = {playlist, song};
             await SendServerRequest("ADDSONGTOPLAYLIST", toSent, client);
             await ServerResponseCheckForException(client, 100000);
-
         }
 
         public async Task RemoveSongFromPlaylistAsync(Entities.Playlist playlist, Entities.Song song)

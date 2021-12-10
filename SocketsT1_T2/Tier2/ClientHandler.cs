@@ -11,8 +11,6 @@ namespace SocketsT1_T2.Tier2
     public class ClientHandler : IClientHandler
     {
         private TcpClient client;
-        private TransferObj requestObject;
-
         public ClientHandler(TcpClient client)
         {
             this.client = client;
@@ -21,13 +19,12 @@ namespace SocketsT1_T2.Tier2
         public async void ListenToClientAsync()
         {
             Console.WriteLine("LISTEN");
-            requestObject = await GetRequestObjAsync();
+            TransferObj requestObject = await GetRequestObjAsync();
             IRequestHandler rHandler = new RequestHandler(requestObject);
             TransferObj responseObj = await rHandler.ExecuteCommand();
             await SendTransferObjectToClient(client.GetStream(), responseObj);
             client.Dispose();
         }
-        
         private async Task<TransferObj> GetRequestObjAsync()
         {
             byte[] dataFromServer = new byte[30000000];

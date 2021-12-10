@@ -9,8 +9,7 @@ namespace RestT2_T3
     public class HttpClientBase
     {
         protected readonly string Uri = "http://localhost:8080/";
-
-    
+        
         protected async Task<T> HandleResponseGet<T>(HttpResponseMessage responseMessage)
         {
             CheckForBadStatusCode(responseMessage);
@@ -20,6 +19,14 @@ namespace RestT2_T3
             T inFromServer = JsonSerializer.Deserialize<T>(inFromServerJson,
                 new JsonSerializerOptions() {PropertyNameCaseInsensitive = true});
             return inFromServer;
+        }
+        protected StringContent FromObjectToStringContentCamelCase<T>(T toStringContent)
+        {
+            string toJson = JsonSerializer.Serialize(toStringContent,
+                new JsonSerializerOptions() {PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
+            
+
+            return new StringContent(toJson, Encoding.UTF8, "application/json");
         }
 
         public void CheckForBadStatusCode(HttpResponseMessage responseMessage)
@@ -43,13 +50,6 @@ namespace RestT2_T3
             }
         }
 
-        protected StringContent FromObjectToStringContentCamelCase<T>(T toStringContent)
-        {
-            string toJson = JsonSerializer.Serialize(toStringContent,
-                new JsonSerializerOptions() {PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
-            
-
-            return new StringContent(toJson, Encoding.UTF8, "application/json");
-        }
+        
     }
     }

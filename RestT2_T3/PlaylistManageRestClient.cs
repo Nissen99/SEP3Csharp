@@ -8,8 +8,6 @@ namespace RestT2_T3
 {
     public class PlaylistManageRestClient : HttpClientBase, IPlaylistMangeNetworking
     {
-        
-        
         public async Task AddSongToPlaylistAsync(Playlist playlist, Song song)
         {
             using HttpClient client = new HttpClient();
