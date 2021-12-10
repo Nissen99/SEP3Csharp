@@ -45,15 +45,7 @@ namespace SocketsT1_T2.Tier1
             checkAndHandleException(objectFromServer);
         }
 
-        private void checkAndHandleException(TransferObj objectFromServer)
-        {
-            if (objectFromServer.Action.Equals("Exception"))
-            {
-                Error error = JsonSerializer.Deserialize<Error>(objectFromServer.Arg);
-                Console.WriteLine($"{error.TimeStamp} \n {error.StackTrace}");
-                throw new Exception($"{error.Message}");
-            }
-        }
+     
 
 
         protected async Task<T> ServerResponse<T>(TcpClient client, int bufferSize)
@@ -83,7 +75,15 @@ namespace SocketsT1_T2.Tier1
             return returnFromServer;
         }
 
-        
+        private void checkAndHandleException(TransferObj objectFromServer)
+        {
+            if (objectFromServer.Action.Equals("Exception"))
+            {
+                Error error = JsonSerializer.Deserialize<Error>(objectFromServer.Arg);
+                Console.WriteLine($"{error.TimeStamp} \n {error.StackTrace}");
+                throw new Exception($"{error.Message}");
+            }
+        }
         
         
         protected TcpClient GetTcpClient()

@@ -10,7 +10,6 @@ namespace RestT2_T3
     public class AlbumRestClient : HttpClientBase, IAlbumNetworking
     {
         
-        public AlbumRestClient(){}
         
         public async Task<IList<Album>> SearchForAlbums(string title)
         {
