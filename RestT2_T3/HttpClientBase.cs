@@ -43,11 +43,7 @@ namespace RestT2_T3
 
         protected void HandleResponseNoReturn(HttpResponseMessage responseMessage)
         {
-            Console.WriteLine($"Handle Response print out: \n {responseMessage}");
-            if (!responseMessage.IsSuccessStatusCode)
-            {
-                throw new Exception($@"Error: {responseMessage.StatusCode}, {responseMessage.ReasonPhrase}");
-            }
+            CheckForBadStatusCode(responseMessage);
         }
 
         

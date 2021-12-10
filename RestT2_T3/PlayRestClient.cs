@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net.Http;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text.Json;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using Domain.Play;
 using Entities;
-using RestT2_T3.Util;
 
 namespace RestT2_T3
 {
@@ -18,7 +11,7 @@ namespace RestT2_T3
         {
             using HttpClient client = new HttpClient();
             
-            HttpResponseMessage responseMessage = await client.GetAsync(Uri + $"mp3?songPath={song.Mp3}");
+            HttpResponseMessage responseMessage = await client.GetAsync(Uri + $"mp3?songId={song.Id}");
 
             CheckForBadStatusCode(responseMessage);
             

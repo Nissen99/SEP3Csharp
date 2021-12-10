@@ -8,6 +8,6 @@ namespace Domain.SongManage
     {
         Task<Song> AddNewSongAsync(Song newSong);
         Task RemoveSongAsync(Song songToRemove);
-        Task UploadMp3(Mp3 mp3);
+        Task UploadMp3(Song newSongWithCorrectId, Mp3 mp3);
     }
 }

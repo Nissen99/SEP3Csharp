@@ -16,7 +16,6 @@ namespace RestT2_T3
         {
             using HttpClient httpClient = new HttpClient();
             
-
             StringContent newSongAsStringContent = FromObjectToStringContentCamelCase(newSong);
 
             HttpResponseMessage responseMessage = await httpClient.PostAsync(Uri + "/song", newSongAsStringContent);
@@ -24,10 +23,11 @@ namespace RestT2_T3
             HandleResponseNoReturn(responseMessage);
             Uri uri = responseMessage.Headers.Location;
 
+           //Uri uri = await HandleResponseGet<Uri>(responseMessage);
+            
             HttpResponseMessage songResponseMessage = await httpClient.GetAsync(uri);
 
             return await HandleResponseGet<Song>(songResponseMessage);
-
         }
 
         public async Task RemoveSongAsync(Song songToRemove)
@@ -40,11 +40,11 @@ namespace RestT2_T3
 
         }
 
-        public async Task UploadMp3(Mp3 mp3)
+        public async Task UploadMp3(Song newSongWithCorrectId, Mp3 mp3)
         {
             using HttpClient httpClient = new HttpClient();
             StringContent content = FromObjectToStringContentCamelCase(mp3);
-            HttpResponseMessage responseMessage = await httpClient.PostAsync(Uri + "/mp3", content);
+            HttpResponseMessage responseMessage = await httpClient.PostAsync(Uri + $"/mp3/{newSongWithCorrectId.Id}", content);
             HandleResponseNoReturn(responseMessage);
         }
         

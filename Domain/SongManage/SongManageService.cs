@@ -5,7 +5,6 @@ using Domain.Library;
 using Domain.Util;
 using Entities;
 using NAudio.Wave;
-using File = TagLib.File;
 
 namespace Domain.SongManage
 {
@@ -31,10 +30,9 @@ namespace Domain.SongManage
             int duration = (int) fileReader.TotalTime.TotalSeconds;
             newSong.Duration = duration;
             
-            Song newSongWithCorrectPath = await songManageNetworking.AddNewSongAsync(newSong);
+            Song newSongWithCorrectId = await songManageNetworking.AddNewSongAsync(newSong);
             
-            mp3.path = newSongWithCorrectPath.Mp3;
-            await songManageNetworking.UploadMp3(mp3);
+            await songManageNetworking.UploadMp3(newSongWithCorrectId, mp3);
         }
         
 
