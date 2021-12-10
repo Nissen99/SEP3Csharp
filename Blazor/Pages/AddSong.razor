@@ -2,7 +2,7 @@
 @using Entities
 @using Microsoft.AspNetCore.Components
 @inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment env
-
+@attribute [Authorize(Policy = "MustBeAdmin")]
 
 <h3>AddSong</h3>
 

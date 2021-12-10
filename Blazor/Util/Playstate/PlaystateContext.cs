@@ -13,20 +13,19 @@ namespace Blazor.Util.Playstate
 {
     public class PlaystateContext : IPlaystateContext
     {
-        
+        private MemoryStream ms;
+        private IPlayNetworkClient client;
         public IPlaystate CurrentState { get; set; }
+        public Action UpdatePlayState { get; set; }
+        public Action ProgressBarUpdate { get; set; }
+        public Mp3FileReader FileReader { get; private set; }
+        public IWavePlayer WaveOut { get; set; }
+        
+        
         public bool IsPlaying
         {
             get { return CurrentState.State == PlaybackState.Playing; }
         }
-        public Action UpdatePlayState { get; set; }
-        public Action ProgressBarUpdate { get; set; }
-        public Mp3FileReader FileReader { get; private set; } 
-        public IWavePlayer WaveOut { get; set; }
-        
-        
-        private MemoryStream ms;
-        private IPlayNetworkClient client;
         
         public PlaystateContext(IPlayNetworkClient client)
         {
@@ -34,7 +33,7 @@ namespace Blazor.Util.Playstate
             WaveOut.Volume = 0.3f;
             this.client = client;
         }
-        
+
         public void StopPlaying()
         {
             if (WaveOut != null && FileReader != null)
@@ -44,7 +43,7 @@ namespace Blazor.Util.Playstate
                 FileReader.Dispose();
             }
         }
-        
+
         public async Task<double> UpdateProgressBar()
         {
             return FileReader.CurrentTime.TotalSeconds;
@@ -77,8 +76,6 @@ namespace Blazor.Util.Playstate
                 }
             });
             t1.Start();
-            
-
         }
 
         public async Task PlayFromAsync(int sec)
@@ -92,6 +89,7 @@ namespace Blazor.Util.Playstate
             {
                 CurrentState = new PlayingPost5(this);
             }
+
             UpdatePlayState.Invoke();
         }
 
