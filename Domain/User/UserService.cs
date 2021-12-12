@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Domain.Util;
 
 namespace Domain.User
 {
     public class UserService : IUserService
     {
         private IUserNetworking userNetworking;
+
         public UserService(IUserNetworking userNetworking)
         {
             this.userNetworking = userNetworking;
@@ -13,32 +15,22 @@ namespace Domain.User
 
         public async Task RegisterUser(Entities.User user)
         {
-            ValidateInput(user);
+            if (!InputValidator.ValidateUserInput(user))
+            {
+                throw new ArgumentException("Some property not found");
+            }
+
             await userNetworking.RegisterUser(user);
         }
 
         public async Task<Entities.User> ValidateUser(Entities.User user)
         {
-            Entities.User toReturn;
-            ValidateInput(user);
-            try
+            if (!InputValidator.ValidateUserInput(user))
             {
-                toReturn = await userNetworking.ValidateUser(user);
-
+                throw new ArgumentException("Some property not found");
             }
-            catch (Exception e)
-            {
-                throw;
-            }
-            return toReturn;
+
+            return await userNetworking.ValidateUser(user);
         }
-
-        private void ValidateInput(Entities.User user)
-        {
-            if (string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.Password))
-                throw new ArgumentException("Field is missing");
-        }
-
-
     }
 }

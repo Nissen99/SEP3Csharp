@@ -11,23 +11,22 @@ namespace SocketsT1_T2.Tier2
     public class ClientHandler : IClientHandler
     {
         private TcpClient client;
-        private TransferObj requestObject;
 
         public ClientHandler(TcpClient client)
         {
             this.client = client;
         }
-        
+
         public async void ListenToClientAsync()
         {
             Console.WriteLine("LISTEN");
-            requestObject = await GetRequestObjAsync();
+            TransferObj requestObject = await GetRequestObjAsync();
             IRequestHandler rHandler = new RequestHandler(requestObject);
             TransferObj responseObj = await rHandler.ExecuteCommand();
             await SendTransferObjectToClient(client.GetStream(), responseObj);
             client.Dispose();
         }
-        
+
         private async Task<TransferObj> GetRequestObjAsync()
         {
             byte[] dataFromServer = new byte[30000000];
@@ -40,13 +39,12 @@ namespace SocketsT1_T2.Tier2
                 });
             return transferObj;
         }
-        
+
         private async Task SendTransferObjectToClient(NetworkStream stream, TransferObj transferObj)
         {
             string transferAsJson = JsonSerializer.Serialize(transferObj);
             byte[] toServer = Encoding.UTF8.GetBytes(transferAsJson);
             await stream.WriteAsync(toServer, 0, toServer.Length);
         }
-        
     }
 }
