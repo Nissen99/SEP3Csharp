@@ -11,12 +11,10 @@ namespace Domain.SongManage
     public class SongManageService : ISongManageService
     {
         private ISongManageNetworking songManageNetworking;
-        private ILibraryNetworking libraryNetworking;
 
-        public SongManageService(ISongManageNetworking songManageNetworking, ILibraryNetworking libraryNetworking)
+        public SongManageService(ISongManageNetworking songManageNetworking)
         {
             this.songManageNetworking = songManageNetworking;
-            this.libraryNetworking = libraryNetworking;
         }
 
         //TODO Input checks

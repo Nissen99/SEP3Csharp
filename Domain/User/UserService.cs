@@ -15,9 +15,9 @@ namespace Domain.User
 
         public async Task RegisterUser(Entities.User user)
         {
-            if (!InputValidator.ValidateUserInput(user))
+            if (!InputValidator.ValidateUser(user))
             {
-                throw new ArgumentException("Some property not found");
+                throw new ArgumentException("User not Valid, something missing");
             }
 
             await userNetworking.RegisterUser(user);
@@ -25,7 +25,7 @@ namespace Domain.User
 
         public async Task<Entities.User> ValidateUser(Entities.User user)
         {
-            if (!InputValidator.ValidateUserInput(user))
+            if (!InputValidator.ValidateUser(user))
             {
                 throw new ArgumentException("Some property not found");
             }

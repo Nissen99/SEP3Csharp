@@ -13,10 +13,7 @@ namespace Blazor.Pages
         
         [CascadingParameter] public BlazoredModalInstance BlazoredModal { get; set; }
 
-    
-        [Parameter]
-        public Song Song { get; set; }
-
+        
         private string artistName = "";
         private string searchName = "";
         private string displayToUser = "Search for Artist";

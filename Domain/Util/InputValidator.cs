@@ -32,7 +32,7 @@ namespace Domain.Util
             return true;
         }
         
-        public static bool ValidateUserInput(Entities.User user)
+        public static bool ValidateUser(Entities.User user)
         {
             if (string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.Password))
             {
