@@ -33,7 +33,7 @@ else
                 <td>
 
                     <AuthorizeView Policy="MustBeLoggedIn">
-                        <i class="mr-4 oi oi-plus" @onclick="() => AddSongToPlaylist(song)"/>
+                        <button class="mr-4 oi oi-plus btn-outline-dark" @onclick="() => AddSongToPlaylist(song)"/>
                     </AuthorizeView>
 
 
@@ -41,16 +41,16 @@ else
                     {
                         if (IsPlaying())
                         {
-                            <i class="oi oi-media-pause" @onclick="() => TogglePlay()"/>
+                            <button class="oi oi-media-pause btn-outline-dark" @onclick="() => TogglePlay()"/>
                         }
                         else
                         {
-                            <i class="oi oi-media-play" @onclick="() => TogglePlay()"/>
+                            <button class="oi oi-media-play btn-outline-dark" @onclick="() => TogglePlay()"/>
                         }
                     }
                     else
                     {
-                        <i class="oi oi-media-play" @onclick="() => PlaySong(song)"/>
+                        <button class="oi oi-media-play btn-outline-dark" @onclick="() => PlaySong(song)"/>
                     }
 
                 </td>
@@ -61,12 +61,13 @@ else
                 <td>@generateArtists(song)</td>
                 <td>@song.ReleaseYear</td>
                 <td>
-                    <button @onclick="@(() => remove(song))">
+                    <button class="btn btn-outline-dark" @onclick="@(() => remove(song))">
                         <i class="oi oi-trash" style="color:red"/>
                     </button>
                 </td>
             </tr>
         }
         </tbody>
-    </table>
+    </table> </div>
+
 }

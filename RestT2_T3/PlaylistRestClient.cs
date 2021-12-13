@@ -45,11 +45,11 @@ namespace RestT2_T3
 
         public async Task RemovePlaylistAsync(Playlist playlist)
         {
-            using HttpClient httpClient = new HttpClient();
+            using HttpClient client = new HttpClient();
 
-            HttpResponseMessage responseMessage = await httpClient.DeleteAsync(Uri + $"/playlist/{playlist.Id}");
+            HttpResponseMessage responseMessage = await client.DeleteAsync(Uri + $"/playlist/{playlist.Id}");
             
             HandleResponseNoReturn(responseMessage);
         }
     }
-}
+    }
