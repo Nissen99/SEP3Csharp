@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -12,14 +13,10 @@ namespace RestT2_T3
 
     
         protected async Task<T> HandleResponseGet<T>(HttpResponseMessage responseMessage)
-        {
+        { 
             CheckForBadStatusCode(responseMessage);
             
-            string inFromServerJson = await responseMessage.Content.ReadAsStringAsync();
-
-            T inFromServer = JsonSerializer.Deserialize<T>(inFromServerJson,
-                new JsonSerializerOptions() {PropertyNameCaseInsensitive = true});
-            return inFromServer;
+            return await responseMessage.Content.ReadFromJsonAsync<T>();
         }
 
         public void CheckForBadStatusCode(HttpResponseMessage responseMessage)
