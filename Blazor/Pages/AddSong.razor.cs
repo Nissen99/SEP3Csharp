@@ -21,6 +21,7 @@ namespace Blazor.Pages
         private int defaultYear = @DateTime.Now.Year;
 
 
+     
         private async void LoadFile(InputFileChangeEventArgs e)
         {
             if (!e.File.Name.EndsWith(".mp3"))
@@ -34,14 +35,13 @@ namespace Blazor.Pages
 
             await e.File.OpenReadStream(80000000).CopyToAsync(ms);
             newMp3.Data = ms.ToArray();
-
         }
 
         private async Task AddNewSong()
         {
             newSong.ReleaseYear = defaultYear;
 
-            if (string.IsNullOrEmpty(newSong.Title) || newSong.Album == null || newSong.Artists.Count == 0)
+            if (string.IsNullOrEmpty(newSong.Title) || newSong.Album == null || newSong.Artists.Count == 0 || newMp3.Data.Length == 0)
             {
                 ModalService.Show<Popup>("Something not sat, please make sure everything is sat");
                 newMp3.Data = Array.Empty<byte>();
@@ -57,11 +57,9 @@ namespace Blazor.Pages
 
         private async Task AddArtist()
         {
-            ModalParameters parameters = new ModalParameters();
-            parameters.Add("Song", newSong);
-            var form = ModalService.Show<NewOrExistingArtist>("Make new artist or choose existing", parameters);
+            var form = ModalService.Show<NewOrExistingArtist>("Make new artist or choose existing");
             var result = await form.Result;
-
+            
             if (!result.Cancelled)
             {
                 Artist justCreated = (Artist) result.Data;
@@ -78,9 +76,8 @@ namespace Blazor.Pages
 
         private async Task AddAlbum()
         {
-            ModalParameters parameters = new ModalParameters();
-            parameters.Add("Song", newSong);
-            var form = ModalService.Show<NewOrExistingAlbum>("Make new album or choose existing", parameters);
+
+            var form = ModalService.Show<NewOrExistingAlbum>("Make new album or choose existing");
             var result = await form.Result;
 
             if (!result.Cancelled)
