@@ -32,6 +32,8 @@ namespace Blazor.Util.Playstate
 
         private async Task Init()
         {
+            fileReader.CurrentTime = TimeSpan.Zero;
+
             if(waveOut != null) waveOut.Dispose();
             waveOut.Init(fileReader);
             waveOut.Play();
