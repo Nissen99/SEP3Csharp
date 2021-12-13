@@ -23,17 +23,25 @@ namespace Blazor.Pages
 
         private async void LoadFile(InputFileChangeEventArgs e)
         {
-            if (!e.File.Name.EndsWith(".mp3"))
+            try
             {
-                resetMp3();
-                ModalService.Show<Popup>("Not right File type, please select an mp3");
-                return;
+                if (!e.File.Name.EndsWith(".mp3"))
+                {
+                    resetMp3();
+                    ModalService.Show<Popup>("Not right File type, please select an mp3");
+                    return;
+                }
+
+                using MemoryStream ms = new MemoryStream(80000000);
+
+                await e.File.OpenReadStream(80000000).CopyToAsync(ms);
+                newMp3.Data = ms.ToArray();
             }
-
-            using MemoryStream ms = new MemoryStream(80000000);
-
-            await e.File.OpenReadStream(80000000).CopyToAsync(ms);
-            newMp3.Data = ms.ToArray();
+            catch  (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
+                throw;
+            }
 
         }
 

@@ -22,3 +22,5 @@ function getVolume(e) {
     return Math.floor(value_clicked);
 }
 
+
+
