@@ -3,19 +3,17 @@
 <h3>Search</h3>
 
 
-<EditForm Model="@LibraryModel">
-    <InputSelect @bind-Value="filterOption">
-        <option>Title</option>
-        <option>Artist</option>
-        <option>Album</option>
-    </InputSelect>
-    <InputText @bind-Value="searchField"/>
-    <button @onclick="Filter">Search</button>
-</EditForm>
+<div >
+    <EditForm Model="@LibraryModel">
+        <InputSelect @bind-Value="filterOption">
+            <option>Title</option>
+            <option>Artist</option>
+            <option>Album</option>
+        </InputSelect>
+        <InputText @bind-Value="searchField"/>
+        <button class="btn btn-outline-dark" @onclick="Filter">Search</button>
+    </EditForm>
+</div>
 
 
 <SongTable SongList="songsToShow"/>
-
-
-
-

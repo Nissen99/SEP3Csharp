@@ -45,7 +45,7 @@ namespace Factory
 
         public static ISongManageService GetSongManageService()
         {
-            return new SongManageService(NetworkingFactory.GetSongManageNetworking(), NetworkingFactory.GetLibraryNetworking());
+            return new SongManageService(NetworkingFactory.GetSongManageNetworking());
         }
 
         public static ISongSearchService GetSongSearchService()

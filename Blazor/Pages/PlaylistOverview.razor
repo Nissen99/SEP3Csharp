@@ -10,7 +10,7 @@
 <td>
  
     
-    <button @onclick="() => PerformCreatePlaylist()"> <i class="oi oi-plus" style="color:blue"/>
+    <button class="btn btn-outline-dark" @onclick="() => PerformCreatePlaylist()"> <i class="oi oi-plus" style="color:blue"/>
       Create New Playlist  </button>
 </td>
 
@@ -25,7 +25,7 @@ else if (!Playlists.Any())
 }
 else
 {
-    <table class="table">
+    <div class="table-responsive" style="margin-bottom: 150px">  <table class="table">
         <thead>
 
         <tr>
@@ -39,11 +39,11 @@ else
             <tr>
                 <td>
 
-                    <button @onclick="@(() => LoadPlaylist(playlist))">
+                    <button class="btn btn-outline-dark" @onclick="@(() => LoadPlaylist(playlist))">
                         <i class="oi oi-media-play" style="color:blue"/>
                     </button> @playlist.Title
                 </td>
-                <button @onclick="() => RemovePlaylist(playlist)"> <i class="oi oi-trash" style="color:blue"/>
+                <button class="btn btn-outline-dark" @onclick="() => RemovePlaylist(playlist)"> <i class="oi oi-trash" style="color:blue"/>
                     Remove Playlist </button>
                 <td>
 
@@ -52,7 +52,7 @@ else
         }
         </tbody>
     </table>
-
+    </div>
 
 
 @code {

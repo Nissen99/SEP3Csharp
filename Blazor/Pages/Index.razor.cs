@@ -50,20 +50,29 @@ namespace Blazor.Pages
             }
             catch (Exception e)
             {
+                ModalService.Show<Popup>(e.Message);
             }
         }
         
         private async void registerPopup()
         {
-            var form = ModalService.Show<Register>();
-            var result = await form.Result;
-            if (!result.Cancelled)
+            try
             {
-                User justCreated = (User) result.Data;
-                await UserModel.RegisterUser(justCreated);
+                var form = ModalService.Show<Register>();
+                var result = await form.Result;
+                if (!result.Cancelled)
+                {
+                    User justCreated = (User) result.Data;
+                    await UserModel.RegisterUser(justCreated);
                 
-                StateHasChanged(); 
+                    StateHasChanged(); 
+                }
             }
+            catch (Exception e)
+            {
+                ModalService.Show<Popup>(e.Message);
+            }
+         
 
         }
     }

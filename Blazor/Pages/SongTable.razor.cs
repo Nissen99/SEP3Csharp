@@ -153,11 +153,11 @@ namespace Blazor.Pages
             }
         }
 
-        private async Task PerformAddToPlaylist(Song song)
+        private async Task AddSongToPlaylist(Song song)
         {
             try
             { 
-                var form = ModalService.Show<AddToPlaylist>("Choose a playlist to add this song to");
+                var form = ModalService.Show<AddToPlaylist>($"Choose a playlist to add \"{song.Title}\" to");
                 var result = await form.Result;
                 if (!result.Cancelled)
                 {
@@ -165,13 +165,11 @@ namespace Blazor.Pages
                     await PlaylistManageModel.AddSongToPlaylist(playlist, song);
                     Console.WriteLine($"Added {song.Title} to playlist: {playlist.Title}");
                 }
-
             }
             catch (Exception e)
             {
                 ModalService.Show<Popup>(e.Message);
             }
-           
         }
     }
 }

@@ -25,6 +25,7 @@ namespace SocketsT1_T2.Tier2
             await SendTransferObjectToClient(client.GetStream(), responseObj);
             client.Dispose();
         }
+
         private async Task<TransferObj> GetRequestObjAsync()
         {
             byte[] dataFromServer = new byte[30000000];

@@ -11,12 +11,10 @@ namespace Domain.SongManage
     public class SongManageService : ISongManageService
     {
         private ISongManageNetworking songManageNetworking;
-        private ILibraryNetworking libraryNetworking;
 
-        public SongManageService(ISongManageNetworking songManageNetworking, ILibraryNetworking libraryNetworking)
+        public SongManageService(ISongManageNetworking songManageNetworking)
         {
             this.songManageNetworking = songManageNetworking;
-            this.libraryNetworking = libraryNetworking;
         }
 
         //TODO Input checks
@@ -25,7 +23,10 @@ namespace Domain.SongManage
             if (!InputValidator.CheckSongValidWithoutMp3(newSong)) throw new ArgumentException("Some Property not found");
             
             using MemoryStream ms = new MemoryStream(mp3.Data);
+           
             using Mp3FileReader fileReader = new Mp3FileReader(ms);
+
+            Console.WriteLine("længe af mp3 " + mp3.Data.Length);
 
             int duration = (int) fileReader.TotalTime.TotalSeconds;
             newSong.Duration = duration;

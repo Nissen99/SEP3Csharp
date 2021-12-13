@@ -2,6 +2,7 @@
 @using Entities
 @using Microsoft.AspNetCore.Components
 @inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment env
+@attribute [Authorize(Policy = "MustBeAdmin")]
 
 
 <h3>AddSong</h3>
@@ -9,94 +10,102 @@
 
 <!-- Could not use "OnValidSubmit" as remove button triggered submit
 Could fix later but now the method call on "Create" button-->
-<EditForm Model="@newSong">
-    <DataAnnotationsValidator/>
-    <ValidationSummary/>
+<div  class="table-responsive" style="max-width:100%;height:auto; margin-bottom: 150px;">
+<div >
+    <EditForm  Model="@newSong" >
+        <DataAnnotationsValidator/>
+        <ValidationSummary/>
 
-    <div class="form-group">
-        Title:<br/>
-        <InputText @bind-Value="newSong.Title" required/>
-    </div>
-    <div class="form-group">
-        Release year:<br/>
-        <InputNumber @bind-Value="defaultYear" required/>
-    </div>
-    <div class="form-group">
-        Artist
-        <button class="btn" @onclick="AddArtist">
-            <i  class="oi oi-plus"/>
-        </button>
+        <div class="form-group">
+            Title:<br/>
+            <InputText @bind-Value="newSong.Title" required/>
+        </div>
+        <div class="form-group">
+            Release year:<br/>
+            <InputNumber @bind-Value="defaultYear" required/>
+        </div>
+        <div class="form-group">
+            Artist
+            <button class="btn" @onclick="AddArtist">
+                <i  class="oi oi-plus"/>
+            </button>
 
-        @if (newSong.Artists == null || newSong.Artists.Count == 0)
-        {
-            <p>
-                Not Artists Added Yet.
-            </p>
-        }
-        else
-        {
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach (Artist artist in newSong.Artists)
-                {
+            @if (newSong.Artists == null || newSong.Artists.Count == 0)
+            {
+                <p>
+                    Not Artists Added Yet.
+                </p>
+            }
+            else
+            {
+                <table class="table">
+                    <thead>
                     <tr>
-                        <td>@if (artist.Id != 0)
-                            {
-                                <p>@artist.Id</p>
-                            }
-                            else
-                            {
-                                <p>NaN</p>
-                            }
-                        </td>
-                        <td>@artist.Name</td>
-                        <td>
-
-                            <button @onclick="@(() => removeArtist(artist))">
-                                <i class="oi oi-trash" style="color:red"/>
-                            </button>
-                        </td>
+                        <th>Id</th>
+                        <th>Name</th>
                     </tr>
-                }
-                </tbody>
-            </table>
-        }
-    </div>
-    <br/>
-    <div class="form-group">
-        Album
-        <button class="btn" @onclick="AddAlbum">
-                    <i class="oi oi-plus"/>
-                </button>
+                    </thead>
+                    <tbody>
+                    @foreach (Artist artist in newSong.Artists)
+                    {
+                        <tr>
+                            <td>@if (artist.Id != 0)
+                                {
+                                    <p>@artist.Id</p>
+                                }
+                                else
+                                {
+                                    <p>NaN</p>
+                                }
+                            </td>
+                            <td>@artist.Name</td>
+                            <td>
+
+                                <button @onclick="@(() => removeArtist(artist))">
+                                    <i class="oi oi-trash" style="color:red"/>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            }
+        </div>
         <br/>
-        @if (newSong.Album != null)
-        {
-            <p>Album Title: @newSong.Album.Title</p>
-        }
-        else
-        {
-            <p>               
-                Not Album Added Yet.
-            </p>
+        <div class="form-group">
+            Album
+            <button class="btn" @onclick="AddAlbum">
+                <i class="oi oi-plus"/>
+            </button>
+            <br/>
+            @if (newSong.Album != null)
+            {
+                <p>Album Title: @newSong.Album.Title</p>
+            }
+            else
+            {
+                <p>               
+                    Not Album Added Yet.
+                </p>
             
-        }
-    </div>
+            }
+        </div>
+        <div class="form-group">
+            Mp3:<br/>
+            <InputFile accept=".mp3" OnChange="@LoadFile" @onclick="() => resetMp3()" ></InputFile>
+        </div>
+        
 
-    <div class="form-group">
-        Mp3:<br/>
-        <InputFile accept=".mp3" OnChange="@LoadFile" @onclick="() => resetMp3()" ></InputFile>
-    </div>
+        <p class="actions">
+            <button class="btn btn-outline-dark" type="submit" @onclick="() => AddNewSong()">Create</button>
+        </p>
+    </EditForm>
+</div>
+</div>
 
-    <p class="actions">
-        <button class="btn btn-outline-dark" type="submit" @onclick="() => AddNewSong()">Create</button>
-    </p>
-</EditForm>
+
+
+
 
 @code {
 

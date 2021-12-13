@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using System;
+using Entities;
 
 namespace Domain.Util
 {
@@ -30,5 +31,17 @@ namespace Domain.Util
 
             return true;
         }
+        
+        public static bool ValidateUser(Entities.User user)
+        {
+            if (string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.Password))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        
     }
 }
