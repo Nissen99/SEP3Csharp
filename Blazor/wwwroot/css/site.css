@@ -70,6 +70,8 @@ a, .btn-link {
     <!-- -->
 
 
+
+
 button{
     border: none;
     border-radius: 15px;
@@ -78,7 +80,6 @@ button{
 
 button:hover{
     border: none;
-    padding: 15px;
     border-radius: 15px;
     box-shadow: inset 0 0 8px #f9f8fc;
 }
