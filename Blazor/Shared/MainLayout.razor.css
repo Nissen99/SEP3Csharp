@@ -98,18 +98,11 @@
     color: white;
     margin-left: 20px;
     border-radius: 35px;
-    /*background-image: url('https://p4.wallpaperbetter.com/wallpaper/13/558/355/digital-art-abstract-dark-hexagon-wallpaper-preview.jpg');*/
+    background-color: black;
     background-image: url("https://c.tenor.com/LTNCZ0gY7ccAAAAC/musica-ondas-sonoras.gif");
 
-    /*position: fixed;*/
-    /*bottom: 0;*/
-    /*left: 0;*/
-    /*width: 100%;*/
-    /*margin: 0;*/
-    /*box-shadow: 0 -2px 2px #dadada;*/
-    /*background-color: #fff;*/
-    /*transition: all ease 0.5s;*/
 }
+
 
 .progressBar {
     display: inline;
