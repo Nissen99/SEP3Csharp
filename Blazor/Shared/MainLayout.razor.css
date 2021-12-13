@@ -10,8 +10,9 @@
     /*max-height: 3rem;*/
     /*width: 100%;*/
     /*height: 50px;*/
-   
+
 }
+
 .main > .content {
     height: calc(100vh - 6.5rem);
     max-height: calc(100vh - 6.5rem);
@@ -65,14 +66,16 @@
     }
 
     .sidebar {
-        width: 200px;
+        width: 230px;
         height: 100vh;
         position: sticky;
         top: 0;
         max-height: 100vh;
         overflow-y: auto;
-        background-image: url('https://p4.wallpaperbetter.com/wallpaper/13/558/355/digital-art-abstract-dark-hexagon-wallpaper-preview.jpg')!important;
-
+        background-color: black;
+        background-image: url("https://i.pinimg.com/originals/c9/f0/75/c9f07594bbfd646da01c0ec50b040931.gif");
+        background-repeat: no-repeat;
+        background-position: center;
     }
 
     .top-row {
@@ -91,12 +94,12 @@
     position: absolute;
     bottom: 5px;
     width: 84%;
-    /*background-color: rgba(0,0,0,0.4);*/
     padding: 10px;
     color: white;
     margin-left: 20px;
     border-radius: 35px;
-    background-image: url('https://p4.wallpaperbetter.com/wallpaper/13/558/355/digital-art-abstract-dark-hexagon-wallpaper-preview.jpg');
+    /*background-image: url('https://p4.wallpaperbetter.com/wallpaper/13/558/355/digital-art-abstract-dark-hexagon-wallpaper-preview.jpg');*/
+    background-image: url("https://c.tenor.com/LTNCZ0gY7ccAAAAC/musica-ondas-sonoras.gif");
 
     /*position: fixed;*/
     /*bottom: 0;*/
