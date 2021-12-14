@@ -9,6 +9,12 @@ using RestT2_T3;
 using SocketsT1_T2.Shared;
 using SocketsT1_T2.Tier2.Util;
 
+/*
+ * Commando klasse. Den klasse styrer udpakningen af handlingen at 'tilføje en sang til en playliste'.
+ * Den de udpakkede objekter til sin receiver IPlaylistManageService.
+ */
+
+
 namespace SocketsT1_T2.Tier2.Commands
 {
     public class AddSongToPlaylistCommand : ICommand
