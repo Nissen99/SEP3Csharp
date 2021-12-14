@@ -5,6 +5,9 @@ using Blazor.Model.PlayModel;
 using Entities;
 using NAudio.Wave;
 
+/*
+ * Denne klasse er en af tilstandene for musikafspilleren.
+ */
 namespace Blazor.Util.Playstate
 {
     public class PlayingPost5 : IPlaystate

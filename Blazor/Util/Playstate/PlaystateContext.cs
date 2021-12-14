@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 using Blazor.Model.PlayModel;
 using Entities;
 using NAudio.Wave;
-using SocketsT1_T2.Tier1;
 using SocketsT1_T2.Tier1.Song;
 
+/*
+ * Denne klasse overtager ansvaret omkring kontrollering af selve afspilningen fra Playmodellen.
+ * Den holder styr på hvilket current state der er aktivt.
+ */
 namespace Blazor.Util.Playstate
 {
     public class PlaystateContext : IPlaystateContext

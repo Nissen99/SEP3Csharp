@@ -1,8 +1,9 @@
-using System;
 using System.Threading.Tasks;
-
 using NAudio.Wave;
 
+/*
+ * Denne klasse er en af tilstandene for musikafspilleren.
+ */
 namespace Blazor.Util.Playstate
 {
     public class PausedSub5 : IPlaystate
