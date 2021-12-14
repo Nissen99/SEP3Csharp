@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 using Entities;
 using SocketsT1_T2.Shared;
 
+
+/*
+ * Dette er en hjælpeklasse. Den bruges til at pakke objekter ned til en respons besked til klienten.
+ */
+
 namespace SocketsT1_T2.Tier2.Util
 {
     public class ServerResponse
