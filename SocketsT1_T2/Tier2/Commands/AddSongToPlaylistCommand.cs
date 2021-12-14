@@ -11,7 +11,7 @@ using SocketsT1_T2.Tier2.Util;
 
 /*
  * Commando klasse. Den klasse styrer udpakningen af handlingen at 'tilføje en sang til en playliste'.
- * Den de udpakkede objekter til sin receiver IPlaylistManageService.
+ * Den sender de udpakkede objekter til sin receiver IPlaylistManageService.
  */
 
 
