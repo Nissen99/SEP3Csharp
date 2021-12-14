@@ -12,8 +12,9 @@ using SocketsT1_T2.Tier2.Util;
 
 /*
  * Commando klasse. Den klasse styrer udpakningen af handlingen 'Get All Artists'.
- * Den sender de udpakkede objekter til sin receiver IArtistService.
+ * Denne handling har ingen objekter den sender videre til sin receiver IArtistService.
  */
+
 namespace SocketsT1_T2.Tier2.Commands
 {
     public class GetAllArtistsCommand : ICommand
