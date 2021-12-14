@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Domain.Util;
-
+/*
+ * Denne klasse håndterer User relaterede handlinger.
+ */
 namespace Domain.User
 {
     public class UserService : IUserService

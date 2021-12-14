@@ -3,6 +3,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Entities;
 
+/*
+ * Denne klasse står for håndtering af specifikke playlists. Heraf at tilføje til eller fjerne fra en playliste.
+ */
 namespace Domain.PlaylistManage
 {
     public class PlaylistManageService : IPlaylistManageService

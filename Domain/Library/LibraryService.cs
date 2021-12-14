@@ -2,6 +2,9 @@
 using System.Threading.Tasks;
 using Entities;
 
+/*
+ * Denne klasse står for håndering af at modtage musik biblioteket i systemet.
+ */
 namespace Domain.Library
 {
     public class LibraryService : ILibraryService

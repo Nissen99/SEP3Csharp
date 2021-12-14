@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-
+/*
+ * Denne klasse står for håndtering af Album information
+ */
 namespace Domain.Album
 {
     public class AlbumService : IAlbumService
