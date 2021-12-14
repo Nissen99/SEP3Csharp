@@ -6,6 +6,10 @@ using Blazored.Modal;
 using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
 
+/*
+ * Popup vindue, som viser alle brugerens playlister.
+ * Burgeren kan vælge en bestemt playliste som bliver returneret.
+ */
 namespace Blazor.Pages
 {
     public partial class AddToPlaylist : ComponentBase

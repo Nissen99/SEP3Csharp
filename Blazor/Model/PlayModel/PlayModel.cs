@@ -4,6 +4,12 @@ using Blazor.Util.Playstate;
 using Entities;
 using SocketsT1_T2.Tier1.Song;
 
+/*
+ * Klassen fungere står for at bestemme hvilken sang der skal spilles, men ikke hvordan det sker
+ * Dette sker ved at klassen gemmer previousSongs og har en liste af hvilke sange der skal spilles næste gang.
+ *
+ * Denne klasse giver informationen videre til Playstate context, der står for at få afsplningen af sangen til at ske 
+ */
 namespace Blazor.Model.PlayModel
 {
     public class PlayModel : IPlayModel

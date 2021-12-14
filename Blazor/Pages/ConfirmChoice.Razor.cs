@@ -3,6 +3,9 @@ using Blazored.Modal;
 using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
 
+/*
+ * popup Brugt til Confirmation, returnere true hvis Confrim og false ved cancel. 
+ */
 namespace Blazor.Pages
 {
     public partial class ConfirmChoice:ComponentBase   

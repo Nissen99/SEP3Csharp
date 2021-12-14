@@ -1,10 +1,14 @@
 ﻿using System.Threading.Tasks;
-using Blazor.Model;
 using Blazored.Modal;
 using Blazored.Modal.Services;
 using Entities;
 using Microsoft.AspNetCore.Components;
-
+/*
+ * Popup brugt til at oprette user
+ *
+ * Hvis brugeren vælger confirm bliver den nyporettet user returneret
+ * 
+ */
 namespace Blazor.Pages
 {
     public partial class Register : ComponentBase

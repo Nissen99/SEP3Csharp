@@ -10,7 +10,15 @@ using Blazor.Model.SongManagerModel;
 using Blazored.Modal.Services;
 using Entities;
 using Microsoft.AspNetCore.Components;
-
+/*
+ * Laver tabel over sange brugeren kan se og interagere med.
+ *
+ * Brugeren kan afspille sange.
+ * Slette sange fra playlister (Hvis der er givet en playliste)
+ * Slette sange fra musikbiblioteket (Hvis de er administrator)
+ *
+ * Tilføje sange til playlister (Hvis de er logget ind)
+ */
 namespace Blazor.Pages
 {
     public partial class SongTable : ComponentBase
@@ -28,11 +36,14 @@ namespace Blazor.Pages
 
         public Song CurrentSong;
 
+        
+        /**
+         * Her tjekkes det om en playliste bliver brugt. Hvis den gør det opdateres songList.
+         */
         protected async override Task OnInitializedAsync()
         {
             if (Playlist != null)
             {
-                Console.WriteLine("Vi bruger squ playlisten nu");
                 SongList = Playlist.Songs;
             }
             

@@ -2,12 +2,15 @@
 using System.IO;
 using System.Threading.Tasks;
 using Blazor.Model.SongManagerModel;
-using Blazored.Modal;
 using Blazored.Modal.Services;
 using Entities;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-
+/*
+ * Klassen står for at håndtere det input brugeren giver i vievet hvor der tilføjes sange.
+ *
+ * Der er brugt IModalService til håndtering af popup vinduer.
+ */
 namespace Blazor.Pages
 {
     public partial class AddSong : ComponentBase{

@@ -3,6 +3,11 @@ using Blazored.Modal;
 using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
 
+/*
+ * Popup brugt til at lave playlister, brugeren udfylder playliste title
+ * Hvis brugeren vælger Confirm returneres playlisten
+ * Hvis brugeren cancler returneres intet
+ */
 
 namespace Blazor.Pages
 {

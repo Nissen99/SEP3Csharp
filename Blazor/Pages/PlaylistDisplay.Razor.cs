@@ -2,7 +2,12 @@
 using Blazor.Model.PlaylistModel;
 using Entities;
 using Microsoft.AspNetCore.Components;
-
+/*
+ * Bruges til at fremvise en bestemt playliste brugeren ønsker at inspiserer.
+ *
+ * Playlisten der fremvises bliverbestemt gennem URI til siden.
+ * Her søges der efter playlisten med et kald til modellen
+ */
 namespace Blazor.Pages
 {
     public partial class PlaylistDisplay

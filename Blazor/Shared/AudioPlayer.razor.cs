@@ -7,13 +7,21 @@ using Entities;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
-
+/*
+ * Denne klasse er et komponent sat på main view.
+ *
+ * Her kan brugeren  se information omkring sangen, bl.a.
+ *  - Hvor langt inde i sangen man er
+ *  - Hvad lydstyrke der er
+ * Disse elementer kan brugeren også interagere med, hvor der er lavet JavaScript for at gøre dette
+ *
+ * Brugeren kan også pause/play og bede om næste/forrige sang
+ */
 namespace Blazor.Shared
 {
     public partial class AudioPlayer : ComponentBase
     {
         [Inject] public IPlayModel Play { get; set; }
-        [Inject] public IModalService ModalService { get; set; }
 
         public double progressValuePercentage { get; set; }
         public int pVP { get; set; }
