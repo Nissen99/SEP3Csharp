@@ -12,7 +12,7 @@ using SocketsT1_T2.Tier2.Util;
 
 /*
  * Commando klasse. Den klasse styrer udpakningen af handlingen 'SearchForAlbums'.
- * Den sender det udpakkede objekt til sin receiver IAlbumService og returnerer en Server Response.
+ * Den sender det udpakkede objekt til sin receiver IAlbumService og returnerer en respons.
  */
 
 
