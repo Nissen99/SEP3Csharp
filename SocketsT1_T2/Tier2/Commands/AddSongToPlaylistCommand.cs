@@ -10,9 +10,10 @@ using SocketsT1_T2.Shared;
 using SocketsT1_T2.Tier2.Util;
 
 /*
- * Commando klasse. Den klasse styrer udpakningen af handlingen at 'tilføje en sang til en playliste'.
- * Den sender de udpakkede objekter til sin receiver IPlaylistManageService.
+ * Commando klasse. Den klasse styrer udpakningen af handlingen 'Add Song To Playlist'.
+ * Den sender de udpakkede objekter til sin receiver IPlaylistManageService og returnerer en Server Response.
  */
+
 
 
 namespace SocketsT1_T2.Tier2.Commands
