@@ -12,7 +12,7 @@ using SocketsT1_T2.Tier2.Util;
 
 /*
  * Commando klasse. Den klasse styrer udpakningen af handlingen 'Remove Playlist'.
- * Den sender det udpakkede objekt til sin receiver IPlaylistService og returnerer et tomt TransferObj.
+ * Den sender det udpakkede objekt til sin receiver IPlaylistService og returnerer en respons.
  */
 
 namespace SocketsT1_T2.Tier2.Commands
