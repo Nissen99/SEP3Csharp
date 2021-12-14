@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using NAudio.Wave;
@@ -24,8 +25,6 @@ namespace Blazor.Util.Playstate
 
         private async Task init()
         {
-            fileReader.CurrentTime = TimeSpan.Zero;
-
             if(waveOut != null) waveOut.Dispose();
             waveOut.Init(fileReader);
             waveOut.Play();
