@@ -2,7 +2,9 @@
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using Entities;
-
+/*
+ * Klassen står for håndtering af sang biblioteket. Den extender TcpClientBase for at kunne benytte dens hjælpemetoder.
+ */
 namespace SocketsT1_T2.Tier1.Library
 {
     public class LibraryTcpClient : TcpClientBase, ILibraryNetworkClient

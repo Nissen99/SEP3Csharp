@@ -3,9 +3,11 @@ using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Entities;
 using SocketsT1_T2.Shared;
-
+/*
+ * Den klasse fungerer som en super klasse til samtlige TcpClient klasser.
+ * Den består af mange hjælpemetoder.
+ */
 namespace SocketsT1_T2.Tier1
 {
     public class TcpClientBase

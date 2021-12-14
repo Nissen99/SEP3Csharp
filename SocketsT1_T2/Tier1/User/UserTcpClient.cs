@@ -1,6 +1,9 @@
 ﻿using System.Net.Sockets;
 using System.Threading.Tasks;
 
+/*
+ * Klassen står for håndtering af User relaterede requests. Den extender TcpClientBase for at kunne benytte dens hjælpemetoder.
+ */
 namespace SocketsT1_T2.Tier1.User
 {
     public class UserTcpClient : TcpClientBase, IUserNetworkClient

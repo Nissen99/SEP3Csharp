@@ -31,6 +31,7 @@ namespace Blazor.Util.Playstate
         public async Task<bool> PlayPreviousSong()
         {
             fileReader.CurrentTime = TimeSpan.Zero;
+            playstateContext.CurrentState = new PlayingSub5(playstateContext);
             return false;
         }
 
