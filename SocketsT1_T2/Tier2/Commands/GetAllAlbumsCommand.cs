@@ -8,6 +8,11 @@ using Factory;
 using SocketsT1_T2.Shared;
 using SocketsT1_T2.Tier2.Util;
 
+/*
+ * Commando klasse. Den klasse styrer udpakningen af handlingen 'Get All Albums'.
+ * Den sender de udpakkede objekter til sin receiver IAlbumService.
+ */
+
 namespace SocketsT1_T2.Tier2.Commands
 {
     public class GetAllAlbumsCommand : ICommand
