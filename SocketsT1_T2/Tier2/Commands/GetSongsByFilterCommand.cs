@@ -10,6 +10,11 @@ using RestT2_T3;
 using SocketsT1_T2.Shared;
 using SocketsT1_T2.Tier2.Util;
 
+/*
+ * Commando klasse. Den klasse styrer udpakningen af handlingen 'Get Songs By Filter'.
+ * Den sender det udpakkede objekt til sin receiver ISongSearchService.
+ */
+
 namespace SocketsT1_T2.Tier2.Commands
 {
     public class GetSongsByFilterCommand: ICommand
