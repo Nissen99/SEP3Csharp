@@ -2,7 +2,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Domain.PlaylistManage;
 using Entities;
-
+/*
+ * Denne klasse står REST kommunikationen af Playliste håndterings relaterede requests
+ */
 namespace RestT2_T3
 {
     public class PlaylistManageRestClient : HttpClientBase, IPlaylistMangeNetworking

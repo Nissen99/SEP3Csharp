@@ -5,6 +5,10 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
+/*
+ * Denne klasse er en super klasse til alle RestClient klasser. Den består af hjælpe metoder
+ * der bruges i samtlige RestClients.
+ */
 namespace RestT2_T3
 {
     public class HttpClientBase
