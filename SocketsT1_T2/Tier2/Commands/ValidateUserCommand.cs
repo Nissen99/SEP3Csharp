@@ -11,7 +11,7 @@ using SocketsT1_T2.Tier2.Util;
 
 /*
  * Commando klasse. Den klasse styrer udpakningen af handlingen 'Validate User'.
- * Den sender det udpakkede objekt til sin receiver IUserService og returnerer en Server Response.
+ * Den sender det udpakkede objekt til sin receiver IUserService og returnerer en respons.
  */
 
 
