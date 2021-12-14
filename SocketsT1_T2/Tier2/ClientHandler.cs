@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 using SocketsT1_T2.Shared;
 using SocketsT1_T2.Tier2.Util;
 
+
+/*
+ * Client Handler klassen står for al kommunikation mellem en klient og serveren. Den videresender dataen den modtager
+ * til en Request Handler og dataen den sender tilbage til klienten får den fra Request Handler.
+ */
+
 namespace SocketsT1_T2.Tier2
 {
     public class ClientHandler : IClientHandler

@@ -9,6 +9,12 @@ using RestT2_T3;
 using SocketsT1_T2.Shared;
 using SocketsT1_T2.Tier2.Util;
 
+/*
+ * Commando klasse. Den klasse styrer udpakningen af handlingen 'Upload Song'.
+ * Den sender de udpakkede objekter til sin receiver ISongManageService og returnerer en respons.
+ */
+
+
 namespace SocketsT1_T2.Tier2.Commands
 {
     public class UploadSongCommand : ICommand
