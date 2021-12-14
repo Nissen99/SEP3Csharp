@@ -7,7 +7,13 @@ using Blazored.Modal.Services;
 using Entities;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-
+/*
+ * Klassen står for at håndtere det input brugeren giver i vievet for at log ind.
+ *
+ * IModalService Bruges til at lave popup på siden
+ *
+ * Klassen står for at håndtere det input brugeren giver når de ønsker at registere sig, her åbnes et popup.
+ */
 namespace Blazor.Pages
 {
     public partial class Index : ComponentBase

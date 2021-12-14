@@ -6,6 +6,12 @@ using Blazored.Modal.Services;
 using Entities;
 using Microsoft.AspNetCore.Components;
 
+/*
+ * popup som håndtere bruger input når der skal findes artist
+ *
+ * Her kan brugeren enden vælger et eksiterende artist eller lave et nyt
+ */ 
+
 namespace Blazor.Pages
 {
     public partial class NewOrExistingArtist

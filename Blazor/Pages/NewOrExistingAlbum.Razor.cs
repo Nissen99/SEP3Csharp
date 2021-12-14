@@ -5,7 +5,11 @@ using Blazored.Modal;
 using Blazored.Modal.Services;
 using Entities;
 using Microsoft.AspNetCore.Components;
-
+/*
+ * popup som håndtere bruger input når der skal findes album
+ *
+ * Her kan brugeren enden vælger et eksiterende album eller lave et nyt
+ */
 namespace Blazor.Pages
 {
     public partial class NewOrExistingAlbum: ComponentBase

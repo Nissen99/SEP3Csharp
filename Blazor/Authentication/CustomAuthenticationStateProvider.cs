@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Blazor.Model;
 using Blazor.Model.UserModel;
 using Entities;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
+
+/*
+ * Lånt af Troels tager fra hans github
+ * https://github.com/TroelsMortensen/DNPExamples
+ *
+ * Nogle ting trykket til Server siden i forhold til den originale.
+ */
 
 namespace Blazor.Authentication
 {

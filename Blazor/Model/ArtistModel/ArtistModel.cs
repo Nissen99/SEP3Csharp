@@ -3,6 +3,9 @@ using System.Threading.Tasks;
 using Entities;
 using SocketsT1_T2.Tier1.Artist;
 
+/*
+ * Klassen fungere gateway fra mvvm del til resten af systemet, her gennem kald til Client
+ */
 namespace Blazor.Model.ArtistModel
 {
     public class ArtistModel : IArtistModel

@@ -63,11 +63,26 @@ else
                 <td>@song.Album.Title</td>
                 <td>@generateArtists(song)</td>
                 <td>@song.ReleaseYear</td>
-                <td>
-                    <button class="btn btn-outline-dark" @onclick="@(() => remove(song))">
-                        <i class="oi oi-trash" style="color:red"/>
-                    </button>
-                </td>
+                @if (Playlist == null)
+                {
+                    <AuthorizeView Policy="MustBeAdmin">
+                        <td>
+                            <button class="btn btn-outline-dark" @onclick="@(() => remove(song))">
+                                <i class="oi oi-trash" style="color:red"/>
+                            </button>
+                        </td>
+                    </AuthorizeView>
+
+                }
+                else
+                {
+                    <td>
+                        <button class="btn btn-outline-dark" @onclick="@(() => remove(song))">
+                            <i class="oi oi-trash" style="color:red"/>
+                        </button>
+                    </td>
+                }
+               
             </tr>
         }
         </tbody>

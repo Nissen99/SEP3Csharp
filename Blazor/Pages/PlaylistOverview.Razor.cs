@@ -6,7 +6,14 @@ using Blazor.Model.PlaylistModel;
 using Blazored.Modal;
 using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
-
+/*
+ * Bruges til at fremvise alle playlister brugeren har oprettet.
+ *
+ * Her søges efter disse playlister med et kald til modellen
+ *
+ * Hvis det ænskes at inspisere en playliste, kan dette gøres ved at åbne en ny side hvor den bestemte playlistes id
+ * sendes med i URI'en
+ */
 namespace Blazor.Pages
 {
     public partial class PlaylistOverview : ComponentBase

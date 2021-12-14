@@ -5,7 +5,10 @@ using Blazor.Model.PlayModel;
 using Blazor.Model.SongSearchModel;
 using Entities;
 using Microsoft.AspNetCore.Components;
-
+/*
+ * Brugt til at modtage bruger input, her giver brugeren input om hvad der skal søges på, og hvilken katagoi af søgning
+ * det skal være. Dette sendes til Modellen hvor det håndteres
+ */
 namespace Blazor.Pages
 {
     public partial class Search : ComponentBase
