@@ -3,6 +3,11 @@ using System.Threading.Tasks;
 using SocketsT1_T2.Shared;
 using SocketsT1_T2.Tier2.Commands;
 
+/*
+ * Request handler klassen står for håndtere requesten fra klienten. Den holder styr på hvilken kommando
+ * systemet skal følge, og sender reqeusten ned til en Commando klasse til udpakning.
+ */
+
 namespace SocketsT1_T2.Tier2.Util
 {
     public class RequestHandler : IRequestHandler

@@ -3,7 +3,10 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 
-
+/*
+ * Dette er server opstarten. Her oprettes en TcpListener som alle klienter skal tilgå. 
+ * Klienter bliver accepteret i et while loop og bliver knyttet til hver deres Client Handler.
+ */
 namespace SocketsT1_T2.Tier2
 {
     public class Server : IServer
