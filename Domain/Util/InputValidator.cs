@@ -1,6 +1,7 @@
-﻿using System;
-using Entities;
-
+﻿using Entities;
+ /*
+  * Denne klasse er en hjælpe klasse som består af samtlige Valideringer. Alle metoder er statiske og returnerer en bool.
+  */
 namespace Domain.Util
 {
     public class InputValidator

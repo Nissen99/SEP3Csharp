@@ -7,8 +7,10 @@ using Domain.PlaylistManage;
 using Domain.SongManage;
 using Domain.SongSearch;
 using Domain.User;
-using RestT2_T3;
 
+/*
+ * Denne klasse følger Factory Pattern og sørger for at oprette alle de services der bruges i systemet.
+ */
 namespace Factory
 {
     public class ServicesFactory

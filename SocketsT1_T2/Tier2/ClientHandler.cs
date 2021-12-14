@@ -17,12 +17,11 @@ namespace SocketsT1_T2.Tier2
     public class ClientHandler : IClientHandler
     {
         private TcpClient client;
-
         public ClientHandler(TcpClient client)
         {
             this.client = client;
         }
-
+        
         public async void ListenToClientAsync()
         {
             Console.WriteLine("LISTEN");
@@ -45,12 +44,13 @@ namespace SocketsT1_T2.Tier2
                 });
             return transferObj;
         }
-
+        
         private async Task SendTransferObjectToClient(NetworkStream stream, TransferObj transferObj)
         {
             string transferAsJson = JsonSerializer.Serialize(transferObj);
             byte[] toServer = Encoding.UTF8.GetBytes(transferAsJson);
             await stream.WriteAsync(toServer, 0, toServer.Length);
         }
+        
     }
 }

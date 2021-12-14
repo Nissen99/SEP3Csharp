@@ -50,12 +50,5 @@ namespace SocketsT1_T2.Tier2.Util
         {
            return await activeCommand.Execute();
         }
-
-        public ICommand GetCommand()
-        {
-            return activeCommand;
-        }
-        
-
     }
 }

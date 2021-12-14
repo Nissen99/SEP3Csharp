@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Domain.SongManage;
 using Entities;
 
+/*
+ * Denne klasse står REST kommunikationen af Song relaterede requests
+ */
 namespace RestT2_T3
 {
     public class SongManageRestClient : HttpClientBase, ISongManageNetworking

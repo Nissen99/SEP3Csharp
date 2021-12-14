@@ -5,8 +5,8 @@ namespace Blazor.Util.Playstate
 {
     public interface IPlaystate
     {
-        PlaybackState State { get; set; }
-        
+        PlaybackState State { get; }
+
         Task<bool> PlayPreviousSong();
         Task TogglePlayPause();
     }

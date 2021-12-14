@@ -5,18 +5,29 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
+/*
+ * Denne klasse er en super klasse til alle RestClient klasser. Den består af hjælpe metoder
+ * der bruges i samtlige RestClients.
+ */
 namespace RestT2_T3
 {
     public class HttpClientBase
     {
         protected readonly string Uri = "http://localhost:8080/";
-
-    
+        
         protected async Task<T> HandleResponseGet<T>(HttpResponseMessage responseMessage)
         { 
             CheckForBadStatusCode(responseMessage);
             
             return await responseMessage.Content.ReadFromJsonAsync<T>();
+        }
+        protected StringContent FromObjectToStringContentCamelCase<T>(T toStringContent)
+        {
+            string toJson = JsonSerializer.Serialize(toStringContent,
+                new JsonSerializerOptions() {PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
+            
+
+            return new StringContent(toJson, Encoding.UTF8, "application/json");
         }
 
         public void CheckForBadStatusCode(HttpResponseMessage responseMessage)
@@ -36,13 +47,6 @@ namespace RestT2_T3
             CheckForBadStatusCode(responseMessage);
         }
 
-        protected StringContent FromObjectToStringContentCamelCase<T>(T toStringContent)
-        {
-            string toJson = JsonSerializer.Serialize(toStringContent,
-                new JsonSerializerOptions() {PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
-            
-
-            return new StringContent(toJson, Encoding.UTF8, "application/json");
-        }
+        
     }
     }

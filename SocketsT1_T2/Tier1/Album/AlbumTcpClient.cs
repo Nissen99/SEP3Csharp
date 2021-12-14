@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Threading.Tasks;
-
+/*
+ * Klassen står for håndtering at få fat i artist information. Den extender TcpClientBase for at kunne benytte dens hjælpemetoder.
+ */
 namespace SocketsT1_T2.Tier1.Album
 {
     public class AlbumTcpClient : TcpClientBase, IAlbumNetworkClient

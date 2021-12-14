@@ -9,6 +9,9 @@ using Domain.SongSearch;
 using Domain.User;
 using RestT2_T3;
 
+/*
+ * Denne klasse følger Factory Pattern og sørger for at oprette alle de RestClient's der bruges i systemet.
+ */
 namespace Factory
 {
     public class NetworkingFactory

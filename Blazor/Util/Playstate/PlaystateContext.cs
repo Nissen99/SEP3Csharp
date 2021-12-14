@@ -13,19 +13,14 @@ namespace Blazor.Util.Playstate
 {
     public class PlaystateContext : IPlaystateContext
     {
-        private MemoryStream ms;
-        private IPlayNetworkClient client;
         public IPlaystate CurrentState { get; set; }
+        public bool IsPlaying => CurrentState.State == PlaybackState.Playing;
         public Action UpdatePlayState { get; set; }
         public Action ProgressBarUpdate { get; set; }
-        public Mp3FileReader FileReader { get; private set; }
+        public Mp3FileReader FileReader { get; private set; } 
         public IWavePlayer WaveOut { get; set; }
         
-        
-        public bool IsPlaying
-        {
-            get { return CurrentState.State == PlaybackState.Playing; }
-        }
+        private IPlayNetworkClient client;
         
         public PlaystateContext(IPlayNetworkClient client)
         {
@@ -33,7 +28,7 @@ namespace Blazor.Util.Playstate
             WaveOut.Volume = 0.3f;
             this.client = client;
         }
-
+        
         public void StopPlaying()
         {
             if (WaveOut != null && FileReader != null)
@@ -43,7 +38,7 @@ namespace Blazor.Util.Playstate
                 FileReader.Dispose();
             }
         }
-
+        
         public async Task<double> UpdateProgressBar()
         {
             return FileReader.CurrentTime.TotalSeconds;
@@ -54,19 +49,19 @@ namespace Blazor.Util.Playstate
             float toSet = (float) percentage / 100;
             WaveOut.Volume = toSet;
         }
-
+        // var watch = new Stopwatch();
+        // watch.Start();
+        // watch.Stop();
+        // Console.WriteLine("Time taken to play song: " + watch.Elapsed.ToString(@"m\:ss\.fff"));
         public async Task PlaySong(Song song)
         {
-            var watch = new Stopwatch();
-            watch.Start();
             byte[] songToPlay = await client.PlaySong(song);
-            watch.Stop();
-            Console.WriteLine("Time taken to play song: " + watch.Elapsed.ToString(@"m\:ss\.fff"));
             MemoryStream ms = new MemoryStream(songToPlay);
             FileReader = new Mp3FileReader(ms);
-            Console.WriteLine(FileReader == null);
+            
             CurrentState = new PlayingSub5(this);
             UpdatePlayState.Invoke();
+            
             Thread t1 = new Thread(() =>
             {
                 while (true)
@@ -89,7 +84,6 @@ namespace Blazor.Util.Playstate
             {
                 CurrentState = new PlayingPost5(this);
             }
-
             UpdatePlayState.Invoke();
         }
 

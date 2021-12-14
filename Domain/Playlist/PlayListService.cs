@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Domain.Util;
 using Entities;
-
+/*
+ * Denne klasse står for håndtering af playlister. Heraf oprette, slette og at få fat i playlister.
+ */
 namespace Domain.Playlist
 {
     public class PlayListService : IPlayListService

@@ -19,7 +19,6 @@ namespace Blazor.Model.PlayModel
         
         
         public IList<Song> CurrentPlaylist { get; set; }
-        
         public IPlaystateContext Context { get; set; }
 
         public PlayModel(IPlayNetworkClient client)

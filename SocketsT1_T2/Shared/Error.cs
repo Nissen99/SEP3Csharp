@@ -1,5 +1,7 @@
 ﻿using System;
-
+/*
+ * Denne klasse bruges til håndtering af exceptions der skal videresendes til klienten fra serveren.
+ */
 namespace SocketsT1_T2.Shared
 {
     [Serializable]

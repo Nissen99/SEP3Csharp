@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Domain.Playlist;
 using Entities;
 
+/*
+ * Denne klasse står REST kommunikationen af Playlist relaterede requests
+ */
 namespace RestT2_T3
 {
     public class PlaylistRestClient : HttpClientBase, IPlaylistNetworking

@@ -14,7 +14,6 @@ namespace Blazor.Util.Playstate
         public PlaybackState State
         {
             get { return PlaybackState.Playing; }
-            set { throw new NotImplementedException(); }
         }
         private PlaystateContext playstateContext;
         public PlayingPost5(PlaystateContext playstateContext)
@@ -22,10 +21,10 @@ namespace Blazor.Util.Playstate
             this.playstateContext = playstateContext;
             waveOut = playstateContext.WaveOut;
             fileReader = playstateContext.FileReader;
-            Init();
+            init();
         }
 
-        private void Init()
+        private void init()
         {
             waveOut.Play();
         }
@@ -33,14 +32,14 @@ namespace Blazor.Util.Playstate
         
         public async Task<bool> PlayPreviousSong()
         {
+            fileReader.CurrentTime = TimeSpan.Zero;
             playstateContext.CurrentState = new PlayingSub5(playstateContext);
-
             return false;
         }
 
         public async Task TogglePlayPause()
         {
-            playstateContext.CurrentState = new PausedSub5(playstateContext);
+            playstateContext.CurrentState = new PausedPost5(playstateContext);
         }
     }
 }

@@ -1,11 +1,10 @@
-﻿using System;
-using System.Net.Http;
-using System.Text;
-using System.Text.Json;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using Domain.User;
 using Entities;
-
+ /*
+  * Denne klasse står REST kommunikationen af User relaterede requests
+  */
 namespace RestT2_T3
 {
     public class UserRestClient : HttpClientBase, IUserNetworking

@@ -2,7 +2,9 @@
 using System.Threading.Tasks;
 using Domain.Play;
 using Entities;
-
+/*
+ * Denne klasse står REST kommunikationen af afspilning af sang
+ */
 namespace RestT2_T3
 {
     public class PlayRestClient : HttpClientBase, IPlayNetworking

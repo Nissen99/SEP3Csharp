@@ -1,11 +1,14 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using Domain.Library;
 using Domain.Util;
 using Entities;
 using NAudio.Wave;
-
+/*
+ * Den klasse sørger for håndtering sange i systemet.
+ * Her sikres at længden på en sang bliver tilføjet til Song objektet.
+ * Der bliver både sendt et object til skal lægges i databasen og et object der skal gemmes som en fil.
+ */
 namespace Domain.SongManage
 {
     public class SongManageService : ISongManageService
@@ -17,7 +20,8 @@ namespace Domain.SongManage
             this.songManageNetworking = songManageNetworking;
         }
 
-        //TODO Input checks
+        //Denne metode bærer præg af at vide at dataserver både gemmer i en database og gemmer en fil. 
+        //I tre tier burde dette ikke ske.
         public async Task AddNewSongAsync(Song newSong, Mp3 mp3)
         {
             if (!InputValidator.CheckSongValidWithoutMp3(newSong)) throw new ArgumentException("Some Property not found");

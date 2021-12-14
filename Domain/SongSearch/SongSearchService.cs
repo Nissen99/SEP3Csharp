@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Entities;
-
+/*
+ * Denne klasse håndterer sang søgnings relaterede handlinger.
+ */
 namespace Domain.SongSearch
 {
     public class SongSearchService : ISongSearchService
