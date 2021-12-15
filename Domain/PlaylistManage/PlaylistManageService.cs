@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain.Util;
 using Entities;
 
 /*
@@ -18,6 +19,8 @@ namespace Domain.PlaylistManage
 
         public async Task AddSongToPlaylistAsync(Entities.Playlist playlist, Song song)
         {
+            if (!InputValidator.CheckPlaylist(playlist) || !InputValidator.CheckSongValidWithoutMp3(song))
+                throw new ArgumentException("No property found");
             if (playlist.Songs.FirstOrDefault(s =>s.Id == song.Id) != null)
             {
                 throw new ArgumentException("That song is already in the playlist");

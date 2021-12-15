@@ -24,7 +24,8 @@ namespace Domain.SongManage
         //I tre tier burde dette ikke ske.
         public async Task AddNewSongAsync(Song newSong, Mp3 mp3)
         {
-            if (!InputValidator.CheckSongValidWithoutMp3(newSong)) throw new ArgumentException("Some Property not found");
+            if (!InputValidator.CheckSongValidWithoutMp3(newSong) || !InputValidator.CheckMp3(mp3)) 
+                throw new ArgumentException("Some Property not found");
             
             using MemoryStream ms = new MemoryStream(mp3.Data);
            
@@ -43,6 +44,8 @@ namespace Domain.SongManage
 
         public async Task RemoveSongAsync(Song songToRemove)
         {
+            if (!InputValidator.CheckSongValidWithoutMp3(songToRemove))
+                throw new ArgumentException("No property found");
             await songManageNetworking.RemoveSongAsync(songToRemove);
         }
     }

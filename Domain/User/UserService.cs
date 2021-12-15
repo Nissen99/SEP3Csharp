@@ -17,21 +17,15 @@ namespace Domain.User
 
         public async Task RegisterUser(Entities.User user)
         {
-            if (!InputValidator.ValidateUser(user))
-            {
-                throw new ArgumentException("User not Valid, something missing");
-            }
-
+            if (!InputValidator.ValidateUser(user)) throw new ArgumentException("User not Valid, something missing");
+            
             await userNetworking.RegisterUser(user);
         }
 
         public async Task<Entities.User> ValidateUser(Entities.User user)
         {
-            if (!InputValidator.ValidateUser(user))
-            {
-                throw new ArgumentException("Some property not found");
-            }
-
+            if (!InputValidator.ValidateUser(user)) throw new ArgumentException("Some property not found");
+            
             return await userNetworking.ValidateUser(user);
         }
     }

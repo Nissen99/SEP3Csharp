@@ -43,6 +43,65 @@ namespace Domain.Util
             return true;
         }
 
-        
+
+        public static bool CheckForAlbum(string title)
+        {
+            if (string.IsNullOrEmpty(title))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool CheckForArtist(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool CheckPlaylistId(int playlistId)
+        {
+            if (playlistId == null || playlistId < 0)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool CheckMp3(Mp3 mp3)
+        {
+            if (mp3 == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool CheckFilterInput(string[] args)
+        {
+            if (args == null || string.IsNullOrEmpty(args[0]) || string.IsNullOrEmpty(args[1]))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool CheckForSongTitle(string songTitle)
+        {
+            if (string.IsNullOrEmpty(songTitle))
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

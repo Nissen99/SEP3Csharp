@@ -1,4 +1,6 @@
+using System;
 using System.Threading.Tasks;
+using Domain.Util;
 using Entities;
 
 /*
@@ -18,6 +20,7 @@ namespace Domain.Play
 
         public async Task<byte[]> PlayAsync(Song song)
         {
+            if (!InputValidator.CheckSongValidWithoutMp3(song)) throw new ArgumentException("No property found");
             return await playNetworking.GetSongWithMP3(song);
         }
     }
