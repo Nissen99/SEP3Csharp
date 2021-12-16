@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Blazor.Model;
 using Blazor.Model.PlayModel;
+using Blazor.Pages;
 using Blazored.Modal.Services;
 using Entities;
 using Microsoft.AspNetCore.Components;
@@ -22,6 +23,7 @@ namespace Blazor.Shared
     public partial class AudioPlayer : ComponentBase
     {
         [Inject] public IPlayModel Play { get; set; }
+        [Inject] public IModalService ModalService { get; set; }
 
         public double progressValuePercentage { get; set; }
         public int pVP { get; set; }
@@ -43,16 +45,37 @@ namespace Blazor.Shared
         }
         private async Task TogglePlay()
         {
-            await Play.PlayPauseToggleAsync();
+            try
+            {
+                await Play.PlayPauseToggleAsync();
+            }
+            catch (Exception e)
+            {
+                // ignored
+            }
         }
         private async Task previousSong()
         {
-            await Play.PlayPreviousSong();
+            try
+            {
+                await Play.PlayPreviousSong();
+            }
+            catch (Exception e)
+            {
+                // ignored
+            }
         }
 
         private async Task nextSong()
         {
-            await Play.PlayNextSongAsync();
+            try
+            {
+                await Play.PlayNextSongAsync();
+            }
+            catch (Exception e)
+            {
+                // ignored
+            }
         }
 
        

@@ -31,12 +31,7 @@ namespace DomainTest.PlaylistTest
             await PlayListService.CreateNewPlaylistAsync(newPlaylist);
             return newPlaylist;
         }
-
-        [Test]
-        public async Task AddPlaylistWithTitle()
-        {
-            Assert.AreEqual(playlistTitle, CreateNewPlaylist().Result.Title);
-        }
+        
 
         [Test]
         public async Task AddPlaylistWithEmptyTitle()
@@ -77,16 +72,14 @@ namespace DomainTest.PlaylistTest
         [Test]
         public async Task RemovePlaylistNotInDatabase()
         {
-            int countBefore = PlayListService.GetAllPlaylistsForUserAsync(user).Result.Count;
             Playlist notRealPlaylist = new Playlist()
             {
                 Title = "This is not a real playList in database",
                 User = await UserService.ValidateUser(user)
             };
 
-            await PlayListService.DeletePlayListAsync(notRealPlaylist);
-            int countAfter = PlayListService.GetAllPlaylistsForUserAsync(user).Result.Count;
-            Assert.AreEqual(countAfter, countBefore);
+            Assert.ThrowsAsync<Exception>(() =>PlayListService.DeletePlayListAsync(notRealPlaylist));
+            
         }
 
 

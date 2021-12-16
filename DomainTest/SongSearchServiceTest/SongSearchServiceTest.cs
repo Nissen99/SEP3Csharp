@@ -24,13 +24,13 @@ namespace DomainTest.SongSearchServiceTest
         {
             int songNumberTest = 0;
 
-            var listOfAllSongs = await GetListOfAllSongs();
+            IList<Song> listOfAllSongs = await GetListOfAllSongs();
 
             string songTitleTest = listOfAllSongs[songNumberTest].Title;
 
             string[] args = {"Title", songTitleTest};
 
-            var listOfDeserilizedSong = ListOfSongSearchFor(args);
+            IList<Song> listOfDeserilizedSong = ListOfSongSearchFor(args);
 
 
             Assert.That(listOfDeserilizedSong.Any(song => song.Id == listOfAllSongs[songNumberTest].Id));
@@ -41,13 +41,13 @@ namespace DomainTest.SongSearchServiceTest
         {
             int songNumberTest = 0;
 
-            var listOfAllSongs = await GetListOfAllSongs();
+            IList<Song> listOfAllSongs = await GetListOfAllSongs();
 
             string songArtistName = listOfAllSongs[songNumberTest].Artists[0].Name;
 
             string[] args = {"Artist", songArtistName};
 
-            var listOfDeserilizedSong = ListOfSongSearchFor(args);
+            IList<Song> listOfDeserilizedSong = ListOfSongSearchFor(args);
 
             Assert.That(listOfDeserilizedSong.Any(song => song.Id == listOfAllSongs[songNumberTest].Id));
         }
@@ -57,13 +57,13 @@ namespace DomainTest.SongSearchServiceTest
         public async Task TestIfCorrectSongIsFoundByAlbum()
         {
             int songNumberTest = 0;
-            var listOfAllSongs = await GetListOfAllSongs();
+            IList<Song> listOfAllSongs = await GetListOfAllSongs();
 
             string songAlbumTitle = listOfAllSongs[songNumberTest].Album.Title;
 
             string[] args = {"Album", songAlbumTitle};
 
-            var listOfDeserilizedSong = ListOfSongSearchFor(args);
+            IList<Song> listOfDeserilizedSong = ListOfSongSearchFor(args);
 
             Assert.That(listOfDeserilizedSong.Any(song => song.Id == listOfAllSongs[songNumberTest].Id));
         }
@@ -83,14 +83,14 @@ namespace DomainTest.SongSearchServiceTest
 
         {
             int songNumberTest = 0;
-            var listOfAllSongs = await GetListOfAllSongs();
+            IList<Song> listOfAllSongs = await GetListOfAllSongs();
 
             string songAlbumTitle = listOfAllSongs[songNumberTest].Album.Title;
             string[] args = {null, songAlbumTitle};
             
 
 
-            Assert.ThrowsAsync<Exception>(() => songSearchService.GetSongsByFilterJsonAsync(args));
+            Assert.ThrowsAsync<ArgumentException>(() => songSearchService.GetSongsByFilterJsonAsync(args));
         }
 
 
@@ -104,7 +104,7 @@ namespace DomainTest.SongSearchServiceTest
             string songAlbumTitle = listOfAllSongs[songNumberTest].Album.Title;
             string[] args = {"", songAlbumTitle};
 
-            Assert.ThrowsAsync<Exception>(() => songSearchService.GetSongsByFilterJsonAsync(args));
+            Assert.ThrowsAsync<ArgumentException>(() => songSearchService.GetSongsByFilterJsonAsync(args));
         }
 
         [Test]
@@ -112,7 +112,7 @@ namespace DomainTest.SongSearchServiceTest
         {
             string[] args = {"Title", ""};
 
-            Assert.ThrowsAsync<Exception>(() => songSearchService.GetSongsByFilterJsonAsync(args));
+            Assert.ThrowsAsync<ArgumentException>(() => songSearchService.GetSongsByFilterJsonAsync(args));
         }
 
         [Test]
@@ -123,7 +123,7 @@ namespace DomainTest.SongSearchServiceTest
             
 
 
-            Assert.ThrowsAsync<Exception>(() => songSearchService.GetSongsByFilterJsonAsync(args));
+            Assert.ThrowsAsync<ArgumentException>(() => songSearchService.GetSongsByFilterJsonAsync(args));
         }
 
         [Test]
@@ -133,7 +133,7 @@ namespace DomainTest.SongSearchServiceTest
 
             string[] args = {"Title", "asdNotTitleOfSongasdf"};
 
-            var listOfDeserilizedSong = ListOfSongSearchFor(args);
+            IList<Song> listOfDeserilizedSong = ListOfSongSearchFor(args);
 
             Assert.AreEqual(0, listOfDeserilizedSong.Count);
         }
@@ -144,7 +144,7 @@ namespace DomainTest.SongSearchServiceTest
         {
             string[] args = {"Artist", ""};
             
-            Assert.ThrowsAsync<Exception>(() => songSearchService.GetSongsByFilterJsonAsync(args));
+            Assert.ThrowsAsync<ArgumentException>(() => songSearchService.GetSongsByFilterJsonAsync(args));
         }
 
         [Test]
@@ -152,7 +152,7 @@ namespace DomainTest.SongSearchServiceTest
         {
             string[] args = {"Artist", null};
 
-            Assert.ThrowsAsync<Exception>(() => songSearchService.GetSongsByFilterJsonAsync(args));
+            Assert.ThrowsAsync<ArgumentException>(() => songSearchService.GetSongsByFilterJsonAsync(args));
         }
 
         [Test]
@@ -160,7 +160,7 @@ namespace DomainTest.SongSearchServiceTest
         {
             string[] args = {"Artist", "asdNotAnArtistNamesdf"};
 
-            var listOfDeserilizedSong = ListOfSongSearchFor(args);
+            IList<Song> listOfDeserilizedSong = ListOfSongSearchFor(args);
 
             Assert.AreEqual(0, listOfDeserilizedSong.Count);
         }
@@ -172,7 +172,7 @@ namespace DomainTest.SongSearchServiceTest
         {
             string[] args = {"Album", ""};
 
-            Assert.ThrowsAsync<Exception>(() => songSearchService.GetSongsByFilterJsonAsync(args));
+            Assert.ThrowsAsync<ArgumentException>(() => songSearchService.GetSongsByFilterJsonAsync(args));
         }
 
         
@@ -181,7 +181,7 @@ namespace DomainTest.SongSearchServiceTest
         {
             string[] args = {"Album", null};
 
-            Assert.ThrowsAsync<Exception>(() => songSearchService.GetSongsByFilterJsonAsync(args));
+            Assert.ThrowsAsync<ArgumentException>(() => songSearchService.GetSongsByFilterJsonAsync(args));
         }
 
         [Test]
@@ -191,7 +191,7 @@ namespace DomainTest.SongSearchServiceTest
 
             string[] args = {"Album", "asdNotAnAlbumTitleasdf"};
 
-            var listOfDeserilizedSong = ListOfSongSearchFor(args);
+            IList<Song> listOfDeserilizedSong = ListOfSongSearchFor(args);
 
             Assert.AreEqual(0, listOfDeserilizedSong.Count);
         }

@@ -9,8 +9,6 @@ namespace SocketsT1_T2
         static void Main(string[] args)
         {
             IServer server = new Server();
-            CommandsReflection reflection = new CommandsReflection();
-            reflection.Init();
             server.startServer();
         }
     }
