@@ -1,6 +1,5 @@
 
 using SocketsT1_T2.Tier2;
-using SocketsT1_T2.Tier2.Util;
 
 namespace SocketsT1_T2
 {

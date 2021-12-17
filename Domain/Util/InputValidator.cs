@@ -66,7 +66,7 @@ namespace Domain.Util
 
         public static bool CheckPlaylistId(int playlistId)
         {
-            if (playlistId >= 0)
+            if (playlistId <= 0)
             {
                 return false;
             }

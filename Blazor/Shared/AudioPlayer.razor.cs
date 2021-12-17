@@ -32,7 +32,7 @@ namespace Blazor.Shared
         private string artistTitle = "";
         private bool isPlaying = false;
         private ElementReference progress;
-        
+
         private string currentDuration = "00:00:00";
         private double progressValue;
         private string totalDuration = "00:00:00";
@@ -43,6 +43,7 @@ namespace Blazor.Shared
             Play.Context.UpdatePlayState = () => updatePlayState();
             Play.Context.ProgressBarUpdate = () => updateProgressBar();
         }
+
         private async Task TogglePlay()
         {
             try
@@ -54,6 +55,7 @@ namespace Blazor.Shared
                 // ignored
             }
         }
+
         private async Task previousSong()
         {
             try
@@ -78,9 +80,9 @@ namespace Blazor.Shared
             }
         }
 
-       
+
         private async Task updatePlayState()
-        { 
+        {
             isPlaying = Play.Context.IsPlaying;
             currentSong = await Play.GetCurrentSongAsync();
             songTitle = currentSong.Title;
@@ -88,26 +90,27 @@ namespace Blazor.Shared
             TimeSpan totalDurationSpan = new TimeSpan(0, currentSong.Duration / 60, currentSong.Duration % 60);
             totalDuration = totalDurationSpan.ToString();
             StateHasChanged();
-            
         }
+
         private async Task updateProgressBar()
         {
             progressValue = await Play.Context.UpdateProgressBar();
             progressValuePercentage = progressValue / currentSong.Duration * 100;
             pVP = (int) progressValuePercentage;
-            TimeSpan currentDurationSpan = new TimeSpan(0, (int)(currentSong.Duration * progressValuePercentage / 100 / 60), (int)(currentSong.Duration * progressValuePercentage / 100 % 60));
+            TimeSpan currentDurationSpan = new TimeSpan(0,
+                (int) (currentSong.Duration * progressValuePercentage / 100 / 60),
+                (int) (currentSong.Duration * progressValuePercentage / 100 % 60));
             currentDuration = currentDurationSpan.ToString();
             await InvokeAsync(() => StateHasChanged());
-            
         }
-        
+
         private async Task progressBarClicked(MouseEventArgs mouseEventArgs)
         {
             float returnHack = 1;
             returnHack = await JS.InvokeAsync<float>("getProgress", mouseEventArgs);
             await Play.PlayFromAsync(returnHack);
         }
-        
+
         private async Task volumeClicked(MouseEventArgs arg)
         {
             volume = await JS.InvokeAsync<int>("getVolume", arg);
@@ -115,6 +118,12 @@ namespace Blazor.Shared
         }
 
 
+        private string StyleForBackground()
+        {
+            if (isPlaying) return "background:blue";
+            {
+                return "background:lightgreen";
+            }
+        }
     }
 }
-
