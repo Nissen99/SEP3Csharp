@@ -61,7 +61,7 @@ namespace Blazor.Model.PlayModel
         {
             bool result = await Context.PlayPreviousAsync();
             if (result)
-            {
+            { 
                 previouslySongs.RemoveAt(previouslySongs.Count - 1);
                 await PlaySongAsync(previouslySongs[^1]);
             }

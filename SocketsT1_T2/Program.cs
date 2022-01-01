@@ -1,6 +1,5 @@
 
 using SocketsT1_T2.Tier2;
-using SocketsT1_T2.Tier2.Util;
 
 namespace SocketsT1_T2
 {
@@ -9,8 +8,6 @@ namespace SocketsT1_T2
         static void Main(string[] args)
         {
             IServer server = new Server();
-            CommandsReflection reflection = new CommandsReflection();
-            reflection.Init();
             server.startServer();
         }
     }

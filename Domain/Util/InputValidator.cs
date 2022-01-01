@@ -66,7 +66,7 @@ namespace Domain.Util
 
         public static bool CheckPlaylistId(int playlistId)
         {
-            if (playlistId == null || playlistId < 0)
+            if (playlistId <= 0)
             {
                 return false;
             }
@@ -76,8 +76,9 @@ namespace Domain.Util
 
         public static bool CheckMp3(Mp3 mp3)
         {
-            if (mp3 == null)
+            if (mp3 == null || mp3.Data == null || mp3.Data.Length == 0)
             {
+               
                 return false;
             }
 
@@ -86,7 +87,7 @@ namespace Domain.Util
 
         public static bool CheckFilterInput(string[] args)
         {
-            if (args == null || string.IsNullOrEmpty(args[0]) || string.IsNullOrEmpty(args[1]))
+            if (args == null || args.Length != 2 || string.IsNullOrEmpty(args[0]) || string.IsNullOrEmpty(args[1]))
             {
                 return false;
             }

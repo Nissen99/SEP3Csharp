@@ -42,7 +42,7 @@ namespace DomainTest.SongManageTest
             album = new Album() {Title = "TestAlbum"};
             artists = new List<Artist>() {new Artist() {Name = "Test"}};
             releaseYear = 2020;
-            mp3 = File.ReadAllBytes(@"C:\Users\mathi\RiderProjects\SEP3Csharp\DomainTest\audio\test.mp3");
+            mp3 = File.ReadAllBytes(@"C:\Users\Mikkel\RiderProjects\SEP3Csharp\DomainTest\audio\test.mp3");
         }
 
 
@@ -107,21 +107,21 @@ namespace DomainTest.SongManageTest
         public async Task AddSongWithEmptyMp3()
         {
             mp3 = Array.Empty<byte>();
-            Assert.ThrowsAsync<InvalidDataException>( CreateNewSongAndSave);
+            Assert.ThrowsAsync<ArgumentException>( CreateNewSongAndSave);
         }
 
         [Test]
         public async Task AddSongWithWrongFileType()
         {
-            mp3 = File.ReadAllBytes(@"C:\Users\mathi\RiderProjects\SEP3Csharp\DomainTest\audio\test.txt");
-            Assert.ThrowsAsync<InvalidDataException>(CreateNewSongAndSave);
+            mp3 = File.ReadAllBytes(@"C:\Users\Mikkel\RiderProjects\SEP3Csharp\DomainTest\audio\test.txt");
+            Assert.ThrowsAsync<ArgumentException>(CreateNewSongAndSave);
         }
 
         [Test]
         public async Task AddSongWithNullMp3()
         {
             mp3 = null;
-            Assert.ThrowsAsync<ArgumentNullException>(CreateNewSongAndSave);
+            Assert.ThrowsAsync<ArgumentException>(CreateNewSongAndSave);
         }
 
         [Test]
@@ -144,7 +144,7 @@ namespace DomainTest.SongManageTest
                 ReleaseYear = releaseYear
             };
             
-            await songManageService.RemoveSongAsync(notRealSong);
+            Assert.ThrowsAsync<Exception>(() => songManageService.RemoveSongAsync(notRealSong));
             int countAfter = (await libraryService.GetAllSongsAsync()).Count;
             Assert.AreEqual(countAfter, countBefore);
         }

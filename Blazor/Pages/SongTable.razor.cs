@@ -50,6 +50,7 @@ namespace Blazor.Pages
             
             SongPlaying();
             PlayModel.Context.UpdatePlayState += () => SongPlaying();
+            PlayModel.CurrentPlaylist = SongList;
             StateHasChanged();
         }
 
