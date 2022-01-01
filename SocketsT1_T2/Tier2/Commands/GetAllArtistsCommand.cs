@@ -17,13 +17,17 @@ using SocketsT1_T2.Tier2.Util;
 
 namespace SocketsT1_T2.Tier2.Commands
 {
+    [MyCommand]
     public class GetAllArtistsCommand : ICommand
     {
         private IArtistService artistService;
+        public string Action { get; }
+        public TransferObj RequestObj { get; set; }
         
 
         public GetAllArtistsCommand()
         {
+            Action = "GETALLARTISTS";
             artistService = ServicesFactory.GetArtistService();
         }
 

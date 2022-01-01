@@ -15,12 +15,16 @@ using SocketsT1_T2.Tier2.Util;
 
 namespace SocketsT1_T2.Tier2.Commands
 {
+    [MyCommand]
     public class GetAllAlbumsCommand : ICommand
     {
         private IAlbumService albumService;
+        public string Action { get; }
+        public TransferObj RequestObj { get; set; }
         
         public GetAllAlbumsCommand()
         {
+            Action = "GETALLALBUMS";
             albumService = ServicesFactory.GetAlbumService();
         }
 

@@ -1,6 +1,7 @@
 using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Reflection;
 using System.Threading;
 
 /*
@@ -13,8 +14,8 @@ namespace SocketsT1_T2.Tier2
     {
         
        public void startServer()
-        {
-            IPAddress ip = IPAddress.Any;
+       {
+           IPAddress ip = IPAddress.Any;
             TcpListener listener = new TcpListener(ip, 1098);
             listener.Start();
             Console.WriteLine("SERVER STARED");

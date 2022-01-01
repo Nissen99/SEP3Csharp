@@ -18,23 +18,24 @@ using SocketsT1_T2.Tier2.Util;
 
 namespace SocketsT1_T2.Tier2.Commands
 {
+    [MyCommand]
     public class SearchForArtistsCommand: ICommand
     {
         private IArtistService artistService;
-        private TransferObj requestObj;
-        
+        public TransferObj RequestObj { get; set; }
+        public string Action { get; }
 
-        public SearchForArtistsCommand(TransferObj requestObj)
+        public SearchForArtistsCommand()
         {
+            Action = "SEARCHFORARTISTS";
             artistService = ServicesFactory.GetArtistService();
-            this.requestObj = requestObj;
         }
 
         public async Task<TransferObj> Execute()
         {
             try
             {
-                string name = JsonElementConverter.ElementToObject<string>(requestObj.Arg);
+                string name = JsonElementConverter.ElementToObject<string>(RequestObj.Arg);
                 IList<Artist> artists = await artistService.SearchForArtists(name);
                 return await ServerResponse.PrepareTransferObjectWithValueAsync(artists);
             }

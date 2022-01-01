@@ -9,9 +9,12 @@ using SocketsT1_T2.Tier2.Util;
  */
 namespace SocketsT1_T2.Tier2.Commands
 {
+    [MyCommand]
     public class NullCommand : ICommand
     
     {
+        public string Action { get; }
+        public TransferObj RequestObj { get; set; }
         public Task<TransferObj> Execute()
         {
             

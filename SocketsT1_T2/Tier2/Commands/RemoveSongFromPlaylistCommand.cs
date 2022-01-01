@@ -16,23 +16,24 @@ using SocketsT1_T2.Tier2.Util;
 
 namespace SocketsT1_T2.Tier2.Commands
 {
+    [MyCommand]
     public class RemoveSongFromPlaylistCommand : ICommand
     {
         private IPlaylistManageService playlistManageService;
-        private TransferObj requestObj;
-        
+        public TransferObj RequestObj { get; set; }
+        public string Action { get; }
 
-        public RemoveSongFromPlaylistCommand(TransferObj requestObj)
+        public RemoveSongFromPlaylistCommand()
         {
+            Action = "REMOVESONGFROMPLAYLIST";
             playlistManageService = ServicesFactory.GetPlaylistManageService();
-            this.requestObj = requestObj;
         }
 
         public async Task<TransferObj> Execute()
         {
             try
             {
-                JsonElement[] args = JsonElementConverter.ElementToObject<JsonElement[]>(requestObj.Arg);
+                JsonElement[] args = JsonElementConverter.ElementToObject<JsonElement[]>(RequestObj.Arg);
                 Playlist playlist = JsonElementConverter.ElementToObject<Playlist>(args[0].GetRawText());
                 Song song = JsonElementConverter.ElementToObject<Song>(args[1].GetRawText());
                 await playlistManageService.RemoveSongFromPlaylistAsync(playlist, song);

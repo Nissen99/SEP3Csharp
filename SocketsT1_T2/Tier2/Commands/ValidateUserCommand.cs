@@ -17,22 +17,24 @@ using SocketsT1_T2.Tier2.Util;
 
 namespace SocketsT1_T2.Tier2.Commands
 {
+    [MyCommand]
     public class ValidateUserCommand: ICommand
     {
         private IUserService userService;
-        private TransferObj requestObj;
-
-        public ValidateUserCommand(TransferObj requestObj)
+        public TransferObj RequestObj { get; set; }
+        public string Action { get; }
+        public ValidateUserCommand()
         {
+            
             userService = ServicesFactory.GetUserService();
-            this.requestObj = requestObj;
+            Action = "VALIDATEUSER";
         }
 
         public async Task<TransferObj> Execute()
         {
             try
             {
-                User user = JsonElementConverter.ElementToObject<User>(requestObj.Arg);
+                User user = JsonElementConverter.ElementToObject<User>(RequestObj.Arg);
                 User toReturn = await userService.ValidateUser(user);
                 return await ServerResponse.PrepareTransferObjectWithValueAsync(toReturn);
             }

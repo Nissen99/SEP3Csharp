@@ -8,7 +8,9 @@ using Factory;
 using RestT2_T3;
 using SocketsT1_T2.Shared;
 using SocketsT1_T2.Tier2.Util;
-
+/*
+ * 
+ */
 /*
  * Commando klasse. Den klasse styrer udpakningen af handlingen 'Upload Song'.
  * Den sender de udpakkede objekter til sin receiver ISongManageService og returnerer en respons.
@@ -17,24 +19,24 @@ using SocketsT1_T2.Tier2.Util;
 
 namespace SocketsT1_T2.Tier2.Commands
 {
+    [MyCommand]
     public class UploadSongCommand : ICommand
     {
         private ISongManageService songManageService;
-        private TransferObj requestObj;
-        
+        public TransferObj RequestObj { get; set; }
+        public string Action { get; }
 
-        public UploadSongCommand(TransferObj requestObj)
+        public UploadSongCommand()
         {
+            Action = "UPLOADSONG";
             songManageService = ServicesFactory.GetSongManageService();
-            this.requestObj = requestObj;
-
         }
 
         public async Task<TransferObj> Execute()
         {
             try
             {
-                JsonElement[] args = JsonElementConverter.ElementToObject<JsonElement[]>(requestObj.Arg);
+                JsonElement[] args = JsonElementConverter.ElementToObject<JsonElement[]>(RequestObj.Arg);
                 Song toAdd = JsonElementConverter.ElementToObject<Song>(args[0].GetRawText());
                 Mp3 mp3 = JsonElementConverter.ElementToObject<Mp3>(args[1].GetRawText());
                 await songManageService.AddNewSongAsync(toAdd, mp3);

@@ -16,23 +16,24 @@ using SocketsT1_T2.Tier2.Util;
 
 namespace SocketsT1_T2.Tier2.Commands
 {
+    [MyCommand]
     public class RegisterUserCommand: ICommand
     {
         private IUserService userService;
-        private TransferObj requestObj;
-        
+        public TransferObj RequestObj { get; set; }
+        public string Action { get; }
 
-        public RegisterUserCommand(TransferObj requestObj)
+        public RegisterUserCommand()
         {
+            Action = "REGISTERUSER";
             userService = ServicesFactory.GetUserService();
-            this.requestObj = requestObj;
         }
 
         public async Task<TransferObj> Execute()
         {
             try
             {
-                User user = JsonElementConverter.ElementToObject<User>(requestObj.Arg);
+                User user = JsonElementConverter.ElementToObject<User>(RequestObj.Arg);
                 await userService.RegisterUser(user);
                 return await ServerResponse.PrepareTransferObjectNoValueAsync();
             }

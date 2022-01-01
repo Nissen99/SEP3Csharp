@@ -17,24 +17,25 @@ using SocketsT1_T2.Tier2.Util;
 
 namespace SocketsT1_T2.Tier2.Commands
 {
+    [MyCommand]
     public class PlaySongCommand : ICommand
     {
         private IPlayService playService;
-        private TransferObj requestObj;
-        
+        public TransferObj RequestObj { get; set; }
+        public string Action { get; }
 
 
-        public PlaySongCommand( TransferObj requestObj)
+        public PlaySongCommand()
         {
+            Action = "PLAYSONG";
             playService = ServicesFactory.GetPlayService();
-            this.requestObj = requestObj;
         }
 
         public async Task<TransferObj> Execute()
         {
             try
             {
-                Song tObjSong = JsonElementConverter.ElementToObject<Song>(requestObj.Arg);
+                Song tObjSong = JsonElementConverter.ElementToObject<Song>(RequestObj.Arg);
                 byte[] song = await playService.PlayAsync(tObjSong);
                 return await ServerResponse.PrepareTransferObjectWithValueAsync(song);
             }

@@ -14,23 +14,25 @@ using SocketsT1_T2.Tier2.Util;
 
 namespace SocketsT1_T2.Tier2.Commands
 {
+    [MyCommand]
     public class GetPlaylistFromId : ICommand
     {
         private IPlayListService playListService;
-        private TransferObj requestObj;
+        public TransferObj RequestObj { get; set; }
+        public string Action { get; }
         
 
-        public GetPlaylistFromId( TransferObj requestObj)
+        public GetPlaylistFromId()
         {
+            Action = "GETPLAYLISTFROMID";
             playListService = ServicesFactory.GetPlayListService();
-            this.requestObj = requestObj;
         }
 
         public async Task<TransferObj> Execute()
         {
             try
             {
-                int playlistId = JsonElementConverter.ElementToObject<int>(requestObj.Arg);
+                int playlistId = JsonElementConverter.ElementToObject<int>(RequestObj.Arg);
                 Playlist playlist = await playListService.GetPlaylistFromIdAsync(playlistId);
                 return await ServerResponse.PrepareTransferObjectWithValueAsync(playlist);
             }

@@ -17,24 +17,25 @@ using SocketsT1_T2.Tier2.Util;
 
 namespace SocketsT1_T2.Tier2.Commands
 {
+    [MyCommand]
     public class RemovePlaylistCommand:ICommand
 
     {
         private IPlayListService playListService;
-        private TransferObj requestObj;
-        
+        public TransferObj RequestObj { get; set; }
+        public string Action { get; }
 
-        public RemovePlaylistCommand(TransferObj requestObj)
+        public RemovePlaylistCommand()
         {
+            Action = "REMOVEPLAYLIST";
             playListService = ServicesFactory.GetPlayListService();
-            this.requestObj = requestObj;
         }
 
         public async Task<TransferObj> Execute()
         {
             try
             {
-                Playlist playlist = JsonElementConverter.ElementToObject<Playlist>(requestObj.Arg);
+                Playlist playlist = JsonElementConverter.ElementToObject<Playlist>(RequestObj.Arg);
                 await playListService.DeletePlayListAsync(playlist);
                 return await ServerResponse.PrepareTransferObjectNoValueAsync();
             }
